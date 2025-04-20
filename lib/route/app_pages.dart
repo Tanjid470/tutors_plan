@@ -1,7 +1,7 @@
 
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
-import 'package:tutors_plan/feature/dashboard/view.dart';
+import 'package:tutors_plan/feature/dashboard/dashboard_view.dart';
 import 'package:tutors_plan/feature/login/view/login_view.dart';
 import 'package:tutors_plan/main.dart';
 part 'app_routes.dart';

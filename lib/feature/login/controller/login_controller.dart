@@ -4,6 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/feature/domain/login_body.dart';
 import 'package:tutors_plan/feature/login/data/repository/login_repository.dart';
+import 'package:tutors_plan/main.dart';
 
 class LoginController extends GetxController{
   TextEditingController emailController = TextEditingController();
@@ -18,6 +19,7 @@ class LoginController extends GetxController{
       validationCheck();
       await insertLoginBody();
       //final response = await loginRepository.fetchLoginResponse(loginBody);
+      preferences.setInt('initScreen', 1);
     } catch (e) {
       SmartDialog.dismiss();
       SmartDialog.showToast('Login failed: $e');

@@ -113,11 +113,13 @@ class _RegisterViewState extends State<RegisterView> {
           KField(
             headLine: 'Password',
             hintText: 'Enter your password',
-            controller: registerController.nameController,
+            controller: registerController.passwordController,
             onTap: null,
             icon: Icons.lock_outlined,
             keyboardType: TextInputType.emailAddress,
             errorText: null,
+            showPassIcon: true,
+
           ),
         ],
       ),
