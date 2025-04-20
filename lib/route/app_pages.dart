@@ -8,8 +8,8 @@ class AppPages{
   AppPages._();
 
   static String INITIAL = isInitScreen == 0 || isInitScreen == null
-      ? Routes.loginView
-      : Routes.dashboardView;
+      ? RouteNames.loginView
+      : RouteNames.dashboardView;
   static final routes =[
     GetPage(
       name:_Paths.dashboardView,
