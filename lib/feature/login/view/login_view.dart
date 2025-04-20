@@ -84,8 +84,8 @@ class _LoginViewState extends State<LoginView> {
               headLine: 'Password',
               hintText: 'Enter your password',
               controller: loginController.passwordController,
-              errorText: loginController.passError.value,
-              onChanged: (_) => loginController.passError.value = Validators.validatePassword(loginController.passwordController.text) ?? '',
+              errorText: loginController.passwordError.value,
+              onChanged: (_) => loginController.passwordError.value = Validators.validatePassword(loginController.passwordController.text) ?? '',
               onTap: null,
               icon: Icons.lock_outline,
               keyboardType: TextInputType.emailAddress,
@@ -93,7 +93,9 @@ class _LoginViewState extends State<LoginView> {
             );
           }),
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
-          Button2(onClick: (){}, title: 'Login'),
+          Button2(onClick: (){
+            loginController.login();
+          }, title: 'Login'),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
