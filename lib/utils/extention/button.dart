@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
+import 'package:tutors_plan/const/color_utils.dart';
 
 class Button2 extends StatelessWidget {
   final VoidCallback onClick;
@@ -75,7 +76,7 @@ class Button2 extends StatelessWidget {
         margin: const EdgeInsets.only(right: 2),
         padding: padding ?? EdgeInsets.symmetric(vertical: ResponsiveScale.of(context).hp(1)),
         decoration: ShapeDecoration(
-          color: const Color(0xFF6A5AE0),
+          color: ColorUtils.competeBorderColor,
           shape: RoundedRectangleBorder(
             side: const BorderSide(width: 1, color: Color(0xFF3A327B)),
             borderRadius: BorderRadius.circular(29),
