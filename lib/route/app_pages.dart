@@ -9,10 +9,10 @@ class AppPages{
 
   static String INITIAL = isInitScreen == 0 || isInitScreen == null
       ? Routes.loginView
-      : Routes.homeScreen;
+      : Routes.dashboardView;
   static final routes =[
     GetPage(
-      name:_Paths.homeScreen,
+      name:_Paths.dashboardView,
       page: () => const DashboardView(),
       transition: Transition.leftToRight,
       curve: Curves.fastOutSlowIn,
