@@ -1,6 +1,6 @@
 part of 'app_pages.dart';
-abstract class Routes {
-  Routes._();
+abstract class RouteNames {
+  RouteNames._();
   static const dashboardView = _Paths.dashboardView;
   static const loginView = _Paths.loginView;
 }
