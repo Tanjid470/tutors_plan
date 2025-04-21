@@ -7,6 +7,7 @@ import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tutors_plan/const/shared_pref_const.dart';
 import 'package:tutors_plan/const/shared_preference.dart';
+import 'package:tutors_plan/utils/network/url_helper.dart';
 
 class ApiClient {
   static Future<dynamic> get(String url, dynamic parameters, bool isJWTRequired, {bool isGeoCoding = false, Map<String, String>? headers}) async {
@@ -78,7 +79,7 @@ class ApiClient {
       token = await Prefs.getValue(SharedPreferenceConstant.jwt);
     }
     Dio dio = Dio(await _options(token, isJWTRequired, isGeoCoding, headers));
-
+    isProduction(dio);
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (IO.HttpClient client) {
       client.badCertificateCallback = (IO.X509Certificate cert, String host, int port) => true;
       return client;

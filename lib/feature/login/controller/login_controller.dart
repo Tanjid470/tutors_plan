@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:tutors_plan/feature/domain/login_body.dart';
+import 'package:tutors_plan/feature/login/data/login_response_body.dart';
 import 'package:tutors_plan/feature/login/data/repository/login_repository.dart';
+import 'package:tutors_plan/feature/login/domain/login_body.dart';
 import 'package:tutors_plan/main.dart';
 
 class LoginController extends GetxController{
@@ -16,10 +17,12 @@ class LoginController extends GetxController{
 
   Future<void> login() async{
     try {
-      validationCheck();
+      //validationCheck();
       await insertLoginBody();
-      //final response = await loginRepository.fetchLoginResponse(loginBody);
-      preferences.setInt('initScreen', 1);
+      LoginResponseBody? response = await loginRepository.fetchLoginResponse(loginBody);
+      if (response?.status == 'SUCCESS') {
+        preferences.setInt('initScreen', 1);
+      }
     } catch (e) {
       SmartDialog.dismiss();
       SmartDialog.showToast('Login failed: $e');
