@@ -15,7 +15,7 @@ class _DashboardViewState extends State<DashboardView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: null,
+        leading: SizedBox(),
         title: Text('Dashboard'),
         actions: [
           IconButton(
