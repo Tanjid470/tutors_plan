@@ -94,7 +94,7 @@ class _LoginViewState extends State<LoginView> {
           }),
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
           Button2(onClick: (){
-            loginController.login();
+            loginController.login(context);
           }, title: 'Login'),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,

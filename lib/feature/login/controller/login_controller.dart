@@ -6,6 +6,7 @@ import 'package:tutors_plan/feature/login/data/login_response_body.dart';
 import 'package:tutors_plan/feature/login/data/repository/login_repository.dart';
 import 'package:tutors_plan/feature/login/domain/login_body.dart';
 import 'package:tutors_plan/main.dart';
+import 'package:tutors_plan/route/app_pages.dart';
 
 class LoginController extends GetxController{
   TextEditingController emailController = TextEditingController();
@@ -15,13 +16,14 @@ class LoginController extends GetxController{
   LoginRepository loginRepository = LoginRepository();
   LoginBody loginBody = LoginBody();
 
-  Future<void> login() async{
+  Future<void> login(BuildContext context) async{
     try {
       //validationCheck();
       await insertLoginBody();
       LoginResponseBody? response = await loginRepository.fetchLoginResponse(loginBody);
       if (response?.status == 'SUCCESS') {
         preferences.setInt('initScreen', 1);
+        Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
       }
     } catch (e) {
       SmartDialog.dismiss();
