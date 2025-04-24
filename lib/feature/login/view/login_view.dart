@@ -12,7 +12,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
 import 'package:tutors_plan/feature/register/view/register_view.dart';
-import 'package:tutors_plan/utils/extention/button.dart';
+import 'package:tutors_plan/common_widget/button.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 
 
@@ -51,7 +51,7 @@ class _LoginViewState extends State<LoginView> {
             ? LoadingViewTransparent(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                color: ColorUtils.baseColor,
+                color: ColorUtils.baseBlueColor,
             ): SizedBox(); // or any other widget when the state doesn't match
           })
 
