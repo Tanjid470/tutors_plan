@@ -78,12 +78,12 @@ class Button2 extends StatelessWidget {
         decoration: ShapeDecoration(
           color: ColorUtils.competeBorderColor,
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 1, color: Color(0xFF3A327B)),
+            side: BorderSide(width: 1, color: ColorUtils.baseBlueColorShade700),
             borderRadius: BorderRadius.circular(29),
           ),
-          shadows: const [
+          shadows: [
             BoxShadow(
-              color: Color(0xFF3A327B),
+              color: ColorUtils.baseBlueColorShade700,
               blurRadius: 0,
               offset: Offset(3, 3),
               spreadRadius: 0,
