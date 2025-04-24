@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/config/font_constants.dart';
@@ -66,6 +67,12 @@ class _LoginViewState extends State<LoginView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset(
+            'assets/images/tutorsPlan_logo.png',
+            height: MediaQuery.of(context).size.height * 0.25,
+            width: MediaQuery.of(context).size.height * 0.5,
+            fit: BoxFit.contain,
+          ),
           Obx((){
             return KField(
               headLine: 'Email Address',
