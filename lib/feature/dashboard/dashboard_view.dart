@@ -11,47 +11,28 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  late final WebViewController _controller;
-  bool isLoading = true; // <-- Add loading flag
+
 
   @override
   void initState() {
     super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (String url) {
-            setState(() {
-              isLoading = true;
-            });
-          },
-          onPageFinished: (String url) {
-            setState(() {
-              isLoading = false;
-            });
-          },
-          onWebResourceError: (error) {
-            setState(() {
-              isLoading = false;
-            });
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse('https://games.tutorsplan.com'));
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            WebViewWidget(controller: _controller),
-            if (isLoading)
-              const Center(
-                child: CircularProgressIndicator(),
-              ),
+        appBar: AppBar(
+          centerTitle: true,
+          leading: SizedBox(),
+          title: Text('Dashboard'),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await preferences.clear();
+                Navigator.pushReplacementNamed(context, RouteNames.loginView);
+              }
+              , icon: Icon(Icons.logout,color: Colors.red,),)
           ],
         ),
       ),
