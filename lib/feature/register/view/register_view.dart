@@ -5,7 +5,7 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/register/controller/register_controller.dart';
-import 'package:tutors_plan/utils/extention/button.dart';
+import 'package:tutors_plan/common_widget/button.dart';
 
 
 class RegisterView extends StatefulWidget {
@@ -59,7 +59,7 @@ class _RegisterViewState extends State<RegisterView> {
                               ' TutorsPlan',
                               style: TextStyle(
                                   fontSize: TextSize.font24(context),
-                                  color: ColorUtils.baseColor,
+                                  color: ColorUtils.baseBlueColor,
                                   fontFamily: 'HindSiliguri',
                                   fontWeight: FontWeight.bold),
                             ),
