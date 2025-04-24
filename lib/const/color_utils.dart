@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 
 class ColorUtils{
   ColorUtils._();
-  static Color baseColor = Colors.orange.shade500;
-  static Color baseColorShadow = const Color(0xffE0C6FD);
-  static Color blackColor = const Color(0xff213346);
-  static Color greyColor = const Color(0xffD0CDCE);
-  static Color white = Colors.white;
-  static Color blueGrey = Colors.blueGrey;
+  static Color baseBlueColor = Color(0xff209bc4);
+  static Color baseBlueColorShade100 = Color(0xff1f99c3);
+  static Color baseBlueColorShade300 = Color(0xff1e91ba);
+  static Color baseBlueColorShade500 = Color(0xff1a7fa7);
+  static Color baseBlueColorShade700 = Color(0xff156d94);
+  static Color baseBlueColorShade900 = Color(0xff0e4d71);
+
+  static Color baseOrangeColor = Color(0xfff26410);
+  static Color basePurpleColor = Color(0xff8c00db);
+
+  static Color grey300 = Colors.grey.shade300;
+
   static Color inputBorderColor = Colors.grey.shade300;
   static Color errorBorderColor = Colors.red;
-  static Color competeBorderColor = Colors.orange.shade500;
+  static Color competeBorderColor = baseBlueColor;
 }
