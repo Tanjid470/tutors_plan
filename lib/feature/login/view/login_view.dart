@@ -4,10 +4,12 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
+import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/config/size_config.dart';
 import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
 import 'package:tutors_plan/feature/register/view/register_view.dart';
 import 'package:tutors_plan/utils/extention/button.dart';
@@ -26,13 +28,34 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginController.emailController.text = 'tutorsplancorp@gmail.com';
+    loginController.passwordController.text = 'superadmin@2025';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: _view(),
-          )
+      child: Stack(
+        children: [
+          Scaffold(
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: _view(),
+              )
+          ),
+          Obx(() {
+            return loginController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
+            ? LoadingViewTransparent(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: ColorUtils.baseColor,
+            ): SizedBox(); // or any other widget when the state doesn't match
+          })
+
+        ],
       ),
     );
   }
