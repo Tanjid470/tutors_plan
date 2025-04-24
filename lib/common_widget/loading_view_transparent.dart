@@ -18,7 +18,7 @@ class LoadingViewTransparent extends StatelessWidget {
               child: CircularProgressIndicator(
                   backgroundColor: color ?? Color(0xfff8f8f8),
                   valueColor:
-                  AlwaysStoppedAnimation<Color>(ColorUtils.greyColor))
+                  AlwaysStoppedAnimation<Color>(ColorUtils.grey300))
           )),
     );
   }
