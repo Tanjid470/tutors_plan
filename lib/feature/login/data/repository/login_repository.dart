@@ -8,15 +8,17 @@ import 'package:tutors_plan/utils/network/api_client.dart';
 class LoginRepository {
   Dio _dio = Dio();
 
-  Future<LoginResponseBody?> fetchLoginResponse(LoginBody loginBody) async {
+  Future<(LoginResponseBody?, Map<String, dynamic>?)> fetchLoginResponse(LoginBody loginBody) async {
     try {
       _dio = await ApiClient.dioClient(false);
-      var data = await _dio.post(UrlConst.loginEndpoint, data: loginBody.toJson());
-      if (data.data != null) {
-        return LoginResponseBody.fromJson(data.data);
-      }
-      else {
-        throw Exception(data.data);
+      var response = await _dio.post(UrlConst.loginEndpoint, data: loginBody.toJson());
+
+      if (response.data != null) {
+        var loginResponse = LoginResponseBody.fromJson(response.data);
+        var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
+        return (loginResponse, headers);
+      } else {
+        throw Exception(response.data);
       }
     } catch (e) {
       throw Exception(e);
