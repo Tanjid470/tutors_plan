@@ -2,15 +2,22 @@ import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/feature/dashboard/dashboard_view.dart';
 import 'package:tutors_plan/feature/login/view/login_view.dart';
+import 'package:tutors_plan/feature/onboard/onboard_view.dart';
 import 'package:tutors_plan/main.dart';
 part 'app_routes.dart';
 class AppPages{
   AppPages._();
 
   static String INITIAL = isInitScreen == 0 || isInitScreen == null
-      ? RouteNames.loginView
+      ? RouteNames.onboardView
       : RouteNames.dashboardView;
   static final routes =[
+    GetPage(
+      name:_Paths.onboardView,
+      page: () => const OnboardingView(),
+      transition: Transition.leftToRight,
+      curve: Curves.fastOutSlowIn,
+    ),
     GetPage(
       name:_Paths.dashboardView,
       page: () => const DashboardView(),
