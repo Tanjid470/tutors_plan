@@ -191,10 +191,6 @@ class _KFieldState extends State<KField> {
     );
   }
 
-  Color _prefixColor() {
-    return widget.errorText == '' && (widget.controller?.value.text ?? '').isNotEmpty ? ColorUtils.competeBorderColor : ColorUtils.inputBorderColor;
-  }
-
   Widget _suffixIcon() {
     return GestureDetector(
         onTap: () {

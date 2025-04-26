@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/config/font_constants.dart';
@@ -79,7 +80,9 @@ class _RegisterViewState extends State<RegisterView> {
       ),
       floatingActionButton: SafeArea(child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Button2(onClick: () {  }, title: 'Register',),
+        child: Button2(onClick: () {
+          SmartDialog.showToast('not implemented yet');
+        }, title: 'Register',),
       )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

@@ -1,13 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
-import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
-import 'package:tutors_plan/config/size_config.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
@@ -120,6 +116,10 @@ class _LoginViewState extends State<LoginView> {
               icon: Icons.lock_outline,
               keyboardType: TextInputType.emailAddress,
               showPassIcon: true,
+              forgotPass: true,
+              forgotPassOntap: (){
+                SmartDialog.showToast('not implemented yet');
+              },
             );
           }),
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
