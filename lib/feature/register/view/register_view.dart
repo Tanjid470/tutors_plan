@@ -119,7 +119,6 @@ class _RegisterViewState extends State<RegisterView> {
             keyboardType: TextInputType.emailAddress,
             errorText: null,
             showPassIcon: true,
-
           ),
         ],
       ),
