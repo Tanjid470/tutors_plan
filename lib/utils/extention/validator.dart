@@ -68,7 +68,7 @@ mixin Validators{
     if (value == null || value.isEmpty) {
       return 'first name is Required';
     }
-    else if (value.length <= 3){
+    else if (value.length < 3){
       return 'first name must contain at least 3 characters!';
     }
     return '';
