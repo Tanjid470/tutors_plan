@@ -24,7 +24,10 @@ class LoginController extends GetxController{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     //validationCheck();
     await insertLoginBody();
-    LoginResponseBody? response = await loginRepository.fetchLoginResponse(loginBody);
+    var (response, headers) = await loginRepository.fetchLoginResponse(loginBody);
+    // headers?.forEach((key, value) {
+    //   debugPrint('Header: $key => $value');
+    // });
     if (response?.status == 'SUCCESS') {
       preferences.setInt('initScreen', 1);
       Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
