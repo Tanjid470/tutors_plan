@@ -14,12 +14,12 @@ class LoginRepository {
       var data = await _dio.post(UrlConst.loginEndpoint, data: loginBody.toJson());
       if (data.data != null) {
         return LoginResponseBody.fromJson(data.data);
-      } else {
+      }
+      else {
         throw Exception(data.data);
       }
     } catch (e) {
       throw Exception(e);
     }
   }
-
 }
