@@ -115,7 +115,8 @@ class _OnboardingViewState extends State<OnboardingView> {
                             style: customTextStyle(
                               context,
                               fontSize: TextSize.font24(context),
-                              color: ColorUtils.basePurpleColor
+                              color: ColorUtils.black87,
+                              fontWeight: FontWeight.bold
                             ),
                             textAlign: TextAlign.center,
                           ),
