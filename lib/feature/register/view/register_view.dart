@@ -153,6 +153,7 @@ class _RegisterViewState extends State<RegisterView> {
           registerController.passwordError.value = 'Please enter password';
           return;
         }
+        registerController.registerAccount(context);
         SmartDialog.showToast('not implemented yet');
 
       }, title: 'Register',),
