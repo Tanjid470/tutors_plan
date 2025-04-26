@@ -64,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        appBar(),
+        //appBar(),
         Expanded(child: _form()),
         //tosAndPp(),
       ],
