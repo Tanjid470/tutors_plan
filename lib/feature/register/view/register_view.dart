@@ -7,6 +7,7 @@ import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/register/controller/register_controller.dart';
 import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/utils/extention/validator.dart';
 
 
 class RegisterView extends StatefulWidget {
@@ -95,35 +96,47 @@ class _RegisterViewState extends State<RegisterView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 10,
         children: [
-          KField(
-            headLine: 'Name',
-            isRequiredField: true,
-            hintText: 'Enter your name',
-            controller: registerController.nameController,
-            onTap: null,
-            icon: Icons.person_2_outlined,
-            keyboardType: TextInputType.emailAddress,
-            errorText: null,
-          ),
-          KField(
-            headLine: 'Email',
-            hintText: 'Enter your email',
-            controller: registerController.emailController,
-            onTap: null,
-            icon: Icons.email_outlined,
-            keyboardType: TextInputType.emailAddress,
-            errorText: null,
-          ),
-          KField(
-            headLine: 'Password',
-            hintText: 'Enter your password',
-            controller: registerController.passwordController,
-            onTap: null,
-            icon: Icons.lock_outlined,
-            keyboardType: TextInputType.emailAddress,
-            errorText: null,
-            showPassIcon: true,
-          ),
+          Obx((){
+            return KField(
+              headLine: 'Name',
+              isRequiredField: true,
+              hintText: 'Enter your name',
+              controller: registerController.nameController,
+              onTap: null,
+              icon: Icons.person_2_outlined,
+              keyboardType: TextInputType.emailAddress,
+              errorText: registerController.nameError.value,
+              onChanged: (_) => registerController.nameError.value = Validators.firstNameValidation(registerController.nameController.text) ?? '',
+            );
+          }),
+          Obx((){
+            return KField(
+              headLine: 'Email',
+              hintText: 'Enter your email',
+              controller: registerController.emailController,
+              onTap: null,
+              icon: Icons.email_outlined,
+              keyboardType: TextInputType.emailAddress,
+              errorText: registerController.emailError.value,
+              onChanged: (_) => registerController.emailError.value = Validators.validateEmail(registerController.emailController.text) ?? '',
+            );
+          }),
+          Obx((){
+            return KField(
+              headLine: 'Password',
+              hintText: 'Enter your password',
+              controller: registerController.passwordController,
+              onTap: null,
+              icon: Icons.lock_outlined,
+              keyboardType: TextInputType.emailAddress,
+              errorText: registerController.passwordError.value,
+              onChanged: (_) => registerController.passwordError.value = Validators.validatePassword(registerController.passwordController.text) ?? '',
+              showPassIcon: true,
+            );
+          }),
+
+
+
         ],
       ),
     );
