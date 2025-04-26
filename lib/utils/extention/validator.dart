@@ -46,10 +46,10 @@ mixin Validators{
 
   static String? validateName(String? value){
     if (value == null || value.isEmpty) {
-      return 'username is Required';
+      return 'This field is Required';
     }
     else if (value.length <= 2){
-      return 'Name must contain at least 3 characters!';
+      return 'Must contain at least 3 characters!';
     }
     return '';
   }
@@ -97,6 +97,15 @@ mixin Validators{
     }
     else if (value.length <= 10){
       return 'Description must contain at least 10 characters!';
+    }
+    return '';
+  }
+
+  static String validatePhone(String text) {
+    if (text.isEmpty) {
+      return 'Phone number is required';
+    } else if (!RegExp(r'^(?:\+?88)?01[3-9]\d{8}$').hasMatch(text)) {
+      return 'Enter a valid Bangladeshi phone number';
     }
     return '';
   }
