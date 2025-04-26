@@ -33,26 +33,24 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
-        children: [
-          Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: _view(),
-              )
-          ),
-          Obx(() {
-            return loginController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
-            ? LoadingViewTransparent(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                color: ColorUtils.baseBlueColor,
-            ): SizedBox(); // or any other widget when the state doesn't match
-          })
+    return Stack(
+      children: [
+        Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: _view(),
+            )
+        ),
+        Obx(() {
+          return loginController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
+          ? LoadingViewTransparent(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: ColorUtils.baseBlueColor,
+          ): SizedBox(); // or any other widget when the state doesn't match
+        })
 
-        ],
-      ),
+      ],
     );
   }
 
@@ -87,7 +85,7 @@ class _LoginViewState extends State<LoginView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/images/tutorsPlan_logo.png',
+            'assets/images/tutorsPlan_logo_title.png',
             height: MediaQuery.of(context).size.height * 0.25,
             width: MediaQuery.of(context).size.height * 0.5,
             fit: BoxFit.contain,
@@ -124,6 +122,14 @@ class _LoginViewState extends State<LoginView> {
           }),
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
           Button2(onClick: (){
+            if (loginController.emailController.text.isEmpty) {
+              loginController.emailError.value = 'Please enter email';
+              return;
+            }
+            if (loginController.passwordController.text.isEmpty) {
+              loginController.passwordError.value = 'Please enter password';
+              return;
+            }
             loginController.login(context);
           }, title: 'Login'),
           Row(
@@ -145,49 +151,4 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-  //
-  // Widget tosAndPp() {
-  //   return RichText(
-  //     textAlign: TextAlign.center,
-  //     text: TextSpan(
-  //       text: 'By continuing, you agree to the ',
-  //       style: TextStyle(
-  //         color: Colors.black54,
-  //         fontSize: TextSize.font16(context),
-  //       ),
-  //       children: <TextSpan>[
-  //         TextSpan(
-  //             text: 'Terms of Service',
-  //             style: TextStyle(
-  //               color: ColorUtils.primary900,
-  //               fontSize: TextSize.font16(context),
-  //             ),
-  //             recognizer: TapGestureRecognizer()
-  //               ..onTap = () {
-  //                 _launchURL(termsAndCondition);
-  //               }),
-  //         TextSpan(
-  //           text: ' & ',
-  //           style: TextStyle(
-  //             color: Colors.black,
-  //             fontSize: TextSize.font16(context),
-  //           ),
-  //         ),
-  //         TextSpan(
-  //             text: 'Privacy Policy',
-  //             style: TextStyle(
-  //               color: ColorUtils.primary900,
-  //               fontSize: TextSize.font16(context),
-  //             ),
-  //             recognizer: TapGestureRecognizer()..onTap = () => _launchURL(privacyPolicy)),
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // _launchURL(url) async {
-  //   if (!await launchUrl(url)) {
-  //     throw Exception('Could not launch $url');
-  //   }
-  // }
 }
