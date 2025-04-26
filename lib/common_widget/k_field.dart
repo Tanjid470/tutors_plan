@@ -167,7 +167,11 @@ class _KFieldState extends State<KField> {
   Widget _prefixIcon() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Icon(widget.icon),
+      child: Icon(widget.icon,
+          color: (widget.controller?.text ?? '').isNotEmpty
+              ? ColorUtils.baseBlueColor
+              : ColorUtils.grey300,
+      ),
     );
   }
 
