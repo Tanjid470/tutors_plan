@@ -20,4 +20,5 @@ class RegisterController extends GetxController{
       print("Controller disposed");
     }
   }
+
 }
