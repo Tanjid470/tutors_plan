@@ -7,6 +7,7 @@ import 'package:tutors_plan/const/input_border_style.dart';
 
 class KField extends StatefulWidget {
   final TextEditingController? controller;
+  final bool? isRequiredField;
   final errorText;
   final VoidCallback? onTap;
   final EdgeInsetsGeometry? contentPadding;
@@ -37,6 +38,7 @@ class KField extends StatefulWidget {
   const KField({
     super.key,
     this.controller,
+    this.isRequiredField,
     this.hintText,
     this.icon,
     this.textColor,
@@ -153,9 +155,23 @@ class _KFieldState extends State<KField> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             if (widget.headLine != null)
-              Text(
-                widget.headLine!,
-                style: TextStyle(fontSize: TextSize.font14(context), fontWeight: FontWeight.w500),
+              Row(
+                children: [
+                  Text(
+                    widget.headLine!,
+                    style: TextStyle(fontSize: TextSize.font14(context), fontWeight: FontWeight.w500),
+                  ),
+                  if (widget.isRequiredField != null && true)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 3.0),
+                    child: Text('*',
+                      style: TextStyle(
+                          fontSize: TextSize.font14(context),
+                          fontWeight: FontWeight.w500,
+                          color: ColorUtils.errorBorderColor),
+                    ),
+                  ),
+                ],
               ),
           ],
         ),
