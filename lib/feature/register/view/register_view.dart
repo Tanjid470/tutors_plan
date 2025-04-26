@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
+import 'package:tutors_plan/common_widget/toggle_switch_tile.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
@@ -79,85 +80,156 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
       ),
-      floatingActionButton: registerButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(top: TextSize.dynamicGap2(context)),
+        height: TextSize.dynamicGap10(context),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade200,
+                offset: Offset(0, -3),
+                blurRadius: 30,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: registerButton()
+      ),
+    //  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
     );
   }
 
   Widget allDataInputField() {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 10,
-        children: [
-          Obx((){
-            return KField(
-              headLine: 'Name',
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 10,
+          children: [
+            Obx(() => KField(
+              headLine: 'Username',
+              hintText: 'Enter your username',
               isRequiredField: true,
-              hintText: 'Enter your name',
-              controller: registerController.nameController,
+              controller: registerController.userNameController,
               onTap: null,
-              icon: Icons.person_2_outlined,
-              keyboardType: TextInputType.emailAddress,
-              errorText: registerController.nameError.value,
-              onChanged: (_) => registerController.nameError.value = Validators.firstNameValidation(registerController.nameController.text),
-            );
-          }),
-          Obx((){
-            return KField(
+              icon: Icons.person_pin,
+              keyboardType: TextInputType.text,
+              errorText: registerController.usernameError.value,
+              onChanged: (_) => registerController.usernameError.value = Validators.validateName(registerController.userNameController.text) ?? '',
+            )),
+            Obx(() => KField(
+              headLine: 'First Name',
+              hintText: 'Enter your first name',
+              controller: registerController.firstNameController,
+              onTap: null,
+              icon: Icons.account_circle_outlined,
+              keyboardType: TextInputType.text,
+              errorText: registerController.firstNameError.value,
+              onChanged: (_) => registerController.firstNameError.value = Validators.firstNameValidation(registerController.firstNameController.text),
+            )),
+            Obx(() => KField(
+              headLine: 'Last Name',
+              hintText: 'Enter your last name',
+              controller: registerController.lastNameController,
+              onTap: null,
+              icon: Icons.person_outline,
+              keyboardType: TextInputType.text,
+              errorText: registerController.lastNameError.value,
+              onChanged: (_) => registerController.lastNameError.value = Validators.lastNameValidation(registerController.lastNameController.text),
+            )),
+            Obx(() => KField(
               headLine: 'Email',
               hintText: 'Enter your email',
+              isRequiredField: true,
               controller: registerController.emailController,
               onTap: null,
               icon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
               errorText: registerController.emailError.value,
               onChanged: (_) => registerController.emailError.value = Validators.validateEmail(registerController.emailController.text) ?? '',
-            );
-          }),
-          Obx((){
-            return KField(
+            )),
+            Obx(() => KField(
+              headLine: 'Phone Number',
+              hintText: 'Enter your phone number',
+              isRequiredField: true,
+              controller: registerController.phoneController,
+              onTap: null,
+              icon: Icons.phone_android_outlined,
+              keyboardType: TextInputType.phone,
+              errorText: registerController.phoneError.value,
+              onChanged: (_) => registerController.phoneError.value = Validators.validatePhone(registerController.phoneController.text) ?? '',
+            )),
+            Obx(() => KField(
               headLine: 'Password',
               hintText: 'Enter your password',
+              isRequiredField: true,
               controller: registerController.passwordController,
               onTap: null,
-              icon: Icons.lock_outlined,
-              keyboardType: TextInputType.emailAddress,
+              icon: Icons.lock_outline,
+              keyboardType: TextInputType.text,
               errorText: registerController.passwordError.value,
               onChanged: (_) => registerController.passwordError.value = Validators.validatePassword(registerController.passwordController.text) ?? '',
               showPassIcon: true,
-            );
-          }),
-
-
-
-        ],
+            )),
+            ToggleSwitchTile(
+                title: 'Account Lock',
+                switchValue: registerController.isAccountLocked),
+            ToggleSwitchTile(
+              title: 'Active or Archive',
+              switchValue: registerController.isActiveOrArchive,
+            ),
+            ToggleSwitchTile(
+              title: 'Email Confirmed',
+              switchValue: registerController.isEmailConfirmed,
+            ),
+            ToggleSwitchTile(
+              title: 'Phone Number Confirmed',
+              switchValue: registerController.isPhoneNumberConfirmed,
+            ),
+            ToggleSwitchTile(
+              title: 'Two Factor Enabled',
+              switchValue: registerController.isTwoFactorEnabled,
+            ),
+            ToggleSwitchTile(
+              title: 'Lockout Enabled',
+              switchValue: registerController.isLockoutEnabled,
+            ),
+          verticalGap(context, 10)
+          ],
+        ),
       ),
     );
   }
 
   Widget registerButton() {
-    return SafeArea(child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Button2(onClick: () {
-        if (registerController.nameController.text.isEmpty) {
-          registerController.nameError.value = 'Please enter name';
-          return;
-        }
-        if (registerController.emailController.text.isEmpty) {
-          registerController.emailError.value = 'Please enter email';
-          return;
-        }
-        if (registerController.passwordController.text.isEmpty) {
-          registerController.passwordError.value = 'Please enter password';
-          return;
-        }
-        registerController.registerAccount(context);
-        SmartDialog.showToast('not implemented yet');
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Button2(onClick: () {
+            if (registerController.userNameController.text.isEmpty) {
+              registerController.usernameError.value = 'Please enter name';
+              return;
+            }
+            if (registerController.emailController.text.isEmpty) {
+              registerController.emailError.value = 'Please enter email';
+              return;
+            }
+            if (registerController.passwordController.text.isEmpty) {
+              registerController.passwordError.value = 'Please enter password';
+              return;
+            }
+            registerController.registerAccount(context);
+            SmartDialog.showToast('not implemented yet');
 
-      }, title: 'Register',),
-    )
+          }, title: 'Register',),
+        ),
+      ],
     );
   }
 
