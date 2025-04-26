@@ -94,6 +94,7 @@ class _RegisterViewState extends State<RegisterView> {
         children: [
           KField(
             headLine: 'Name',
+            isRequiredField: true,
             hintText: 'Enter your name',
             controller: registerController.nameController,
             onTap: null,
