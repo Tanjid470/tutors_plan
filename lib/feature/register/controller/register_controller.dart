@@ -5,8 +5,13 @@ class RegisterController extends GetxController{
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  RxString nameError = ''.obs;
+  RxString emailError = ''.obs;
+  RxString passwordError = ''.obs;
+
+
 
   @override
   void onClose() {
