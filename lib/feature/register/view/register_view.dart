@@ -79,12 +79,7 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
       ),
-      floatingActionButton: SafeArea(child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Button2(onClick: () {
-          SmartDialog.showToast('not implemented yet');
-        }, title: 'Register',),
-      )),
+      floatingActionButton: registerButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -106,7 +101,7 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.person_2_outlined,
               keyboardType: TextInputType.emailAddress,
               errorText: registerController.nameError.value,
-              onChanged: (_) => registerController.nameError.value = Validators.firstNameValidation(registerController.nameController.text) ?? '',
+              onChanged: (_) => registerController.nameError.value = Validators.firstNameValidation(registerController.nameController.text),
             );
           }),
           Obx((){
@@ -141,5 +136,29 @@ class _RegisterViewState extends State<RegisterView> {
       ),
     );
   }
+
+  Widget registerButton() {
+    return SafeArea(child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Button2(onClick: () {
+        if (registerController.nameController.text.isEmpty) {
+          registerController.nameError.value = 'Please enter name';
+          return;
+        }
+        if (registerController.emailController.text.isEmpty) {
+          registerController.emailError.value = 'Please enter email';
+          return;
+        }
+        if (registerController.passwordController.text.isEmpty) {
+          registerController.passwordError.value = 'Please enter password';
+          return;
+        }
+        SmartDialog.showToast('not implemented yet');
+
+      }, title: 'Register',),
+    )
+    );
+  }
+
 
 }
