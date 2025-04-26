@@ -10,13 +10,26 @@ class RegisterController extends GetxController{
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
-  TextEditingController nameController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
-  RxString nameError = ''.obs;
+  RxString usernameError = ''.obs;
+  RxString firstNameError = ''.obs;
+  RxString lastNameError = ''.obs;
   RxString emailError = ''.obs;
+  RxString phoneError = ''.obs;
   RxString passwordError = ''.obs;
+
+  RxBool isActiveOrArchive = true.obs;
+  RxBool isEmailConfirmed = true.obs;
+  RxBool isAccountLocked = true.obs;
+  RxBool isPhoneNumberConfirmed = true.obs;
+  RxBool isTwoFactorEnabled = true.obs;
+  RxBool isLockoutEnabled = true.obs;
 
   RegisterRepository registerRepository = RegisterRepository();
   RegistrationDataBody registerDataBody = RegistrationDataBody();
