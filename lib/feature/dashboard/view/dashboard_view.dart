@@ -14,8 +14,6 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-
-
   @override
   void initState() {
     super.initState();
@@ -216,10 +214,10 @@ class CourseSubplotCard extends StatelessWidget {
         Icon(icon,color: ColorUtils.baseBlueColor,size: TextSize.font12(context),),
         Text(title,
           style: customTextStyle(
-              context,
-              fontSize: TextSize.font12(context),
-              fontWeight: FontWeight.bold,
-              color: ColorUtils.black54
+            context,
+            fontSize: TextSize.font12(context),
+            fontWeight: FontWeight.bold,
+            color: ColorUtils.black54
           ),
         ),
       ],
