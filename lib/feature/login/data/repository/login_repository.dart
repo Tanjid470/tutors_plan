@@ -8,11 +8,10 @@ import 'package:tutors_plan/utils/network/api_result.dart';
 
 class LoginRepository {
   Dio _dio = Dio();
-
   Future<ApiResult<LoginResponseBody>> fetchLoginResponse(LoginBody loginBody) async {
     try {
       _dio = await ApiClient.dioClient(false);
-      Response response = await _dio.post(
+      final response = await _dio.post(
         UrlConst.loginEndpoint,
         data: loginBody.toJson(),
         options: Options(
@@ -20,18 +19,41 @@ class LoginRepository {
         ),
       );
 
-      if (response.statusCode == 200 && response.data != null && response.data is Map<String, dynamic>) {
+      if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
         var loginResponse = LoginResponseBody.fromJson(response.data);
         var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
         return ApiSuccess(loginResponse, headers: headers);
-      } else {
+      }
+      else {
         return ApiError(
           statusCode: response.statusCode,
-          message: response.data.toString(),
+          message: (response.data is Map<String, dynamic>)
+              ? response.data['message']?.toString() ?? 'Unknown Error'
+              : response.data?.toString() ?? 'Unknown Error',
         );
       }
-    } catch (e) {
-      return const ApiError(message: "Network or unexpected error");
+    }
+    catch (e) {
+      if (e is DioException) {
+        final responseData = e.response?.data;
+
+        if (responseData is Map<String, dynamic>) {
+          final message = responseData['message']?.toString() ?? 'Unknown Error';
+          return ApiError(
+            statusCode: e.response?.statusCode ?? 500,
+            message: message,
+          );
+        } else {
+          return ApiError(
+            statusCode: e.response?.statusCode ?? 500,
+            message: responseData?.toString() ?? 'Unknown Error',
+          );
+        }
+      }
+      return const ApiError(
+        statusCode: 500,
+        message: "Network or unexpected error",
+      );
     }
   }
 
