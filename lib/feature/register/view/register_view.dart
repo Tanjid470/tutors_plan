@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/common_widget/toggle_switch_tile.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/register_controller.dart';
 import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/feature/register/view/widget/user_role_card.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 
 
@@ -19,7 +22,12 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterController registerController = Get.put(RegisterController());
-
+  final methods = {
+    'Student': 'assets/svg/graduation_cap.svg',
+    'Tutor': 'assets/svg/graduation_cap.svg',
+    'Gradient': 'assets/svg/graduation_cap.svg',
+  };
+  String? selectedMethod;
 
 
   @override
@@ -174,6 +182,57 @@ class _RegisterViewState extends State<RegisterView> {
               onChanged: (_) => registerController.passwordError.value = Validators.validatePassword(registerController.passwordController.text) ?? '',
               showPassIcon: true,
             )),
+            // Row(
+            //   spacing: 10,
+            //   children: [
+            //     UserRoleCard(
+            //       context: context,
+            //       onTap: () {
+            //         registerController.selectedUserRole.value = 'Teacher';
+            //       },
+            //       color: ColorUtils.baseBlueColorLight,
+            //       title: 'Student',
+            //     ),
+            //     UserRoleCard(
+            //       context: context,
+            //       onTap: () {
+            //         registerController.selectedUserRole.value = 'Student';
+            //       },
+            //       color: ColorUtils.baseOrangeColorLight,
+            //       title: 'Tutor',
+            //     ),
+            //     UserRoleCard(
+            //       context: context,
+            //       onTap: () {
+            //         registerController.selectedUserRole.value = 'Student';
+            //       },
+            //       color: ColorUtils.basePurpleColorLight,
+            //       title: 'Gradient',
+            //     ),
+            //   ],
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              spacing: 10,
+              children: methods.entries.map((entry) {
+                final isSelected = selectedMethod == entry.key;
+                return Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        selectedMethod = entry.key;
+                      });
+                    },
+                    child: UserRoleCard(
+                      context: context,
+                      title: entry.key,
+                      imageUrl: entry.value,
+                      isSelected: isSelected,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
             ToggleSwitchTile(
                 title: 'Account Lock',
                 switchValue: registerController.isAccountLocked),
@@ -197,6 +256,7 @@ class _RegisterViewState extends State<RegisterView> {
               title: 'Lockout Enabled',
               switchValue: registerController.isLockoutEnabled,
             ),
+
           verticalGap(context, 10)
           ],
         ),
