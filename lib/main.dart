@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tutors_plan/feature/dashboard/dashboard_view.dart';
+import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'config/font_constants.dart';
 import 'feature/login/view/login_view.dart';
