@@ -18,4 +18,6 @@ class ColorUtils{
   static Color inputBorderColor = Colors.grey.shade300;
   static Color errorBorderColor = Colors.red;
   static Color competeBorderColor = baseBlueColor;
+
+  static Color successBorderColor = Colors.green;
 }
