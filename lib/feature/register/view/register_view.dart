@@ -10,6 +10,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/register_controller.dart';
 import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/feature/register/domain/user_role.dart';
 import 'package:tutors_plan/feature/register/view/widget/user_role_card.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 
@@ -22,10 +23,25 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterController registerController = Get.put(RegisterController());
-  final methods = {
-    'Student': 'assets/svg/graduation_cap.svg',
-    'Tutor': 'assets/svg/graduation_cap.svg',
-    'Gradient': 'assets/svg/graduation_cap.svg',
+  final Map<String, UserRole> methods = {
+    'Student': UserRole(
+      title: 'Student',
+      imageUrl: 'assets/svg/graduation_cap.svg',
+      selectedColor: ColorUtils.baseBlueColor,
+      bgColor: ColorUtils.baseBlueColorLight,
+    ),
+    'Tutor': UserRole(
+      title: 'Tutor',
+      imageUrl: 'assets/svg/graduation_cap.svg',
+      selectedColor: ColorUtils.baseOrangeColor,
+      bgColor: ColorUtils.baseOrangeColorLight,
+    ),
+    'Gradient': UserRole(
+      title: 'Admin',
+      imageUrl: 'assets/svg/graduation_cap.svg',
+      selectedColor: ColorUtils.basePurpleColor,
+      bgColor: ColorUtils.basePurpleColorLight,
+    ),
   };
   String? selectedMethod;
 
@@ -226,7 +242,9 @@ class _RegisterViewState extends State<RegisterView> {
                     child: UserRoleCard(
                       context: context,
                       title: entry.key,
-                      imageUrl: entry.value,
+                      imageUrl: entry.value.imageUrl,
+                      color: entry.value.selectedColor,
+                      bgColor: entry.value.bgColor,
                       isSelected: isSelected,
                     ),
                   ),
