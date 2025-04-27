@@ -8,6 +8,7 @@ import 'package:tutors_plan/feature/login/data/repository/login_repository.dart'
 import 'package:tutors_plan/feature/login/domain/login_body.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
+import 'package:tutors_plan/utils/network/api_result.dart';
 
 class LoginController extends GetxController{
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
@@ -20,18 +21,37 @@ class LoginController extends GetxController{
   LoginRepository loginRepository = LoginRepository();
   LoginBody loginBody = LoginBody();
 
-  Future<void> login(BuildContext context) async{
+  Future<void> login(BuildContext context) async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-    //validationCheck();
+
     await insertLoginBody();
-    var (response, headers) = await loginRepository.fetchLoginResponse(loginBody);
-    // headers?.forEach((key, value) {
-    //   debugPrint('Header: $key => $value');
-    // });
-    if (response?.status == 'SUCCESS') {
-      preferences.setInt('initScreen', 1);
-      Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
+    final result = await loginRepository.fetchLoginResponse(loginBody);
+
+    if (result is ApiSuccess<LoginResponseBody>) {
+      final loginResponse = result.data;
+      final headers = result.headers;
+
+      if (loginResponse.status == 'SUCCESS') {
+        preferences.setInt('initScreen', 1);
+        Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
+      } else {
+        // Optional: Handle login error even when status == 'FAILED' etc
+        print("Login status failed: ${loginResponse.status}");
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login status failed:${loginResponse.status}')));
+      }
+
+      // If you want to print headers
+      headers?.forEach((key, value) {
+        debugPrint('Header: $key => $value');
+      });
+
+    } else if (result is ApiError) {
+      print("Login failed:");
+      // Show a snackbar or dialog if needed
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login failed:')));
     }
+
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
 
