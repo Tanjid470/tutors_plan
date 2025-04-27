@@ -10,6 +10,7 @@ class UserRoleCard extends StatelessWidget {
     required this.title,
     this.imageUrl,
     this.color,
+    this.bgColor,
     this.isSelected = false,
   });
 
@@ -17,6 +18,7 @@ class UserRoleCard extends StatelessWidget {
   final String title;
   final String? imageUrl;
   final Color? color;
+  final Color? bgColor;
   final bool isSelected;
 
   @override
@@ -25,7 +27,7 @@ class UserRoleCard extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: isSelected ? color ?? ColorUtils.baseBlueColor : Colors.white,
+        color: isSelected ? color : bgColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -35,13 +37,14 @@ class UserRoleCard extends StatelessWidget {
             imageUrl ?? 'assets/svg/graduation_cap.svg',
             width: 30,
             height: 30,
+            color: isSelected ? Colors.white : Colors.black87,
           ),
           Text(
             title,
             style: customTextStyle(
               context,
               fontSize: TextSize.font18(context),
-              color: ColorUtils.black,
+              color: isSelected ? Colors.white : ColorUtils.black,
               fontWeight: FontWeight.bold,
             ),
           )
