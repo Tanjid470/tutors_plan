@@ -23,7 +23,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterController registerController = Get.put(RegisterController());
-  final Map<String, UserRole> methods = {
+  final Map<String, UserRole> userRoleTypeList = {
     'Student': UserRole(
       title: 'Student',
       imageUrl: 'assets/svg/graduation_cap.svg',
@@ -130,7 +130,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
             Obx(() => KField(
@@ -198,39 +198,18 @@ class _RegisterViewState extends State<RegisterView> {
               onChanged: (_) => registerController.passwordError.value = Validators.validatePassword(registerController.passwordController.text) ?? '',
               showPassIcon: true,
             )),
-            // Row(
-            //   spacing: 10,
-            //   children: [
-            //     UserRoleCard(
-            //       context: context,
-            //       onTap: () {
-            //         registerController.selectedUserRole.value = 'Teacher';
-            //       },
-            //       color: ColorUtils.baseBlueColorLight,
-            //       title: 'Student',
-            //     ),
-            //     UserRoleCard(
-            //       context: context,
-            //       onTap: () {
-            //         registerController.selectedUserRole.value = 'Student';
-            //       },
-            //       color: ColorUtils.baseOrangeColorLight,
-            //       title: 'Tutor',
-            //     ),
-            //     UserRoleCard(
-            //       context: context,
-            //       onTap: () {
-            //         registerController.selectedUserRole.value = 'Student';
-            //       },
-            //       color: ColorUtils.basePurpleColorLight,
-            //       title: 'Gradient',
-            //     ),
-            //   ],
-            // ),
+            Text('Choose your role',
+                style: customTextStyle(
+                  context,
+                  fontSize: TextSize.font18(context),
+                  color: ColorUtils.black,
+                  fontWeight: FontWeight.w500,
+                )
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               spacing: 10,
-              children: methods.entries.map((entry) {
+              children: userRoleTypeList.entries.map((entry) {
                 final isSelected = selectedMethod == entry.key;
                 return Expanded(
                   child: InkWell(
