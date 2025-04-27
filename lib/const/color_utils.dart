@@ -29,9 +29,13 @@ class ColorUtils{
   static Color basePurpleColorShade700 = Color(0xff8e1bc2);
   static Color basePurpleColorShade900 = Color(0xff70198f);
 
+  static Color grey = Colors.grey;
   static Color grey300 = Colors.grey.shade300;
-  static Color black87 = Colors.black87;
+
   static Color black = Colors.black;
+  static Color black54 = Colors.black54;
+  static Color black87 = Colors.black87;
+
 
   static Color inputBorderColor = Colors.grey.shade300;
   static Color errorBorderColor = Colors.red;
