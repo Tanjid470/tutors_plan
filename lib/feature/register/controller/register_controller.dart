@@ -31,6 +31,8 @@ class RegisterController extends GetxController{
   RxBool isTwoFactorEnabled = true.obs;
   RxBool isLockoutEnabled = true.obs;
 
+  RxString selectedUserRole = ''.obs;
+
   RegisterRepository registerRepository = RegisterRepository();
   RegistrationDataBody registerDataBody = RegistrationDataBody();
   @override
