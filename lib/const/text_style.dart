@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 
-TextStyle whiteText(double fontSize){
+TextStyle whiteText(double fontSize,{fontWeight}){
   return  TextStyle(
       fontSize: fontSize,
-      fontWeight: FontWeight.w700,
+      fontWeight: fontWeight ?? FontWeight.w700,
       color:Colors.white
   );
 }
