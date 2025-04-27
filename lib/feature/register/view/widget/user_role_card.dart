@@ -45,7 +45,7 @@ class UserRoleCard extends StatelessWidget {
               context,
               fontSize: TextSize.font18(context),
               color: isSelected ? Colors.white : ColorUtils.black,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
             ),
           )
         ],
