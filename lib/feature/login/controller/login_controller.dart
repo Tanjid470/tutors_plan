@@ -34,10 +34,10 @@ class LoginController extends GetxController{
       final headers = result.headers;
       if (loginResponse.status == 'SUCCESS') {
         preferences.setInt('initScreen', 1);
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',color: ColorUtils.successBorderColor));
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
         Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login status failed:${loginResponse.status}',color: ColorUtils.errorBorderColor));
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login status failed:',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
       }
       headers?.forEach((key, value) {
         debugPrint('Header: $key => $value');
@@ -46,7 +46,7 @@ class LoginController extends GetxController{
     else if (result is ApiError) {
       final apiError = result as ApiError;
       ScaffoldMessenger.of(context).showSnackBar(
-          customSnackBar('Login failed:${apiError.message}',color: ColorUtils.errorBorderColor)
+          customSnackBar('Login failed:',context,subtitle: apiError.message,color: ColorUtils.errorSnackBarColor)
       );
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
