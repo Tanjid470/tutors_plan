@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
+import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/data/login_response_body.dart';
 import 'package:tutors_plan/feature/login/data/repository/login_repository.dart';
@@ -30,28 +32,23 @@ class LoginController extends GetxController{
     if (result is ApiSuccess<LoginResponseBody>) {
       final loginResponse = result.data;
       final headers = result.headers;
-
       if (loginResponse.status == 'SUCCESS') {
         preferences.setInt('initScreen', 1);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',color: ColorUtils.successBorderColor));
         Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
       } else {
-        // Optional: Handle login error even when status == 'FAILED' etc
-        print("Login status failed: ${loginResponse.status}");
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login status failed:${loginResponse.status}')));
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login status failed:${loginResponse.status}',color: ColorUtils.errorBorderColor));
       }
-
-      // If you want to print headers
       headers?.forEach((key, value) {
         debugPrint('Header: $key => $value');
       });
-
-    } else if (result is ApiError) {
-      print("Login failed:");
-      // Show a snackbar or dialog if needed
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login failed:')));
     }
-
+    else if (result is ApiError) {
+      final apiError = result as ApiError;
+      ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar('Login failed:${apiError.message}',color: ColorUtils.errorBorderColor)
+      );
+    }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
 
