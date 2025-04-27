@@ -18,7 +18,6 @@ class LoginRepository {
           validateStatus: (status) => status != null && status < 500,
         ),
       );
-
       if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
         var loginResponse = LoginResponseBody.fromJson(response.data);
         var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
