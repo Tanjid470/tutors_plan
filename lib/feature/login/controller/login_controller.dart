@@ -35,7 +35,7 @@ class LoginController extends GetxController{
       if (loginResponse.status == 'SUCCESS') {
         preferences.setInt('initScreen', 1);
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
-        Navigator.pushReplacementNamed(context, RouteNames.dashboardView);
+        Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login status failed:',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
       }
