@@ -48,13 +48,13 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             right: 0,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.06,
-              decoration: const BoxDecoration(
+              decoration:  BoxDecoration(
                 color: Colors.transparent,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black54,
+                    color: Colors.grey.shade400,
                     spreadRadius: 20,
-                    blurRadius: 50,
+                    blurRadius: 100,
                     offset: Offset(0, -5),
                   ),
                 ],
@@ -104,7 +104,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
             iconSize: TextSize.font36(context),
             selectedFontSize: TextSize.font14(context),
             selectedItemColor: Colors.white,
-            backgroundColor: ColorUtils.grey300,
+            backgroundColor: Colors.grey.shade50,
             onTap: onTapped,
           ),
         ],
