@@ -41,6 +41,6 @@ class ColorUtils{
   static Color errorBorderColor = Colors.red;
   static Color competeBorderColor = baseBlueColor;
 
-  static Color successSnackBarColor = Colors.green.shade200;
-  static Color errorSnackBarColor = Colors.red.shade200;
+  static Color successSnackBarColor = Colors.green.shade100;
+  static Color errorSnackBarColor = Colors.red.shade100;
 }
