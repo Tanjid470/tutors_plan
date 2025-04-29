@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
@@ -9,6 +10,8 @@ import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
 import 'package:tutors_plan/feature/register/view/register_view.dart';
 import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/main.dart';
+import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 
 
@@ -132,6 +135,13 @@ class _LoginViewState extends State<LoginView> {
             }
             loginController.login(context);
           }, title: 'Login'),
+
+          SizedBox(height: ResponsiveScale.of(context).hp(2)),
+          Button2(onClick: (){
+            preferences.setInt('initScreen', 1);
+            ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Temporary Login',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor));
+            Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+          }, title: 'Temporary Login'),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
