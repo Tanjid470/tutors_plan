@@ -11,6 +11,8 @@ class FontConstants{
 }
 
 class TextSize {
+  static font6(BuildContext context) => ResponsiveScale.of(context).fontSize(.85);
+  static font8(BuildContext context) => ResponsiveScale.of(context).fontSize(1);
   static font10(BuildContext context) => ResponsiveScale.of(context).fontSize(1.15);
   static font12(BuildContext context) => ResponsiveScale.of(context).fontSize(1.37);
   static font14(BuildContext context) => ResponsiveScale.of(context).fontSize(1.6);
