@@ -15,12 +15,6 @@ class BottomNavigationWidget extends StatefulWidget {
 class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   int selectedIndex = 0;
   PageController pageController = PageController();
-  /* List<Widget> widgets=[
-    Text('Home'),
-    Text('Search'),
-    Text('Add'),
-    Text('Profile'),
-  ];*/
   void onTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -64,13 +58,13 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           BottomNavigationBar(
             items:  <BottomNavigationBarItem>[
               BottomNavigationBarItem(icon: Container(
-                height: Get.height/30,
-                width: Get.height/30,
+                height: Get.height/35,
+                width: Get.height/35,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: selectedIndex == 0
-                            ? AssetImage(AppImages.dashBoard)
-                            : AssetImage(AppImages.dashBoard)
+                            ? AssetImage(AppImages.homeSelected)
+                            : AssetImage(AppImages.homeUnSelected)
                     )
                 ),
               ),label: 'Home'),
@@ -84,7 +78,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                             : AssetImage(AppImages.dashBoard)
                     )
                 ),
-              ),label: 'Updates'),
+              ),label: 'Library'),
               BottomNavigationBarItem(icon: Container(
                 height: Get.height/30,
                 width: Get.height/30,
@@ -96,16 +90,16 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                     )
                 ),
               ),label: 'Other'),
-
             ],
             currentIndex: selectedIndex,
-            unselectedItemColor: ColorUtils.grey,
+            unselectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
+            selectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
+            landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
+            unselectedItemColor: ColorUtils.black,
             selectedIconTheme:  IconThemeData(color: ColorUtils.baseBlueColor,),
             iconSize: TextSize.font36(context),
             selectedFontSize: TextSize.font14(context),
             selectedItemColor: ColorUtils.baseBlueColor,
-            backgroundColor: Colors.grey.shade50,
-            elevation: 0,
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: true,
             showUnselectedLabels: true,
