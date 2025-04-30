@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:tutors_plan/common_widget/button.dart';
 import 'package:tutors_plan/config/font_constants.dart';
+import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/main.dart';
@@ -22,173 +24,216 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: SizedBox(),
-        title: Text('Dashboard'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await preferences.clear();
-              Navigator.pushReplacementNamed(context, RouteNames.loginView);
-            }
-            , icon: Icon(Icons.logout,color: Colors.red,),)
-        ],
-      ),
-      body: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade200,
-                  blurStyle: BlurStyle.outer,
-                  offset: Offset(0, 0),
-                  blurRadius: 10,
-                ),
-              ],
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(
-                height: 100,
-                width: MediaQuery.of(context).size.width * 0.5,
-                'assets/images/dummy_image.jpg',
-                fit: BoxFit.cover,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
-                child: Column(
-                  spacing: 10,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('History Adventure',
-                        style: customTextStyle(
-                          context,
-                          fontSize: TextSize.font16(context),
-                          fontWeight: FontWeight.bold,
-                          color: ColorUtils.black
-                        )
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text('Explore world history with Grade 5-level activities and stories',
-                        style: customTextStyle(
-                          context,
-                          fontSize: TextSize.font12(context),
-                          fontWeight: FontWeight.bold,
-                          color: ColorUtils.black54
-                        ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            verticalGap(context, 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 10,
+              children: [
+                Expanded(
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      CircleAvatar(
+                        radius: ResponsiveScale.of(context).hp(3),
+                        backgroundColor: ColorUtils.baseBlueColor,
+                        child: Image.asset('assets/images/tutorsPlan_logo.png')
                       ),
-                    ),
-                    Column(
-                      spacing: 5,
-                      children: [
-                        CourseSubplotCard(
-                            context: context,
-                            title: '4 months Duration',
-                            icon: Icons.date_range
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('User name',
+                                maxLines: 1,overflow: TextOverflow.ellipsis,
+                                style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: ColorUtils.black)),
+                            Text('example@gmail.com',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: customTextStyle(context,fontSize: TextSize.font12(context),fontWeight: FontWeight.w600,color: ColorUtils.black54))
+                          ],
                         ),
-                        CourseSubplotCard(
-                          context: context,
-                          title: '25 Tutoring Sessions',
-                          icon: Icons.school,
-                        ),
-                        CourseSubplotCard(
-                          context: context,
-                          title: '18 Video Lessons',
-                          icon: Icons.play_circle_fill,
-                        ),
-                        CourseSubplotCard(
-                          context: context,
-                          title: '12 Book Lessons',
-                          icon: Icons.menu_book,
-                        ),
-                        CourseSubplotCard(
-                          context: context,
-                          title: '8 Modules',
-                          icon: Icons.view_module,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 7,
-                          child: Row(
-                            spacing: 3,
-                            children: [
-                              Container(
-                                height : 20,
-                                width : 20,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: ColorUtils.grey)
-                                ),
-                                child: Icon(Icons.person,size: TextSize.font14(context)),
-                              ),
-                              Expanded(
-                                child: Text('Tanjid Hossain Amran',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: customTextStyle(
-                                    context,
-                                    fontSize: TextSize.font12(context),
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorUtils.black54
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Row(
-                            spacing: 3,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text('\$60',
-                                style: customTextStyle(
-                                    context,
-                                    fontSize: TextSize.font10(context),
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorUtils.grey
-                                ),
-                              ),
-                              Text('\$50',
-                                style: customTextStyle(
-                                    context,
-                                    fontSize: TextSize.font12(context),
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorUtils.black54
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Button2(
-                      onClick: (){}, 
-                      title: 'Enroll Now',
-                      fontSize: TextSize.font12(context),
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      borderRadius: 10,
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
+                Row(
+                  spacing: 10,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        SmartDialog.showToast('Not implement yet...!');
+                      },
+                      child: Icon(Icons.notifications_active_outlined,color: Colors.black,),
+                    ), 
+                    InkWell(
+                      onTap: () async {
+                        await preferences.clear();
+                        Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                      },
+                      child: Icon(Icons.logout,color: Colors.red,),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade200,
+                      blurStyle: BlurStyle.outer,
+                      offset: Offset(0, 0),
+                      blurRadius: 10,
+                    ),
+                  ],
+                borderRadius: BorderRadius.all(Radius.circular(10))
               ),
-            ],
-          ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    height: 100,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    'assets/images/dummy_image.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+                    child: Column(
+                      spacing: 10,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('History Adventure',
+                            style: customTextStyle(
+                              context,
+                              fontSize: TextSize.font16(context),
+                              fontWeight: FontWeight.bold,
+                              color: ColorUtils.black
+                            )
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text('Explore world history with Grade 5-level activities and stories',
+                            style: customTextStyle(
+                              context,
+                              fontSize: TextSize.font12(context),
+                              fontWeight: FontWeight.bold,
+                              color: ColorUtils.black54
+                            ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Column(
+                          spacing: 5,
+                          children: [
+                            CourseSubplotCard(
+                                context: context,
+                                title: '4 months Duration',
+                                icon: Icons.date_range
+                            ),
+                            CourseSubplotCard(
+                              context: context,
+                              title: '25 Tutoring Sessions',
+                              icon: Icons.school,
+                            ),
+                            CourseSubplotCard(
+                              context: context,
+                              title: '18 Video Lessons',
+                              icon: Icons.play_circle_fill,
+                            ),
+                            CourseSubplotCard(
+                              context: context,
+                              title: '12 Book Lessons',
+                              icon: Icons.menu_book,
+                            ),
+                            CourseSubplotCard(
+                              context: context,
+                              title: '8 Modules',
+                              icon: Icons.view_module,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 7,
+                              child: Row(
+                                spacing: 3,
+                                children: [
+                                  Container(
+                                    height : 20,
+                                    width : 20,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: ColorUtils.grey)
+                                    ),
+                                    child: Icon(Icons.person,size: TextSize.font14(context)),
+                                  ),
+                                  Expanded(
+                                    child: Text('Tanjid Hossain Amran',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: customTextStyle(
+                                        context,
+                                        fontSize: TextSize.font12(context),
+                                        fontWeight: FontWeight.bold,
+                                        color: ColorUtils.black54
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Row(
+                                spacing: 3,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('\$60',
+                                    style: customTextStyle(
+                                        context,
+                                        fontSize: TextSize.font10(context),
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorUtils.grey
+                                    ),
+                                  ),
+                                  Text('\$50',
+                                    style: customTextStyle(
+                                        context,
+                                        fontSize: TextSize.font12(context),
+                                        fontWeight: FontWeight.bold,
+                                        color: ColorUtils.black54
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Button2(
+                          onClick: (){},
+                          title: 'Enroll Now',
+                          fontSize: TextSize.font12(context),
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          borderRadius: 10,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
