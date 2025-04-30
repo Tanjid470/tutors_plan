@@ -2,6 +2,7 @@ import 'dart:async'; // <-- Import this
 
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
+import 'package:tutors_plan/const/app_images.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/route/app_pages.dart';
@@ -22,19 +23,19 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   final List<OnboardingItem> _onboardingData = [
     OnboardingItem(
-      image: 'assets/images/onboarding1.png',
+      image: AppImages.learningARTPoster,
       title: 'LearningART AI Platform',
       subtitle: 'Personalized learning with advanced AI technology',
     ),
     OnboardingItem(
-      image: 'assets/images/onboarding2.png',
-      title: 'Live Tutoring & Learning',
-      subtitle: 'Connect with expert tutors in real-time',
-    ),
-    OnboardingItem(
-      image: 'assets/images/onboarding3.png',
+      image: AppImages.scholarPassPoster,
       title: 'ScholarPASS',
       subtitle: 'Access to exclusive scholarship opportunities',
+    ),
+    OnboardingItem(
+      image: AppImages.tutorLearningPoster,
+      title: 'Live Tutoring & Learning',
+      subtitle: 'Connect with expert tutors in real-time',
     ),
   ];
 
@@ -101,9 +102,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/images/tutorsPlan_logo.png',
-                        height: MediaQuery.of(context).size.height * 0.25,
-                        width: MediaQuery.of(context).size.height * 0.5,
+                        item.image,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: MediaQuery.of(context).size.height * 0.7,
                         fit: BoxFit.contain,
                       ),
 
