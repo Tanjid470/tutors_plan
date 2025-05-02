@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutors_plan/common_widget/test_tab_bar.dart';
+import 'package:tutors_plan/common_widget/text_tab_bar.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 
