@@ -5,6 +5,7 @@ abstract class RouteNames {
   static const onboardView = _Paths.onboardView;
   static const dashboardView = _Paths.dashboardView;
   static const loginView = _Paths.loginView;
+  static const libraryView = _Paths.libraryView;
 }
 
 abstract class _Paths {
@@ -13,4 +14,5 @@ abstract class _Paths {
   static const onboardView = '/onboard_view';
   static const dashboardView = '/dashboard_view';
   static const loginView = '/login_view';
+  static const libraryView = '/library_view';
 }
