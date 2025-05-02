@@ -4,6 +4,7 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/app_images.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
+import 'package:tutors_plan/feature/dummy/library_view.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({super.key});
@@ -29,7 +30,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         controller: pageController,
         children: const [
           DashboardView(),
-          DashboardView(),
+          LibraryView(),
           DashboardView(),
         ],
       ),
@@ -58,8 +59,8 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           BottomNavigationBar(
             items:  <BottomNavigationBarItem>[
               BottomNavigationBarItem(icon: Container(
-                height: Get.height/35,
-                width: Get.height/35,
+                height: Get.height/40,
+                width: Get.height/40,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: selectedIndex == 0
