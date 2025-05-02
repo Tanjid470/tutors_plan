@@ -59,14 +59,31 @@ class _DashboardViewState extends State<DashboardView> {
                 },
               ),
             ),
+            Row(
+              children: [
+                Text('Categories',
+                  style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font20(context),
+                      fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text('See all',
+                  style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font14(context),
+                  )
+                )
+              ],
+            ),
             SizedBox(
               height: 200,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.all(12),
-                itemCount: categories.length,
+                itemCount: categories.length + 10,
                 itemBuilder: (context, index) {
-                  final cat = categories[index];
+                  final cat = categories[0];
                   return SizedBox(
                     width: 300,
                     child: Card(
