@@ -17,6 +17,20 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+
+  final List<Map<String, dynamic>> categories = [
+    {
+      "id": 11,
+      "name": "4th Grade Courses",
+      "description": "Adds complexity in reading comprehension and problem-solving in math.",
+      "image": "https://res.cloudinary.com/dnkqenu8j/image/upload/v1746014463/dnkqenu8j/j9t8vsewobgwivqzdswi.png",
+      "enrolled_students": 40,
+      "assigned_tutors": 6,
+      "total_course": 4,
+    },
+    // Add more dummy categories here
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +45,6 @@ class _DashboardViewState extends State<DashboardView> {
           children: [
             verticalGap(context, 5),
             appBar(),
-
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.42,
               child: ListView.builder(
@@ -42,6 +55,58 @@ class _DashboardViewState extends State<DashboardView> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 5),
                     child: CourseCard(),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.all(12),
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  final cat = categories[index];
+                  return SizedBox(
+                    width: 300,
+                    child: Card(
+                      elevation: 3,
+                      margin: const EdgeInsets.only(right: 12),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Image.network(
+                              cat["image"],
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(cat["name"],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold, fontSize: 16)),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    cat["description"],
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const Spacer(),
+                                  Text("Courses: ${cat["total_course"]}"),
+                                  Text("Students: ${cat["enrolled_students"]}"),
+                                  Text("Tutors: ${cat["assigned_tutors"]}"),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
                 },
               ),
