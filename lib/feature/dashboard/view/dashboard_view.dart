@@ -31,114 +31,117 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            verticalGap(context, 5),
+            appBar(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.42,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 5),
+                    child: CourseCard(),
+                  );
+                },
+              ),
+            ),
+            Row(
               children: [
-                verticalGap(context, 5),
-                appBar(),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.42,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 5),
-                        child: CourseCard(),
-                      );
-                    },
-                  ),
+                Text('Categories',
+                  style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font20(context),
+                      fontWeight: FontWeight.bold),
                 ),
-                Row(
-                  children: [
-                    Text('Categories',
-                      style: customTextStyle(
-                          context,
-                          fontSize: TextSize.font20(context),
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const Spacer(),
-                    Text(dashboardController.categoryList!.length.toString(),
-                      style: customTextStyle(
-                          context,
-                          fontSize: TextSize.font14(context),
-                      )
-                    ),
-                    Text('See all',
-                      style: customTextStyle(
-                          context,
-                          fontSize: TextSize.font14(context),
-                      )
-                    ),
-                  ],
+                const Spacer(),
+                Text(dashboardController.categoryList!.length.toString(),
+                  style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font14(context),
+                  )
                 ),
-                SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(12),
-                    itemCount: dashboardController.categoryList?.length,
-                    itemBuilder: (context, index) {
-                      final categoryItem = dashboardController.categoryList?[index];
-                      return SizedBox(
-                        width: 300,
-                        child: Card(
-                          elevation: 3,
-                          margin: const EdgeInsets.only(right: 12),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  categoryItem?.image ?? '',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover,
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(categoryItem?.name ?? '',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold, fontSize: 16)),
-                                      const SizedBox(height: 6),
-                                      Text(
-                                        categoryItem?.description ?? '',
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      const Spacer(),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )
+                Text('See all',
+                  style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font14(context),
+                  )
+                ),
               ],
             ),
-          ),
+            Obx((){
+              return dashboardController.isLoadingCategoryList.value
+                  ? SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(12),
+                  itemCount: dashboardController.categoryList?.length,
+                  itemBuilder: (context, index) {
+                    final categoryItem = dashboardController.categoryList?[index];
+                    return SizedBox(
+                      width: 300,
+                      child: Card(
+                        elevation: 3,
+                        color: Colors.white,
+                        margin: const EdgeInsets.only(right: 12),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                categoryItem?.image ?? '',
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(categoryItem?.name ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold, fontSize: 16)),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      categoryItem?.description ?? '',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+
+                                    Text(
+                                      "${categoryItem?.totalCourse.toString() ?? ''} courses",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "${categoryItem?.enrolledStudents.toString() ?? ''} students",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ) : SizedBox();
+            })
+          ],
         ),
-        Obx(() {
-          return dashboardController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
-              ? LoadingViewTransparent(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                color: ColorUtils.baseBlueColor,
-              ): SizedBox(); // or any other widget when the state doesn't match
-        })
-      ],
+      ),
     );
   }
 
