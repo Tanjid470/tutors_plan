@@ -1,6 +1,6 @@
 class CourseCategoriesResponseBody {
   String? status;
-  List<Data>? data;
+  List<CategoryListModel>? data;
   String? message;
   Pagination? pagination;
 
@@ -10,9 +10,9 @@ class CourseCategoriesResponseBody {
   CourseCategoriesResponseBody.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <CategoryListModel>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(CategoryListModel.fromJson(v));
       });
     }
     message = json['message'];
@@ -35,7 +35,7 @@ class CourseCategoriesResponseBody {
   }
 }
 
-class Data {
+class CategoryListModel {
   int? id;
   String? name;
   String? description;
@@ -53,7 +53,7 @@ class Data {
   String? image;
   String? managerEmployeeId;
 
-  Data(
+  CategoryListModel(
       {this.id,
         this.name,
         this.description,
@@ -71,7 +71,7 @@ class Data {
         this.image,
         this.managerEmployeeId});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CategoryListModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
