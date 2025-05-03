@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
+import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/login/data/login_response_body.dart';
 import 'package:tutors_plan/feature/login/data/repository/login_repository.dart';
@@ -17,14 +18,19 @@ class DashboardController extends GetxController{
 
   DashboardRepository dashboardRepository = DashboardRepository();
 
-  Future<void> getCourseCategory(BuildContext context) async {
+  List<CategoryListModel>? categoryList = [];
 
+  Future<void> getCourseCategory() async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-    final result = await dashboardRepository.getCourseCategory();
-
+    final result = await dashboardRepository.getCourseCategory(
+      page: 1.toString(),
+      limit:10.toString()
+    );
+    if (result != null) {
+      categoryList = result;
+    }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
-
 
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {
