@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/common_widget/text_tab_bar.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/feature/webview/in_app_web_view.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
@@ -24,7 +25,7 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
     return   Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -86,7 +87,7 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
   }
 
   Widget _game() {
-    return Center(child: Text('Game',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)));
+    return InAppWebView();
   }
 
   Widget _exam() {
