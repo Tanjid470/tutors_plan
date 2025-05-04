@@ -15,13 +15,13 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.only(right: 10),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200,
+              color: Colors.grey.shade300,
               blurStyle: BlurStyle.outer,
               offset: Offset(0, 0),
               blurRadius: 10,
