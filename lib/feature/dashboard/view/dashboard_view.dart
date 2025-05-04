@@ -7,6 +7,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/controller/dashboard_controller.dart';
 import 'package:tutors_plan/feature/dashboard/widget/course_card.dart';
+import 'package:tutors_plan/feature/dashboard/widget/learning_art_view.dart';
 import 'package:tutors_plan/feature/dashboard/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/widget/scholar_pass_view.dart';
 import 'package:tutors_plan/main.dart';
@@ -287,7 +288,7 @@ class _DashboardViewState extends State<DashboardView> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ScholarPassScreen()),
+                MaterialPageRoute(builder: (context) => const ScholarPassView()),
               );
             },
 
@@ -298,6 +299,10 @@ class _DashboardViewState extends State<DashboardView> {
           child: ProgramCard(
             title: 'LearningART',
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningARTView()),
+              );
             },
             icon: Icons.style_outlined,
           ),
