@@ -33,6 +33,7 @@ class ColorUtils{
   static Color grey300 = Colors.grey.shade300;
 
   static Color black = Colors.black;
+  static Color white = Colors.white;
   static Color black54 = Colors.black54;
   static Color black87 = Colors.black87;
 
