@@ -3,8 +3,8 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 
-class ScholarPassScreen extends StatelessWidget {
-  const ScholarPassScreen({super.key});
+class ScholarPassView extends StatelessWidget {
+  const ScholarPassView({super.key});
 
   @override
   Widget build(BuildContext context) {
