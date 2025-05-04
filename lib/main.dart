@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'config/font_constants.dart';
+import 'feature/bottom_navigator/bottom_navigation_view.dart';
 import 'feature/login/view/login_view.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white, // Set your preferred background color here
       ),
       debugShowCheckedModeBanner: true,
-      home: const DashboardView(),
+      home: const BottomNavigationWidget(),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       builder: FlutterSmartDialog.init(
