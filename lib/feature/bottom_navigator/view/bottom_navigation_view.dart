@@ -4,7 +4,8 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/app_images.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
-import 'package:tutors_plan/feature/dummy/library_view.dart';
+import 'package:tutors_plan/feature/library/view/library_view.dart';
+
 
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({super.key});
