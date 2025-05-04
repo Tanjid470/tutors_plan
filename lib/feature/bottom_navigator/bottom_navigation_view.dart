@@ -28,6 +28,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
     return Scaffold(
       body: PageView(
         controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
         children: const [
           DashboardView(),
           LibraryView(),
