@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'config/font_constants.dart';
-import 'feature/bottom_navigator/bottom_navigation_view.dart';
+import 'feature/bottom_navigator/view/bottom_navigation_view.dart';
 import 'feature/login/view/login_view.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
