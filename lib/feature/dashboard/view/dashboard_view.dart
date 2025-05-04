@@ -30,15 +30,13 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            verticalGap(context, 5),
-            appBar(),
-            verticalGap(context, 1),
-            Expanded(
-              child: SingleChildScrollView(
+      body: Column(
+        children: [
+          appBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
                   spacing: ResponsiveScale.of(context).hp(1),
                   children: [
@@ -48,71 +46,93 @@ class _DashboardViewState extends State<DashboardView> {
                   ],
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
 
   Widget appBar(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      spacing: 10,
-      children: [
-        Expanded(
-          child: Row(
-            spacing: 10,
-            children: [
-              Container(
-                padding: EdgeInsets.all(2), // Border thickness
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: ColorUtils.baseBlueColor, width: 2), // Change color & width
-                ),
-                child: CircleAvatar(
-                  radius: ResponsiveScale.of(context).hp(3),
-                  child: Icon(Icons.person),
-                  //child: Image.asset('assets/images/tutorsPlan_logo.png'),
-                ),
-              ),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('User name',
-                        maxLines: 1,overflow: TextOverflow.ellipsis,
-                        style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: ColorUtils.black)),
-                    Text('example@gmail.com',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: customTextStyle(context,fontSize: TextSize.font12(context),fontWeight: FontWeight.w600,color: ColorUtils.black54))
-                  ],
-                ),
-              )
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [ ColorUtils.baseBlueColorShade100,ColorUtils.baseBlueColorShade500],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        Row(
-          spacing: 10,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10),bottomRight: Radius.circular(10)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Column(
           children: [
-            InkWell(
-              onTap: () async {
-                SmartDialog.showToast('Not implement yet...!');
-              },
-              child: Icon(Icons.notifications_active_outlined,color: Colors.black,),
+            verticalGap(context, 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 10,
+              children: [
+                Expanded(
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(2), // Border thickness
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: ColorUtils.baseBlueColor, width: 2), // Change color & width
+                        ),
+                        child: CircleAvatar(
+                          radius: ResponsiveScale.of(context).hp(3),
+                          child: Icon(Icons.person),
+                          //child: Image.asset('assets/images/tutorsPlan_logo.png'),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('User name',
+                                maxLines: 1,overflow: TextOverflow.ellipsis,
+                                style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: ColorUtils.white)),
+                            Text('example@gmail.com',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: customTextStyle(context,fontSize: TextSize.font12(context),fontWeight: FontWeight.w600,color: ColorUtils.white))
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  spacing: 10,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        SmartDialog.showToast('Not implement yet...!');
+                      },
+                      child: Icon(Icons.notifications_active_outlined,color: Colors.white),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await preferences.clear();
+                        Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                      },
+                      child: CircleAvatar(
+                        radius: ResponsiveScale.of(context).hp(2),
+                        child: Icon(Icons.logout,color: Colors.red)
+                      ),
+                    ),
+                  ],
+                )
+              ],
             ),
-            InkWell(
-              onTap: () async {
-                await preferences.clear();
-                Navigator.pushReplacementNamed(context, RouteNames.loginView);
-              },
-              child: Icon(Icons.logout,color: Colors.red,),
-            ),
+            verticalGap(context, 1),
           ],
-        )
-      ],
+        ),
+      ),
     );
   }
 
