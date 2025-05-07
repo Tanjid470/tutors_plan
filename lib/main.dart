@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   preferences = await SharedPreferences.getInstance();
   isInitScreen = preferences.getInt('initScreen');
+  await dotenv.load(fileName: '.env');
   runApp(const MyApp());
 }
 
