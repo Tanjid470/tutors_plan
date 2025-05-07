@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tutors_plan/config/font_constants.dart';
-import 'package:tutors_plan/const/app_images.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/feature/library/view/library_view.dart';
+import 'package:tutors_plan/feature/webview/in_app_web_view.dart';
 
 
 class BottomNavigationWidget extends StatefulWidget {
@@ -33,7 +32,8 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         children: const [
           DashboardView(),
           LibraryView(),
-          DashboardView(),
+          InAppWebView(),
+          Center(child: Text('Games')),
         ],
       ),
       bottomNavigationBar: Stack(
@@ -60,39 +60,12 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           ),
           BottomNavigationBar(
             items:  <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Container(
-                height: Get.height/40,
-                width: Get.height/40,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: selectedIndex == 0
-                            ? AssetImage(AppImages.homeSelected)
-                            : AssetImage(AppImages.homeUnSelected)
-                    )
-                ),
-              ),label: 'Home'),
-              BottomNavigationBarItem(icon: Container(
-                height: Get.height/30,
-                width: Get.height/30,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: selectedIndex == 1
-                            ? AssetImage(AppImages.dashBoard)
-                            : AssetImage(AppImages.dashBoard)
-                    )
-                ),
-              ),label: 'Library'),
-              BottomNavigationBarItem(icon: Container(
-                height: Get.height/30,
-                width: Get.height/30,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: selectedIndex == 2
-                            ? AssetImage(AppImages.dashBoard)
-                            : AssetImage(AppImages.dashBoard)
-                    )
-                ),
-              ),label: 'Other'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home_rounded),
+                  label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.school_outlined),label: 'Learning'),
+              BottomNavigationBarItem(icon: Icon(Icons.gamepad_outlined),label: 'Games'),
+              BottomNavigationBarItem(icon: Icon(Icons.padding),label: 'Exams'),
             ],
             currentIndex: selectedIndex,
             unselectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),

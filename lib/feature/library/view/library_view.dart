@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/common_widget/text_tab_bar.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
-import 'package:tutors_plan/feature/webview/in_app_web_view.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
@@ -13,7 +12,7 @@ class LibraryView extends StatefulWidget {
 
 class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStateMixin{
   TabController? _tabController;
-  final _tabs = const ['Quiz', 'Game', 'Exam'];
+  final _tabs = const ['Self Learn', 'Live Tutoring', 'Stats'];
   @override
   void initState() {
     super.initState();
@@ -31,7 +30,7 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Library',
+                'Learning',
                 style: TextStyle(
                   color: ColorUtils.black,
                   fontSize: TextSize.font20(context),
@@ -83,14 +82,44 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
   }
 
   Widget _quiz() {
-    return Center(child: Text('Quiz',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Enroll action
+              },
+              child: Text('Enroll Course'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Recommend action
+              },
+              child: Text('Recommend'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Exploring action
+              },
+              child: Text('Exploring'),
+            ),
+          ],
+        ),
+
+        Expanded(child: Center(child: Text('Self learning',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)))),
+      ],
+    );
   }
 
   Widget _game() {
-    return InAppWebView();
+    return Center(child: Text('Live Tutoring',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)));
   }
 
   Widget _exam() {
-    return Center(child: Text('Exam',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)));
+    return Center(child: Text('Stats',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)));
   }
+
 }
