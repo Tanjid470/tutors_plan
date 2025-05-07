@@ -41,6 +41,8 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   webview_flutter: ^4.11.0
   flutter_svg: ^2.1.0
+  flutter_dotenv: ^5.2.1
+  zego_uikit_prebuilt_video_conference: ^2.9.9
 
 
 dev_dependencies:
@@ -70,6 +72,7 @@ flutter:
     - assets/svg/
     - assets/images/
     - assets/icons/
+    - .env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
