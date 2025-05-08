@@ -14,3 +14,8 @@ enum ScreenStates {
   NO_LOCATION_PERMISSION,
   ERROR,
 }
+
+enum ButtonsStyle {
+  blueButton,
+  dynamicButton
+}
