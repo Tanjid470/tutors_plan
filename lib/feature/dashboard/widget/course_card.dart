@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/common_widget/base_button.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
@@ -182,7 +182,7 @@ class CourseCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Button2(
+                BaseButton(
                   onClick: (){},
                   title: 'Enroll Now',
                   fontSize: TextSize.font12(context),
