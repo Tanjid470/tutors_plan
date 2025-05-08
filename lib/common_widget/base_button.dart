@@ -3,7 +3,7 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 
-class Button2 extends StatelessWidget {
+class BaseButton extends StatelessWidget {
   final VoidCallback onClick;
   final String title;
   final Widget? icon;
@@ -14,7 +14,7 @@ class Button2 extends StatelessWidget {
   final double? borderRadius;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? contentPadding;
-  const Button2({
+  const BaseButton({
     super.key,
     required this.onClick,
     required this.title,
