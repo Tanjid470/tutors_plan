@@ -9,7 +9,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
 import 'package:tutors_plan/feature/register/view/register_view.dart';
-import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/common_widget/base_button.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
@@ -124,7 +124,7 @@ class _LoginViewState extends State<LoginView> {
             );
           }),
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
-          Button2(onClick: (){
+          BaseButton(onClick: (){
             if (loginController.emailController.text.isEmpty) {
               loginController.emailError.value = 'Please enter email';
               return;
@@ -137,7 +137,7 @@ class _LoginViewState extends State<LoginView> {
           }, title: 'Login'),
 
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
-          Button2(onClick: (){
+          BaseButton(onClick: (){
             preferences.setInt('initScreen', 1);
             ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Temporary Login',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor));
             Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
