@@ -61,14 +61,14 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           BottomNavigationBar(
             items:  <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_rounded),
+                  icon: Icon(Icons.home_rounded,size: TextSize.font26(context)),
                   label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.school_outlined),label: 'Learning'),
-              BottomNavigationBarItem(icon: Icon(Icons.gamepad_outlined),label: 'Games'),
-              BottomNavigationBarItem(icon: Icon(Icons.padding),label: 'Exams'),
+              BottomNavigationBarItem(icon: Icon(Icons.school_outlined,size: TextSize.font26(context)),label: 'Learning'),
+              BottomNavigationBarItem(icon: Icon(Icons.gamepad_outlined,size: TextSize.font26(context)),label: 'Games'),
+              BottomNavigationBarItem(icon: Icon(Icons.padding,size: TextSize.font26(context)),label: 'Exams'),
             ],
             currentIndex: selectedIndex,
-            unselectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.w400),
             selectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
             landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
             unselectedItemColor: ColorUtils.black,
