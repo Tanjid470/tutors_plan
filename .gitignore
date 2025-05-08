@@ -28,6 +28,7 @@ migrate_working_dir/
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
+.env
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
@@ -43,3 +44,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/lib/const/url_const.dart

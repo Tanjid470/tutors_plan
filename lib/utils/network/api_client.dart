@@ -7,13 +7,15 @@ import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tutors_plan/const/shared_pref_const.dart';
 import 'package:tutors_plan/const/shared_preference.dart';
+import 'package:tutors_plan/utils/network/url_helper.dart';
 
 class ApiClient {
+
   static Future<dynamic> get(String url, dynamic parameters, bool isJWTRequired, {bool isGeoCoding = false, Map<String, String>? headers}) async {
     try {
       Dio dio = await dioClient(isJWTRequired, isGeoCoding: isGeoCoding, headers: headers);
       Response response = await dio.get(url, queryParameters: parameters).catchError((error) => throw error);
-      return _response(response, url);
+      return dioResponse(response);
     } on DioException catch (e) {
       throwError(e);
     } catch (e) {
@@ -24,8 +26,8 @@ class ApiClient {
   static Future<dynamic> post(String url, dynamic params, dynamic body, bool isJWTRequired, {Map<String, String>? headers}) async {
     try {
       Dio dio = await dioClient(isJWTRequired, headers: headers);
-      Response response = await dio.post(url, queryParameters: params, data: body).catchError((error) => throw error);
-      return _response(response, url);
+      Response response = await dio.post(url, queryParameters: params, data: body);
+      return dioResponse(response);
     } on DioException catch (e) {
       throwError(e);
     } catch (e) {
@@ -37,7 +39,7 @@ class ApiClient {
     try {
       Dio dio = await dioClient(isJWTRequired);
       Response response = await dio.put(url, queryParameters: params, data: body).catchError((error) => throw error);
-      return _response(response, url);
+      return dioResponse(response);
     } on DioException catch (e) {
       throwError(e);
     } catch (e) {
@@ -49,11 +51,37 @@ class ApiClient {
     try {
       Dio dio = await dioClient(isJWTRequired);
       Response response = await dio.delete(url, queryParameters: params, data: body);
-      return _response(response, url);
+      return dioResponse(response);
     } on DioException catch (e) {
       throwError(e);
     } catch (e) {
       rethrow;
+    }
+  }
+
+  static dynamic dioResponse(Response response) {
+    try {
+      var responseJson = json.decode(response.toString());
+      switch (response.statusCode) {
+        case 200:
+        case 201:
+        case 412:
+          return responseJson;
+        case 401:
+          throw throwResponseError(response);
+        case 403:
+        case 404:
+        case 417:
+        case 422:
+        case 500:
+        case 503:
+          throw throwResponseError(response);
+        default:
+          throw throwResponseError(response);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      throw e.toString();
     }
   }
 
@@ -64,7 +92,7 @@ class ApiClient {
         url,
         data: FormData.fromMap(body),
       );
-      return _response(response, url);
+      return dioResponse(response);
     } on DioException catch (e) {
       throwError(e);
     } catch (e) {
@@ -78,7 +106,7 @@ class ApiClient {
       token = await Prefs.getValue(SharedPreferenceConstant.jwt);
     }
     Dio dio = Dio(await _options(token, isJWTRequired, isGeoCoding, headers));
-
+    isProduction(dio);
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (IO.HttpClient client) {
       client.badCertificateCallback = (IO.X509Certificate cert, String host, int port) => true;
       return client;
@@ -104,32 +132,6 @@ class ApiClient {
       receiveTimeout: const Duration(seconds: 60),
       headers: header,
     );
-  }
-
-  static dynamic _response(Response response, String url) {
-    try {
-      var responseJson = json.decode(response.toString());
-      switch (response.statusCode) {
-        case 200:
-        case 201:
-        case 412:
-          return responseJson;
-        case 401:
-          throw throwResponseError(response);
-        case 403:
-        case 404:
-        case 417:
-        case 422:
-        case 500:
-        case 503:
-          throw throwResponseError(response);
-        default:
-          throw throwResponseError(response);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-      throw e.toString();
-    }
   }
 
   static void throwError(Exception e) {
@@ -165,7 +167,7 @@ class ApiClient {
       throw e.toString();
     }
   }
-  //
+
   // static Future<String> getClientInfo() async {
   //   String? deviceData;
   //   DeviceInfoPlugin? deviceInfoPlugin = DeviceInfoPlugin();

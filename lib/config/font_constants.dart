@@ -11,6 +11,8 @@ class FontConstants{
 }
 
 class TextSize {
+  static font6(BuildContext context) => ResponsiveScale.of(context).fontSize(.85);
+  static font8(BuildContext context) => ResponsiveScale.of(context).fontSize(1);
   static font10(BuildContext context) => ResponsiveScale.of(context).fontSize(1.15);
   static font12(BuildContext context) => ResponsiveScale.of(context).fontSize(1.37);
   static font14(BuildContext context) => ResponsiveScale.of(context).fontSize(1.6);
@@ -26,6 +28,11 @@ class TextSize {
   static font36(BuildContext context) => ResponsiveScale.of(context).fontSize(4.1);
   static font48(BuildContext context) => ResponsiveScale.of(context).fontSize(5.5);
   static font54(BuildContext context) => ResponsiveScale.of(context).fontSize(6.17);
+  static dynamicGap1(BuildContext context) => ResponsiveScale.of(context).fontSize(1);
+  static dynamicGap2(BuildContext context) => ResponsiveScale.of(context).fontSize(2);
+  static dynamicGap3(BuildContext context) => ResponsiveScale.of(context).fontSize(3);
+  static dynamicGap10(BuildContext context) => ResponsiveScale.of(context).fontSize(10);
+  static dynamicGap12(BuildContext context) => ResponsiveScale.of(context).fontSize(12);
 
 }
 
