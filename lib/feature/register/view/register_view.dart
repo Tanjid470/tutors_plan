@@ -9,7 +9,7 @@ import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/register_controller.dart';
-import 'package:tutors_plan/common_widget/button.dart';
+import 'package:tutors_plan/common_widget/base_button.dart';
 import 'package:tutors_plan/feature/register/domain/user_role.dart';
 import 'package:tutors_plan/feature/register/view/widget/user_role_card.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
@@ -268,7 +268,7 @@ class _RegisterViewState extends State<RegisterView> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Button2(onClick: () {
+          child: BaseButton(onClick: () {
             if (registerController.userNameController.text.isEmpty) {
               registerController.usernameError.value = 'Please enter name';
               return;
