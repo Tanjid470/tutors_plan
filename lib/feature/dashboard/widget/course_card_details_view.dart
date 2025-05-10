@@ -10,10 +10,8 @@ class CourseDetailsScreen extends StatelessWidget {
   final String courseTitle = "Creative Art & Design - Grade 6";
   final String instructor = "Tanjid Hossain Amran";
   final String location = "Dhaka, Bangladesh";
-  final String description =
-      "This course encourages students to express themselves through drawing, painting, and design principles.";
-  final String outcome =
-      "Students will learn various artistic techniques and improve their creativity through hands-on projects.";
+  final String description = "This course encourages students to express themselves through drawing, painting, and design principles.";
+  final String outcome = "Students will learn various artistic techniques and improve their creativity through hands-on projects.";
   final String prerequisites = "Basic drawing and painting skills.";
 
   final int bookLessons = 12;
