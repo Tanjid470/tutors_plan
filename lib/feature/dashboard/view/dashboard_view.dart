@@ -116,9 +116,67 @@ class _DashboardViewState extends State<DashboardView> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        SmartDialog.showToast('Not implement yet...!');
+                        await showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            backgroundColor: Colors.transparent,
+                            insetPadding: EdgeInsets.only(
+                              right: 16,
+                              top: kToolbarHeight + 10,
+                            ),
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.32,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  // Grid icons
+                                  Expanded(
+                                    child: GridView.count(
+                                      crossAxisCount: 3,
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5,
+                                      padding: EdgeInsets.zero,
+                                      children: [
+                                        _menuItem(Icons.videogame_asset_outlined, "Games"),
+                                        _menuItem(Icons.handshake_outlined, "CRM"),
+                                        _menuItem(Icons.school_outlined, "LMS"),
+                                        _menuItem(Icons.work_outline, "Jobs"),
+                                        _menuItem(Icons.groups_2_outlined, "Team"),
+                                        _menuItem(Icons.edit_note, "Blog"),
+                                        _menuItem(Icons.school_outlined, "ScholarPass"),
+                                        _menuItem(Icons.stars_outlined, "TutorsPlan"), // Replace with asset if needed
+                                      ],
+                                    ),
+                                  ),
+                                  Divider(),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text("More from TutorsPlan",style: TextStyle(color: ColorUtils.baseBlueColor,fontSize: TextSize.font14(context)),),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.keyboard_arrow_down,size: TextSize.font20(context),color: ColorUtils.baseBlueColor),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
                       },
-                      child: Icon(Icons.notifications_active_outlined,color: Colors.white),
+                      child: Icon(
+                        Icons.grid_view,
+                        color: Colors.white,
+                        size: ResponsiveScale.of(context).hp(3),
+                      ),
                     ),
                     InkWell(
                       onTap: () async {
@@ -138,6 +196,18 @@ class _DashboardViewState extends State<DashboardView> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _menuItem(IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: 30, color: Colors.black),
+        SizedBox(height: 4),
+        Text(label, style: TextStyle(fontSize: 12)),
+      ],
     );
   }
 
