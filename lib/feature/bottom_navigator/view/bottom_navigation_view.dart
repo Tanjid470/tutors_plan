@@ -29,11 +29,12 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
+        children:  [
           DashboardView(),
           LibraryView(),
           InAppWebView(),
-          Center(child: Text('Games')),
+          Center(child: Text('Exams', style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)
+          )),
         ],
       ),
       bottomNavigationBar: Stack(
