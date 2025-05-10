@@ -6,6 +6,8 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/widget/course_subplot_card.dart';
 
+import 'course_card_details_view.dart';
+
 class CourseCard extends StatelessWidget {
   const CourseCard({
     super.key,
@@ -183,7 +185,12 @@ class CourseCard extends StatelessWidget {
                   ],
                 ),
                 BaseButton(
-                  onClick: (){},
+                  onClick: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const CourseDetailsScreen()),
+                    );
+                  },
                   title: 'Enroll Now',
                   fontSize: TextSize.font12(context),
                   padding: EdgeInsets.symmetric(vertical: 5),
