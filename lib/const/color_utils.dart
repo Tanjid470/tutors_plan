@@ -14,20 +14,10 @@ class ColorUtils{
   // Orange Shades
   static Color baseOrangeColor = Color(0xfff26410);
   static Color baseOrangeColorLight = Color(0xfff26410).withOpacity(0.1);
-  static Color baseOrangeColorShade100 = Color(0xfff57d34);
-  static Color baseOrangeColorShade300 = Color(0xfff79245);
-  static Color baseOrangeColorShade500 = Color(0xfff87a2a);
-  static Color baseOrangeColorShade700 = Color(0xffe85d13);
-  static Color baseOrangeColorShade900 = Color(0xffd94a00);
 
   // Purple Shades
   static Color basePurpleColor = Color(0xff8c00db);
   static Color basePurpleColorLight = Color(0xff8c00db).withOpacity(0.1);
-  static Color basePurpleColorShade100 = Color(0xff9b2dd6);
-  static Color basePurpleColorShade300 = Color(0xffa84bcc);
-  static Color basePurpleColorShade500 = Color(0xff9e1bd6);
-  static Color basePurpleColorShade700 = Color(0xff8e1bc2);
-  static Color basePurpleColorShade900 = Color(0xff70198f);
 
   static Color grey = Colors.grey;
   static Color grey300 = Colors.grey.shade300;
