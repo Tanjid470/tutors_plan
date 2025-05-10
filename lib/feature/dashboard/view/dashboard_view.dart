@@ -9,6 +9,7 @@ import 'package:tutors_plan/feature/dashboard/widget/course_card.dart';
 import 'package:tutors_plan/feature/dashboard/widget/learning_art_view.dart';
 import 'package:tutors_plan/feature/dashboard/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/widget/scholar_pass_view.dart';
+import 'package:tutors_plan/feature/library/widget/more_info_tutorsplan_view.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 
@@ -155,7 +156,10 @@ class _DashboardViewState extends State<DashboardView> {
                                   ),
                                   Divider(),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      Get.to(() => MoreInfoTutorsPlanView());
+                                    },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
