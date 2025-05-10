@@ -18,11 +18,17 @@ class SelfLearningState extends State<SelfLearning> {
   Widget _buildContent() {
     switch (selectedIndex) {
       case 0:
-        return Text('Enroll Course Content');
+        return Text('Enroll Course Content',
+            style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)
+        );
       case 1:
-        return Text('Recommend Content');
+        return Text('Recommend Content',
+          style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)
+        );
       case 2:
-        return Text('Exploring Content');
+        return Text('Exploring Content',
+            style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)
+        );
       default:
         return Text('Self learning');
     }
