@@ -1,13 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tutors_plan/common_widget/buttons.dart';
 import 'package:tutors_plan/common_widget/text_tab_bar.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
-import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
+import 'package:tutors_plan/feature/library/widget/self_learning_view.dart';
+import 'package:tutors_plan/feature/library/widget/video_conference_view.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
@@ -94,119 +94,88 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
   }
 
   Widget _selfLearning() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Enroll action
-              },
-              child: Text('Enroll Course'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Recommend action
-              },
-              child: Text('Recommend'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Exploring action
-              },
-              child: Text('Exploring'),
-            ),
-          ],
-        ),
-
-        Expanded(child: Center(child: Text('Self learning',style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)))),
-      ],
-    );
+    return SelfLearning();
   }
 
   Widget _liveTutoring() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          children: [
-            Image.asset('assets/images/zoom_logo.png',
-              width: MediaQuery.of(context).size.width * 0.6,
-              height: MediaQuery.of(context).size.height * 0.25,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          Image.asset('assets/images/zoom_logo.png',
+            width: MediaQuery.of(context).size.width * 0.6,
+            height: MediaQuery.of(context).size.height * 0.25,
+          ),
+          Text('Your userId : $userId',
+            style: customTextStyle(
+              context,
+              fontSize: TextSize.font16(context),
+              fontWeight: FontWeight.w500,
+              color: Colors.black87
             ),
-            Text('Your userId : $userId',
-              style: customTextStyle(
+          ),
+          verticalGap(context, 1),
+          Text('Conference Id : $randomConferenceId',
+            style: customTextStyle(
                 context,
                 fontSize: TextSize.font16(context),
                 fontWeight: FontWeight.w500,
                 color: Colors.black87
+            ),
+          ),
+          verticalGap(context, 2),
+          TextFormField(
+            maxLength: 10,
+            keyboardType: TextInputType.number,
+            controller: meetsTabController,
+            decoration: const InputDecoration(
+              hintText: 'Enter conference Id to join',
+              hintStyle: TextStyle(color: Colors.grey),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderSide: BorderSide(color: Colors.blueAccent, width: 2),
               ),
             ),
-            verticalGap(context, 1),
-            Text('Conference Id : $randomConferenceId',
-              style: customTextStyle(
-                  context,
-                  fontSize: TextSize.font16(context),
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87
-              ),
-            ),
-            verticalGap(context, 2),
-            TextFormField(
-              maxLength: 10,
-              keyboardType: TextInputType.number,
-              controller: meetsTabController,
-              decoration: const InputDecoration(
-                hintText: 'Enter conference Id to join',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2),
-                ),
-              ),
-            ),
-            Buttons(
-              onTap: () {
-                if (meetsTabController.text.length == 10) {
-                  jumpToMeetPage(context, conferenceId: meetsTabController.text);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Conference ID must be 10 digits',
-                        style: customTextStyle(
-                          context,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: TextSize.font16(context)
-                        )
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                      duration: Duration(seconds: 2),
-                      backgroundColor: ColorUtils.errorSnackBarColor,
+          ),
+          Buttons(
+            onTap: () {
+              if (meetsTabController.text.length == 10) {
+                jumpToMeetPage(context, conferenceId: meetsTabController.text);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Conference ID must be 10 digits',
+                      style: customTextStyle(
+                        context,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: TextSize.font16(context)
+                      )
                     ),
-                  );
-                }
-              },
-              title: 'Join a meeting',
-              style: ButtonsStyle.blueButton,
-            ),
-            SizedBox(height: 10,),
-            Buttons(
-              onTap: () {
-                jumpToMeetPage(context, conferenceId : randomConferenceId);
-              },
-              title: 'Start a meeting',
-              style: ButtonsStyle.blueButton,
-            )
+                    behavior: SnackBarBehavior.floating,
+                    duration: Duration(seconds: 2),
+                    backgroundColor: ColorUtils.errorSnackBarColor,
+                  ),
+                );
+              }
+            },
+            title: 'Join a meeting',
+            style: ButtonsStyle.blueButton,
+          ),
+          SizedBox(height: 10,),
+          Buttons(
+            onTap: () {
+              jumpToMeetPage(context, conferenceId : randomConferenceId);
+            },
+            title: 'Start a meeting',
+            style: ButtonsStyle.blueButton,
+          )
 
-          ],
-        ),
-      )
+        ],
+      ),
     );
   }
 
@@ -216,30 +185,8 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
 
   void jumpToMeetPage(BuildContext context, {required String conferenceId}) {
     Navigator.push(context,
-      MaterialPageRoute(builder: (context)=> VideoConferencePage(conferenceId :conferenceId))
+      MaterialPageRoute(builder: (context)=> VideoConferenceView(conferenceId :conferenceId))
     );
   }
 }
 
-class VideoConferencePage extends StatelessWidget {
-  final String conferenceId;
-  final String userId = Random().nextInt(900000 + 100000).toString();
-
-  VideoConferencePage({super.key, required this.conferenceId});
-  final int appID = int.parse(dotenv.get('ZEGO_APP_ID'));
-  final String appSIGN = dotenv.get('ZEGO_APP_SIGN');
-  
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: ZegoUIKitPrebuiltVideoConference(
-        appID: appID,
-        appSign: appSIGN,
-        conferenceID: conferenceId,
-        config: ZegoUIKitPrebuiltVideoConferenceConfig(),
-        userID: userId,
-        userName: 'Tanjid',
-      )
-    );
-  }
-}
