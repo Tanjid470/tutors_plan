@@ -1,16 +1,9 @@
-# tutors_plan
+# 📚 TutorsPlan – Mobile App
 
-A new Flutter project.
+TutorsPlan is a modern Learning Management System (LMS) mobile application built with Flutter. It empowers students to learn through live classes, self-paced courses, and interactive content—anytime, anywhere.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+git clone https://github.com/your-username/tutorsplan.git
+flutter pub get
+flutter run
