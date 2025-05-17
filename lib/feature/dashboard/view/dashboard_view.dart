@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/config/font_constants.dart';
@@ -5,10 +8,13 @@ import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/controller/dashboard_controller.dart';
+import 'package:tutors_plan/feature/dashboard/widget/course.dart';
 import 'package:tutors_plan/feature/dashboard/widget/course_card.dart';
+import 'package:tutors_plan/feature/dashboard/widget/k12_bundle_card.dart';
 import 'package:tutors_plan/feature/dashboard/widget/learning_art_view.dart';
 import 'package:tutors_plan/feature/dashboard/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/widget/scholar_pass_view.dart';
+import 'package:tutors_plan/feature/dashboard/widget/stat_card.dart';
 import 'package:tutors_plan/feature/library/widget/more_info_tutorsplan_view.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
@@ -44,6 +50,9 @@ class _DashboardViewState extends State<DashboardView> {
                   spacing: ResponsiveScale.of(context).hp(1),
                   children: [
                     verticalGap(context, 1),
+                    sliderView(),
+                    ScholarPassBundle(),
+                    statView(),
                     courseCardView(),
                     categoryView(),
                     programCardView(),
@@ -72,7 +81,7 @@ class _DashboardViewState extends State<DashboardView> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: [
-            verticalGap(context, 5),
+            verticalGap(context, 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 10,
@@ -82,15 +91,15 @@ class _DashboardViewState extends State<DashboardView> {
                     spacing: 10,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(2), // Border thickness
+                        clipBehavior: Clip.hardEdge, // Border thickness
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: ColorUtils.baseBlueColor, width: 2), // Change color & width
                         ),
                         child: CircleAvatar(
                           radius: ResponsiveScale.of(context).hp(3),
-                          child: Icon(Icons.person),
-                          //child: Image.asset('assets/images/tutorsPlan_logo.png'),
+                          backgroundColor: Colors.white,
+                          child: Image.asset('assets/images/profile.png',fit: BoxFit.fill),
                         ),
                       ),
 
@@ -98,10 +107,10 @@ class _DashboardViewState extends State<DashboardView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('User name',
+                            Text('Tom David',
                                 maxLines: 1,overflow: TextOverflow.ellipsis,
                                 style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: ColorUtils.white)),
-                            Text('example@gmail.com',
+                            Text('tom123@gmail.com',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: customTextStyle(context,fontSize: TextSize.font12(context),fontWeight: FontWeight.w600,color: ColorUtils.white))
@@ -188,6 +197,7 @@ class _DashboardViewState extends State<DashboardView> {
                       },
                       child: CircleAvatar(
                         radius: ResponsiveScale.of(context).hp(2),
+                        backgroundColor: Colors.white,
                         child: Icon(Icons.logout,color: Colors.red)
                       ),
                     ),
@@ -261,18 +271,29 @@ class _DashboardViewState extends State<DashboardView> {
                               blurRadius: 5,
                             ),
                           ],
+
+                          border: Border(
+                            left: BorderSide(color: ColorUtils.baseBlueColor, width: 4),
+                          ),
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Row(
                           children: [
-                            Image.network(
+                            categoryItem?.image != null
+                              ? Image.network(
                               categoryItem?.image ?? '',
                               width: 70,
                               height: 70,
                               fit: BoxFit.cover,
-                            ),
+                            )
+                              : Image.asset(
+                                'assets/images/dummy_image.jpg',
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                              ),
                             SizedBox(width: ResponsiveScale.of(context).wp(2)),
                             Expanded(
                               child: Column(
@@ -323,26 +344,86 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget courseCardView(){
+    final List<Course> dummyCourses = [
+      Course(
+        title: 'Math Mastery',
+        description: 'Master arithmetic and algebra for Grade 6 students',
+        imageUrl: 'assets/images/math.jpeg',
+        author: 'Alice Johnson',
+        originalPrice: 70,
+        discountedPrice: 55,
+        hasScholarship: true,
+        features: [
+          '6 months Duration',
+          '30 Tutoring Sessions',
+          '20 Video Lessons',
+          '15 Book Lessons',
+          '10 Modules',
+        ],
+      ),
+      Course(
+        title: 'Science Explorers',
+        description: 'Discover science through fun experiments and videos',
+        imageUrl: 'assets/images/science.jpeg',
+        author: 'David Kim',
+        originalPrice: 80,
+        discountedPrice: 65,
+        hasScholarship: false,
+        features: [
+          '5 months Duration',
+          '28 Tutoring Sessions',
+          '22 Video Lessons',
+          '10 Book Lessons',
+          '9 Modules',
+        ],
+      ),
+      Course(
+        title: 'History Adventure',
+        description: 'Explore world history with Grade 5-level activities and stories',
+        imageUrl: 'assets/images/history.jpeg',
+        author: 'Tanjid Hossain Amran',
+        originalPrice: 60,
+        discountedPrice: 50,
+        hasScholarship: true,
+        features: [
+          '4 months Duration',
+          '25 Tutoring Sessions',
+          '18 Video Lessons',
+          '12 Book Lessons',
+          '8 Modules',
+        ],
+      ),
+    ];
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Recommended courses',
+        Text('Trending courses',
           style: customTextStyle(
               context,
               fontSize: TextSize.font20(context),
               fontWeight: FontWeight.bold),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.43,
+          height: MediaQuery.of(context).size.height * 0.435,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 10,
+            itemCount: dummyCourses.length,
             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return CourseCard();
+              return CourseCard(
+                title: dummyCourses[index].title,
+                description: dummyCourses[index].description,
+                imageUrl: dummyCourses[index].imageUrl,
+                author: dummyCourses[index].author,
+                originalPrice: dummyCourses[index].originalPrice,
+                discountedPrice: dummyCourses[index].discountedPrice,
+                hasScholarship: dummyCourses[index].hasScholarship,
+                features: [],
+              );
             },
           ),
         ),
@@ -380,6 +461,172 @@ class _DashboardViewState extends State<DashboardView> {
             icon: Icons.style_outlined,
           ),
         )
+      ],
+    );
+  }
+
+  Widget statView(){
+    return Column(
+      spacing: 10,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          spacing: 10,
+          children: [
+            Expanded(
+              child: StatCard(
+                title: 'Lessons This Week',
+                value: '12',
+                subtitle: '+3 from last week',
+                icon: Icons.menu_book_outlined,
+              ),
+            ),
+            Expanded(
+              child: StatCard(
+                title: 'Average Duration',
+                value: '60 min',
+                subtitle: '+5 min from last month',
+                icon: Icons.access_time,
+              ),
+            ),
+          ],
+        ),
+        StatCard(
+          title: 'Student Progress',
+          value: '+12%',
+          subtitle: '+2% from last month',
+          icon: Icons.trending_up,
+        ),
+      ],
+    );
+  }
+
+  Widget sliderView(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: Get.height / 6,
+          child: CarouselSlider.builder(
+            itemCount: dashboardController.splashList.length,
+            itemBuilder: (BuildContext context, int index, int realIndex) {
+              return Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Color(0xFFD6E4FF)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blue.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                dashboardController.splashList[index].color.withOpacity(0.5),
+                                dashboardController.splashList[index].color,
+                                dashboardController.splashList[index].color.withOpacity(0.5),
+                              ]
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(Icons.person, color: Colors.white),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          dashboardController.splashList[index].title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: dashboardController.splashList[index].color,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      dashboardController.splashList[index].description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle navigation or action
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            dashboardController.splashList[index].iconText,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: dashboardController.splashList[index].color,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Icon(Icons.arrow_forward, size: 16, color: dashboardController.splashList[index].color),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            options: CarouselOptions(
+              height: MediaQuery.of(context).size.height, // Adjust height accordingly
+              autoPlay: true,  // Enable auto-play
+              autoPlayInterval: const Duration(seconds: 3),  // Time between transitions
+              enlargeCenterPage: true, // Enlarge the current item
+              viewportFraction: 1.0, // Display one item at a time
+              onPageChanged: (index, reason) {
+                dashboardController.changePage(index);
+              },
+            ),
+          ),
+        ),
+        Obx(() {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(dashboardController.splashList.length, (index) {
+              return InkWell(
+                onTap: () => dashboardController.changePage(index),
+                child: Container(
+                  width: dashboardController.selectedPage.value == index ? 15.0 : 10.0,
+                  height: 10.0,
+                  margin: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 4.0),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(7)),
+                    color: dashboardController.selectedPage.value == index
+                        ? ColorUtils.baseBlueColor
+                        : Colors.grey.shade300,
+                  ),
+                ),
+              );
+            }),
+          );
+        }),
       ],
     );
   }
