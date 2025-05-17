@@ -5,14 +5,28 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/widget/course_subplot_card.dart';
-
 import 'course_card_details_view.dart';
 
 class CourseCard extends StatelessWidget {
-  const CourseCard({
-    super.key,
-  });
+  final String title;
+  final String description;
+  final String imageUrl;
+  final String author;
+  final int originalPrice;
+  final int discountedPrice;
+  final bool hasScholarship;
+  final List<String> features;
 
+  const CourseCard({super.key,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+    required this.author,
+    required this.originalPrice,
+    required this.discountedPrice,
+    required this.hasScholarship,
+    required this.features,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,6 +43,7 @@ class CourseCard extends StatelessWidget {
               blurRadius: 10,
             ),
           ],
+          border: Border.all(color: Colors.grey.shade400),
           borderRadius: BorderRadius.all(Radius.circular(10))
       ),
       child: Column(
@@ -40,8 +55,8 @@ class CourseCard extends StatelessWidget {
               Image.asset(
                 height: 100,
                 width: MediaQuery.of(context).size.width * 0.5,
-                'assets/images/dummy_image.jpg',
-                fit: BoxFit.cover,
+                imageUrl,
+                fit: BoxFit.fill,
               ),
               Positioned(
                   bottom: 5,
@@ -55,7 +70,8 @@ class CourseCard extends StatelessWidget {
                                 ColorUtils.baseBlueColorShade100,
                                 ColorUtils.baseBlueColorShade300,
                               ]
-                          )
+                          ),
+                        border: Border.all(color: Colors.grey,width: 1)
                       ),
                       child: Text('Scholarship available',
                           style:whiteText(fontWeight: FontWeight.w400,TextSize.font8(context)))
@@ -64,7 +80,11 @@ class CourseCard extends StatelessWidget {
               Positioned(
                   top: 7,
                   right: 7,
-                  child: Icon(Icons.favorite_border,color: Colors.red,size: TextSize.font14(context))
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.favorite_border,color: Colors.red,size: TextSize.font14(context))
+                  )
               ),
             ],
           ),
@@ -74,7 +94,7 @@ class CourseCard extends StatelessWidget {
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('History Adventure',
+                Text(title,
                     style: customTextStyle(
                         context,
                         fontSize: TextSize.font16(context),
@@ -84,7 +104,7 @@ class CourseCard extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Text('Explore world history with Grade 5-level activities and stories',
+                  child: Text(description,
                     style: customTextStyle(
                         context,
                         fontSize: TextSize.font12(context),
@@ -142,7 +162,7 @@ class CourseCard extends StatelessWidget {
                             child: Icon(Icons.person,size: TextSize.font14(context)),
                           ),
                           Expanded(
-                            child: Text('Tanjid Hossain Amran',
+                            child: Text(author,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: customTextStyle(
@@ -163,7 +183,7 @@ class CourseCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('\$60',
+                          Text('\$ $originalPrice',
                             style: customTextStyle(
                                 context,
                                 fontSize: TextSize.font10(context),
@@ -171,7 +191,7 @@ class CourseCard extends StatelessWidget {
                                 color: ColorUtils.grey
                             ),
                           ),
-                          Text('\$50',
+                          Text('\$ $discountedPrice',
                             style: customTextStyle(
                                 context,
                                 fontSize: TextSize.font12(context),
@@ -184,6 +204,7 @@ class CourseCard extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 BaseButton(
                   onClick: (){
                     Navigator.push(

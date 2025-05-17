@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
+import 'package:tutors_plan/feature/exam/view/exam_view.dart';
 import 'package:tutors_plan/feature/library/view/library_view.dart';
 import 'package:tutors_plan/feature/webview/in_app_web_view.dart';
 
@@ -33,8 +34,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           DashboardView(),
           LibraryView(),
           InAppWebView(),
-          Center(child: Text('Exams', style: TextStyle(fontSize: TextSize.font20(context),fontWeight: FontWeight.bold)
-          )),
+          ExamView(),
         ],
       ),
       bottomNavigationBar: Stack(
