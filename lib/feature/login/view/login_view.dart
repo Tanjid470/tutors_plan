@@ -8,7 +8,7 @@ import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
-import 'package:tutors_plan/feature/register/view/register_view.dart';
+import 'package:tutors_plan/feature/register/view/registration_view.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
