@@ -220,7 +220,7 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
             border: Border(
-              left: BorderSide(color: ColorUtils.baseBlueColor, width: 4),
+              left: BorderSide(color: ColorUtils.baseColor, width: 4),
             ),
             boxShadow: [
               BoxShadow(
@@ -241,7 +241,7 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
                 margin: EdgeInsets.only(right: 12),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: ColorUtils.baseBlueColor, width: 2),
+                  border: Border.all(color: ColorUtils.baseColor, width: 2),
                 ),
                 child: ClipOval(
                   child: Image.asset(

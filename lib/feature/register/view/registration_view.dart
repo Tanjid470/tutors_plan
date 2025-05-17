@@ -27,7 +27,7 @@ class _RegisterViewState extends State<RegisterView> {
     'Student': UserRole(
       title: 'Student',
       imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.baseBlueColor,
+      selectedColor: ColorUtils.baseColor,
       bgColor: ColorUtils.baseBlueColorLight,
     ),
     'Tutor': UserRole(
@@ -86,7 +86,7 @@ class _RegisterViewState extends State<RegisterView> {
                               ' TutorsPlan',
                               style: TextStyle(
                                   fontSize: TextSize.font24(context),
-                                  color: ColorUtils.baseBlueColor,
+                                  color: ColorUtils.baseColor,
                                   fontFamily: 'HindSiliguri',
                                   fontWeight: FontWeight.bold),
                             ),

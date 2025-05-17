@@ -148,7 +148,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     child: Text('Skip',
                       style: customTextStyle(
                           context,
-                          color: ColorUtils.baseBlueColor,
+                          color: ColorUtils.baseColor,
                           fontSize: TextSize.font16(context)
                       ),
                     ),
@@ -164,7 +164,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _currentIndex == index
-                            ? ColorUtils.baseBlueColor
+                            ? ColorUtils.baseColor
                             : Colors.grey,
                       ),
                     ),
@@ -179,7 +179,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     child: Text('Next',
                       style: customTextStyle(
                           context,
-                          color: ColorUtils.baseBlueColor,
+                          color: ColorUtils.baseColor,
                           fontSize: TextSize.font16(context)
                       ),
                     ),

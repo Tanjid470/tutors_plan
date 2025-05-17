@@ -114,7 +114,7 @@ class CourseDetailsScreen extends StatelessWidget {
                             style: customTextStyle(context,
                                 fontSize: TextSize.font18(context),
                                 fontWeight: FontWeight.bold,
-                                color: ColorUtils.baseBlueColor)),
+                                color: ColorUtils.baseColor)),
                       ],
                     ),
                   ],
@@ -122,9 +122,9 @@ class CourseDetailsScreen extends StatelessWidget {
               ),
               TabBar(
                 isScrollable: true,
-                labelColor: ColorUtils.baseBlueColor,
+                labelColor: ColorUtils.baseColor,
                 unselectedLabelColor: Colors.grey,
-                indicatorColor: ColorUtils.baseBlueColor,
+                indicatorColor: ColorUtils.baseColor,
                 tabAlignment: TabAlignment.center,
                 labelStyle: customTextStyle(context,
                     fontSize: TextSize.font16(context),
@@ -172,7 +172,7 @@ class CourseDetailsScreen extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: ColorUtils.baseBlueColor, size: 20),
+          Icon(icon, color: ColorUtils.baseColor, size: 20),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -291,7 +291,7 @@ class CourseDetailsScreen extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: ColorUtils.baseBlueColor),
+          Icon(icon, size: 18, color: ColorUtils.baseColor),
           const SizedBox(width: 10),
           Expanded(
             child: Text("$label: $value",

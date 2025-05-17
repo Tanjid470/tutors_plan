@@ -191,7 +191,7 @@ class SelfLearningState extends State<SelfLearning> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: ColorUtils.baseBlueColor.withOpacity(0.1),
+                  color: ColorUtils.baseColor.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.travel_explore, size: 32, color: Color(0xFF1976D2)),
@@ -253,7 +253,7 @@ class SelfLearningState extends State<SelfLearning> {
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
                   color: selectedIndex == index
-                      ? ColorUtils.baseBlueColor
+                      ? ColorUtils.baseColor
                       : Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(15),
                 ),
