@@ -44,12 +44,12 @@ class _TextTabBarState extends State<TextTabBar>
       indicator: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: ColorUtils.baseBlueColor,
+            color: ColorUtils.baseColor,
             width: 2,
           ),
         ),
       ),
-      labelColor: ColorUtils.baseBlueColor,
+      labelColor: ColorUtils.baseColor,
       unselectedLabelColor: ColorUtils.grey,
       labelStyle: TextStyle(
         fontSize: TextSize.font16(context),

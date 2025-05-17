@@ -30,8 +30,6 @@ class _LoginViewState extends State<LoginView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loginController.emailController.text = 'tutorsplancorp@gmail.com';
-    loginController.passwordController.text = 'superadmin@2025';
   }
 
   @override
@@ -49,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
           ? LoadingViewTransparent(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              color: ColorUtils.baseBlueColor,
+              color: ColorUtils.baseColor,
           ): SizedBox(); // or any other widget when the state doesn't match
         })
 
@@ -153,7 +151,7 @@ class _LoginViewState extends State<LoginView> {
                   MaterialPageRoute(
                       builder: (context) => const RegisterView()),
                 );
-              }, child: Text('Sign Up'))
+              }, child: Text('Sign Up',style: TextStyle(color: ColorUtils.baseColor)))
             ],
           )
 

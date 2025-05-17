@@ -94,7 +94,7 @@ class _DashboardViewState extends State<DashboardView> {
                         clipBehavior: Clip.hardEdge, // Border thickness
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: ColorUtils.baseBlueColor, width: 2), // Change color & width
+                          border: Border.all(color: ColorUtils.baseColor, width: 2), // Change color & width
                         ),
                         child: CircleAvatar(
                           radius: ResponsiveScale.of(context).hp(3),
@@ -172,9 +172,9 @@ class _DashboardViewState extends State<DashboardView> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text("More from TutorsPlan",style: TextStyle(color: ColorUtils.baseBlueColor,fontSize: TextSize.font14(context)),),
+                                        Text("More from TutorsPlan",style: TextStyle(color: ColorUtils.baseColor,fontSize: TextSize.font14(context)),),
                                         SizedBox(width: 5),
-                                        Icon(Icons.keyboard_arrow_down,size: TextSize.font20(context),color: ColorUtils.baseBlueColor),
+                                        Icon(Icons.keyboard_arrow_down,size: TextSize.font20(context),color: ColorUtils.baseColor),
                                       ],
                                     ),
                                   )
@@ -273,7 +273,7 @@ class _DashboardViewState extends State<DashboardView> {
                           ],
 
                           border: Border(
-                            left: BorderSide(color: ColorUtils.baseBlueColor, width: 4),
+                            left: BorderSide(color: ColorUtils.baseColor, width: 4),
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(10))
                       ),
@@ -619,7 +619,7 @@ class _DashboardViewState extends State<DashboardView> {
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(7)),
                     color: dashboardController.selectedPage.value == index
-                        ? ColorUtils.baseBlueColor
+                        ? ColorUtils.baseColor
                         : Colors.grey.shade300,
                   ),
                 ),

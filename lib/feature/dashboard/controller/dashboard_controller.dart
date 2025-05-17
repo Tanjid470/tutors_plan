@@ -36,7 +36,7 @@ class DashboardController extends GetxController{
       title: 'Live Tutoring',
       description: 'Connect with certified tutors globally through our interactive platform, offering personalized 24/7 support across all subjects and educational levels.',
       iconText: 'Meet Tutors',
-      color: ColorUtils.baseBlueColor,
+      color: ColorUtils.baseColor,
       onTap: () {
         // Navigate to tutoring section
       },
@@ -46,7 +46,7 @@ class DashboardController extends GetxController{
       title: 'ScholarPASS',
       description: 'Access comprehensive scholarships that cover educational fees, making quality learning accessible to students regardless of financial background.',
       iconText: 'Apply Now',
-      color: ColorUtils.baseBlueColor,
+      color: ColorUtils.baseColor,
       onTap: () {
         // Navigate to scholarships
       },
@@ -76,7 +76,7 @@ class DashboardController extends GetxController{
       title: 'LearningHub',
       description: 'Discover and connect with local education providers through our community marketplace, creating a rich ecosystem of diverse learning opportunities.',
       iconText: 'Find Providers',
-      color: ColorUtils.baseBlueColor,
+      color: ColorUtils.baseColor,
       onTap: () {
         // Navigate to learning hub
       },
@@ -86,7 +86,7 @@ class DashboardController extends GetxController{
       title: 'Become Hub Partner',
       description: 'Join our network of educational partners and expand your reach. Collaborate with us to provide quality learning experiences and grow your educational business.',
       iconText: 'Partner With Us',
-      color: ColorUtils.baseBlueColor,
+      color: ColorUtils.baseColor,
       onTap: () {
         // Navigate to partner page
       },

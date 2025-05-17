@@ -185,7 +185,7 @@ class _KFieldState extends State<KField> {
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Icon(widget.icon,
           color: (widget.controller?.text ?? '').isNotEmpty
-              ? ColorUtils.baseBlueColor
+              ? ColorUtils.baseColor
               : ColorUtils.grey300,
       ),
     );
