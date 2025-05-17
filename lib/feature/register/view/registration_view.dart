@@ -8,7 +8,7 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
-import 'package:tutors_plan/feature/register/controller/register_controller.dart';
+import 'package:tutors_plan/feature/register/controller/registration_controller.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
 import 'package:tutors_plan/feature/register/domain/user_role.dart';
 import 'package:tutors_plan/feature/register/view/widget/user_role_card.dart';
@@ -22,7 +22,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  RegisterController registerController = Get.put(RegisterController());
+  RegistrationController registerController = Get.put(RegistrationController());
   final Map<String, UserRole> userRoleTypeList = {
     'Student': UserRole(
       title: 'Student',
@@ -48,7 +48,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   void dispose() {
-    Get.delete<RegisterController>();
+    Get.delete<RegistrationController>();
     super.dispose();
   }
   @override
@@ -149,6 +149,7 @@ class _RegisterViewState extends State<RegisterView> {
               hintText: 'Enter your first name',
               controller: registerController.firstNameController,
               onTap: null,
+              isRequiredField: true,
               icon: Icons.account_circle_outlined,
               keyboardType: TextInputType.text,
               errorText: registerController.firstNameError.value,
