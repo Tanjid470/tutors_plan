@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 class ColorUtils{
   ColorUtils._();
   // Blue Shades
-  static Color baseBlueColor = Color(0xff209bc4);
-  static Color baseBlueColorLight = Color(0xff209bc4).withOpacity(0.1);
-  static Color baseBlueColorShade100 = Color(0xff1f99c3);
-  static Color baseBlueColorShade300 = Color(0xff1e91ba);
-  static Color baseBlueColorShade500 = Color(0xff1a7fa7);
-  static Color baseBlueColorShade700 = Color(0xff156d94);
-  static Color baseBlueColorShade900 = Color(0xff0e4d71);
+  static Color baseBlueColor = Color(0xff4f46e5); // Base color
+
+// Lighter shade with opacity (used for backgrounds, light UI)
+  static Color baseBlueColorLight = baseBlueColor.withOpacity(0.1);
+
+// Custom shades based on baseBlueColor — darker as the shade number increases
+  static Color baseBlueColorShade100 = Color(0xff726af0); // Lighter tone
+  static Color baseBlueColorShade300 = Color(0xff6159eb);
+  static Color baseBlueColorShade500 = baseBlueColor; // Original
+  static Color baseBlueColorShade700 = Color(0xff3e38b7);
+  static Color baseBlueColorShade900 = Color(0xff2e2b8c); // Darker tone
+
 
   // Orange Shades
   static Color baseOrangeColor = Color(0xfff26410);
