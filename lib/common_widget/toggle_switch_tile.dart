@@ -36,7 +36,7 @@ class ToggleSwitchTile extends StatelessWidget {
           Switch(
             value: switchValue.value,
             onChanged: (newValue) => switchValue.value = newValue,
-            activeTrackColor: ColorUtils.baseBlueColor,
+            activeTrackColor: ColorUtils.baseColor,
             activeColor: Colors.white,
             inactiveTrackColor: Colors.transparent,
             inactiveThumbColor: Colors.black,

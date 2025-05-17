@@ -20,6 +20,6 @@ TextStyle customTextStyle(context,{Color? color,double? fontSize,fontWeight}){
   return  TextStyle(
       fontSize: fontSize ?? TextSize.font14(context),
       fontWeight: fontWeight ?? FontWeight.w500,
-      color: color ?? ColorUtils.baseBlueColor
+      color: color ?? ColorUtils.baseColor
   );
 }

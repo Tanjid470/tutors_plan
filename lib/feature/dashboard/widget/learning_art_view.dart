@@ -285,7 +285,7 @@ class LearningARTView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 40, color: ColorUtils.baseBlueColor),
+          Icon(icon, size: 40, color: ColorUtils.baseColor),
           Text(
             title,
             maxLines: 2,
@@ -321,7 +321,7 @@ class LearningARTView extends StatelessWidget {
           height: 30,
           width: 30,
           decoration: BoxDecoration(
-            color: ColorUtils.baseBlueColor,
+            color: ColorUtils.baseColor,
             shape: BoxShape.circle
           ),
           child: Center(child: Text(serialNo,style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: Colors.white),))

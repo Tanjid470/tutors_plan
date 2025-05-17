@@ -20,7 +20,7 @@ class CourseSubplotCard extends StatelessWidget {
     return Row(
       spacing: 10,
       children: [
-        Icon(icon,color: ColorUtils.baseBlueColor,size: TextSize.font12(context),),
+        Icon(icon,color: ColorUtils.baseColor,size: TextSize.font12(context),),
         Text(title,
           style: customTextStyle(
               context,

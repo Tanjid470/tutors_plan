@@ -84,7 +84,7 @@ class Buttons extends StatelessWidget {
         decoration: ShapeDecoration(
           color: bgColor,
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1,  color: shadowColor ?? ColorUtils.baseBlueColor),
+            side: BorderSide(width: 1,  color: shadowColor ?? ColorUtils.baseColor),
             borderRadius: BorderRadius.circular(29),
           ),
           shadows: [
