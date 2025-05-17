@@ -1,10 +1,11 @@
 
 import 'dart:convert';
-String registrationDataBodyToJson(RegistrationDataBody data) => json.encode(data.toJson());
+String registrationDataBodyToJson(RegistrationPostBody data) => json.encode(data.toJson());
 
-class RegistrationDataBody {
+class RegistrationPostBody {
   String? username;
   String? passwordHash;
+  String? accessLevel;
   String? firstName;
   String? lastName;
   String? email;
@@ -16,7 +17,7 @@ class RegistrationDataBody {
   bool? twoFactorEnabled;
   bool? lockoutEnabled;
   int? accessFailedCount;
-  String? lockoutEnd;
+  bool? lockoutEnd;
   String? securityStamp;
   String? profilePicture;
   String? profilePictureUrl;
@@ -26,16 +27,16 @@ class RegistrationDataBody {
   bool? smsSubscribed;
   int? masterCountry;
   int? zone;
-  int? student;
   int? tutor;
   int? institute;
   int? employee;
-  List<String>? roles;
+  List<int>? roles;
   int? primaryRole;
 
-  RegistrationDataBody(
+  RegistrationPostBody(
       {this.username,
         this.passwordHash,
+        this.accessLevel,
         this.firstName,
         this.lastName,
         this.email,
@@ -57,16 +58,16 @@ class RegistrationDataBody {
         this.smsSubscribed,
         this.masterCountry,
         this.zone,
-        this.student,
         this.tutor,
         this.institute,
         this.employee,
         this.roles,
         this.primaryRole});
 
-  RegistrationDataBody.fromJson(Map<String, dynamic> json) {
+  RegistrationPostBody.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     passwordHash = json['password_hash'];
+    accessLevel = json['access_level'];
     firstName = json['first_name'];
     lastName = json['last_name'];
     email = json['email'];
@@ -88,11 +89,10 @@ class RegistrationDataBody {
     smsSubscribed = json['sms_subscribed'];
     masterCountry = json['master_country'];
     zone = json['zone'];
-    student = json['student'];
     tutor = json['tutor'];
     institute = json['institute'];
     employee = json['employee'];
-    roles = json['roles'].cast<String>();
+    roles = json['roles'].cast<int>();
     primaryRole = json['primary_role'];
   }
 
@@ -100,6 +100,7 @@ class RegistrationDataBody {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['username'] = username;
     data['password_hash'] = passwordHash;
+    data['access_level'] = accessLevel;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
     data['email'] = email;
@@ -121,7 +122,6 @@ class RegistrationDataBody {
     data['sms_subscribed'] = smsSubscribed;
     data['master_country'] = masterCountry;
     data['zone'] = zone;
-    data['student'] = student;
     data['tutor'] = tutor;
     data['institute'] = institute;
     data['employee'] = employee;
@@ -130,3 +130,4 @@ class RegistrationDataBody {
     return data;
   }
 }
+
