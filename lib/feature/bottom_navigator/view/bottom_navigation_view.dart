@@ -3,8 +3,8 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/feature/exam/view/exam_view.dart';
-import 'package:tutors_plan/feature/library/view/library_view.dart';
-import 'package:tutors_plan/feature/webview/in_app_web_view.dart';
+import 'package:tutors_plan/feature/learning/view/library_view.dart';
+import 'package:tutors_plan/feature/webview/view/in_app_web_view.dart';
 
 
 class BottomNavigationWidget extends StatefulWidget {
