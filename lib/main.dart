@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/route/app_pages.dart';
+import 'package:tutors_plan/services/stripe_service.dart';
 import 'config/font_constants.dart';
 import 'feature/bottom_navigator/view/bottom_navigation_view.dart';
 import 'feature/login/view/login_view.dart';
@@ -14,14 +15,14 @@ final navigatorKey = GlobalKey<NavigatorState>();
 late SharedPreferences preferences;
 int? isInitScreen;
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   preferences = await SharedPreferences.getInstance();
   isInitScreen = preferences.getInt('initScreen');
   await dotenv.load(fileName: '.env');
+  await StripeService.initialize();
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -41,21 +42,19 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.routes,
       builder: FlutterSmartDialog.init(
           toastBuilder: (String msg) => Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  color: Colors.red.shade300
-              ),
-              child: Text(msg,
-                style:   TextStyle(
-                  color: Colors.white,
-                  fontSize: TextSize.font16(context),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.red.shade300),
+                  child: Text(
+                    msg,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: TextSize.font16(context),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          loadingBuilder: (String msg) => CircularProgressIndicator()
-      ),
+          loadingBuilder: (String msg) => CircularProgressIndicator()),
       navigatorObservers: [FlutterSmartDialog.observer],
       navigatorKey: navigatorKey,
     );
