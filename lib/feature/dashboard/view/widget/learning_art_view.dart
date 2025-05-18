@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
-import 'package:tutors_plan/feature/dashboard/widget/feature_card_learning_art.dart';
+import 'package:tutors_plan/feature/dashboard/view/widget/feature_card_learning_art.dart';
 
 class LearningARTView extends StatelessWidget {
   const LearningARTView({super.key});
