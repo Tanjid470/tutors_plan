@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:tutors_plan/const/app_images.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
-import 'package:tutors_plan/feature/dashboard/widget/slider.dart';
+import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
+
 
 
 class DashboardController extends GetxController{
