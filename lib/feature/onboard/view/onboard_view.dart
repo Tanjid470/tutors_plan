@@ -7,7 +7,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 
-import 'onboarding_item.dart';
+import '../domain/onboarding_item.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -19,7 +19,7 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-  Timer? _timer; // <-- Timer for auto slide
+  Timer? _timer;
 
   final List<OnboardingItem> _onboardingData = [
     OnboardingItem(

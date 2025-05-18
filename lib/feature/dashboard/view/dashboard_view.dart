@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +13,7 @@ import 'package:tutors_plan/feature/dashboard/view/widget/k12_bundle_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/learning_art_view.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/scholar_pass_view.dart';
-import 'package:tutors_plan/feature/library/widget/more_info_tutorsplan_view.dart';
+import 'package:tutors_plan/feature/learning/view/widget/more_info_tutorsplan_view.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 
