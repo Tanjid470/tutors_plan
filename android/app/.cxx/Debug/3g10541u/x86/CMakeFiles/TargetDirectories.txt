@@ -1,0 +1,2 @@
+/Users/tanvirarafat/development/tutors_plan/android/app/.cxx/Debug/3g10541u/x86/CMakeFiles/edit_cache.dir
+/Users/tanvirarafat/development/tutors_plan/android/app/.cxx/Debug/3g10541u/x86/CMakeFiles/rebuild_cache.dir
