@@ -66,8 +66,11 @@ class _OnboardingViewState extends State<OnboardingView> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.ease,
       );
+    } else {
+      _skip(); // Navigate to login when last page is reached
     }
   }
+
 
   void _skip() {
     Navigator.pushReplacementNamed(context, RouteNames.loginView);
