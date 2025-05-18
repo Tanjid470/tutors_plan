@@ -1,15 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:tutors_plan/common_widget/buttons.dart';
 import 'package:tutors_plan/common_widget/text_tab_bar.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
-import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/const/text_style.dart';
-import 'package:tutors_plan/feature/library/widget/google_meet/google_client_id.dart';
-import 'package:tutors_plan/feature/library/widget/live_classes.dart';
-import 'package:tutors_plan/feature/library/widget/self_learning_view.dart';
-import 'package:tutors_plan/feature/library/widget/video_conference_view.dart';
+import 'package:tutors_plan/feature/learning/view/widget/live_classes.dart';
+import 'package:tutors_plan/feature/learning/view/widget/self_learning_view.dart';
+import 'package:tutors_plan/feature/learning/view/widget/video_conference_view.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
