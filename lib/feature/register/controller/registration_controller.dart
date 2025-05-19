@@ -45,6 +45,14 @@ class RegistrationController extends GetxController{
   RegistrationRepository registrationRepository = RegistrationRepository();
   RegistrationPostBody registrationPostBody = RegistrationPostBody();
 
+  @override
+  void onClose() {
+    super.onClose();
+    if (kDebugMode) {
+      print("Controller disposed");
+    }
+  }
+
   List<AppRoles>? appRoles = [];
 
   final Map<String, UserRole>? userRoleTypeList = {
@@ -71,13 +79,6 @@ class RegistrationController extends GetxController{
     ),
   };
 
-  @override
-  void onClose() {
-    super.onClose();
-    if (kDebugMode) {
-      print("Controller disposed");
-    }
-  }
   Future<void> getAppRoles() async {
     final result = await registrationRepository.getAppRole(
         page: 1.toString(),
@@ -133,7 +134,6 @@ class RegistrationController extends GetxController{
       passwordHash: passwordController.text.trim(),
     );
   }
-
 
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {
