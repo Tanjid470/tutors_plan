@@ -8,6 +8,8 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/profile/controller/profile_controller.dart';
+import 'package:tutors_plan/main.dart';
+import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 
 class ProfileView extends StatefulWidget {
@@ -21,8 +23,10 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   ProfileController profileController = Get.put(ProfileController());
 
+  String? accessToken;
   @override
   void initState() {
+    accessToken= preferences.getString('accessToken');
     profileController.getUserProfile();
     super.initState();
   }
@@ -32,7 +36,8 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
+        accessToken != null
+        ? Scaffold(
           appBar: AppBar(
             centerTitle: true,
             leading: SizedBox(),
@@ -242,7 +247,10 @@ class _ProfileViewState extends State<ProfileView> {
               ),
             ),
           ),
-        ),
+        ) : Expanded(child: Center(child: Buttons(style: ButtonsStyle.blueButton, onTap: () async{
+          await preferences.clear();
+          Navigator.pushReplacementNamed(context, RouteNames.loginView);
+        },title: 'Sign in',))),
         Obx(() {
           return profileController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
               ? LoadingViewTransparent(

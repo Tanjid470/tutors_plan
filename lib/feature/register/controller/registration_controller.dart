@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,29 +57,29 @@ class RegistrationController extends GetxController{
 
   List<AppRoles>? appRoles = [];
 
-  final Map<String, UserRole>? userRoleTypeList = {
-    'Student': UserRole(
+  final List<UserRole> userRoleTypeList = [
+    UserRole(
       title: 'Student',
       imageUrl: 'assets/svg/graduation_cap.svg',
       selectedColor: ColorUtils.baseColor,
       bgColor: ColorUtils.baseBlueColorLight,
-      id: 0,
+      id: 4,
     ),
-    'Tutor': UserRole(
+    UserRole(
       title: 'Tutor',
       imageUrl: 'assets/svg/graduation_cap.svg',
       selectedColor: ColorUtils.baseOrangeColor,
       bgColor: ColorUtils.baseOrangeColorLight,
-      id: 0,
+      id: 3,
     ),
-    'Guardian': UserRole(
+    UserRole(
       title: 'Guardian',
       imageUrl: 'assets/svg/graduation_cap.svg',
       selectedColor: ColorUtils.basePurpleColor,
       bgColor: ColorUtils.basePurpleColorLight,
       id: 0,
     ),
-  };
+  ];
 
   Future<void> getAppRoles() async {
     final result = await registrationRepository.getAppRole(
@@ -86,6 +88,8 @@ class RegistrationController extends GetxController{
     );
     if (result != null) {
       appRoles = result;
+
+      update();
     }
   }
 
