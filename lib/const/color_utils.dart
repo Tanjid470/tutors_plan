@@ -30,7 +30,7 @@ class ColorUtils{
   static Color black = Colors.black;
   static Color white = Colors.white;
   static Color black54 = Colors.black54;
-  static Color black87 = Colors.black87;
+  static Color black87 = const Color(0XFF03A3946);
 
 
   static Color inputBorderColor = Colors.grey.shade300;
