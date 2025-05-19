@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -22,29 +24,15 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegistrationController registerController = Get.put(RegistrationController());
-  final Map<String, UserRole> userRoleTypeList = {
-    'Student': UserRole(
-      title: 'Student',
-      imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.baseColor,
-      bgColor: ColorUtils.baseBlueColorLight,
-    ),
-    'Tutor': UserRole(
-      title: 'Tutor',
-      imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.baseOrangeColor,
-      bgColor: ColorUtils.baseOrangeColorLight,
-    ),
-    'Guardian': UserRole(
-      title: 'Guardian',
-      imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.basePurpleColor,
-      bgColor: ColorUtils.basePurpleColorLight,
-    ),
-  };
+
   String? selectedMethod;
 
 
+  @override
+  void initState() {
+    registerController.getAppRoles();
+    super.initState();
+  }
   @override
   void dispose() {
     Get.delete<RegistrationController>();
@@ -209,13 +197,15 @@ class _RegisterViewState extends State<RegisterView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               spacing: 10,
-              children: userRoleTypeList.entries.map((entry) {
+              children: registerController.userRoleTypeList!.entries.map((entry) {
                 final isSelected = selectedMethod == entry.key;
                 return Expanded(
                   child: InkWell(
                     onTap: () {
                       setState(() {
                         selectedMethod = entry.key;
+                        registerController.appRoleId = entry.value.id;
+                        log(registerController.appRoleId.toString());
                       });
                     },
                     child: UserRoleCard(
