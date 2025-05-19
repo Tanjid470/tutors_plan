@@ -4,6 +4,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/feature/exam/view/exam_view.dart';
 import 'package:tutors_plan/feature/learning/view/library_view.dart';
+import 'package:tutors_plan/feature/profile/view/profile_view.dart';
 import 'package:tutors_plan/feature/webview/view/in_app_web_view.dart';
 
 
@@ -34,7 +35,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           DashboardView(),
           LibraryView(),
           InAppWebView(),
-          ExamView(),
+          ProfileView(),
         ],
       ),
       bottomNavigationBar: Stack(
@@ -66,7 +67,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   label: 'Home'),
               BottomNavigationBarItem(icon: Icon(Icons.school_outlined,size: TextSize.font26(context)),label: 'Learning'),
               BottomNavigationBarItem(icon: Icon(Icons.gamepad_outlined,size: TextSize.font26(context)),label: 'Games'),
-              BottomNavigationBarItem(icon: Icon(Icons.padding,size: TextSize.font26(context)),label: 'Exams'),
+              BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined,size: TextSize.font26(context)),label: 'Profile'),
             ],
             currentIndex: selectedIndex,
             unselectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.w400),
