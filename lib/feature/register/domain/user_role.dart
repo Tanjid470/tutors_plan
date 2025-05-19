@@ -5,14 +5,14 @@ class UserRole {
   final String imageUrl;
   final Color selectedColor;
   final Color bgColor;
-  final int id;
+  int? id;
 
   UserRole({
     required this.title,
     required this.imageUrl,
     required this.selectedColor,
     required this.bgColor,
-    required this.id,
+    this.id,
   });
 
   UserRole copyWith({
