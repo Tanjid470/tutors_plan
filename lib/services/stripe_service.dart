@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:tutors_plan/services/data/crourse_enrollemnt.dart';
+import 'package:tutors_plan/services/data/repository/course_enrollment.dart';
+import 'package:tutors_plan/utils/network/api_result.dart';
 
 class StripeService {
   static String publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
@@ -38,6 +41,8 @@ class StripeService {
   static Future<void> makePayment({
     required double amount,
     required String currency,
+    required int courseID,
+    required int studentID,
     required Function(String) onSuccess,
     required Function(String) onError,
   }) async {
@@ -57,7 +62,6 @@ class StripeService {
           paymentIntentClientSecret: clientSecret,
           merchantDisplayName: 'TutorsPlan',
           style: ThemeMode.system,
-          
         ),
       );
 
@@ -66,6 +70,19 @@ class StripeService {
 
       // Payment successful
       onSuccess('Payment completed successfully');
+      CourseEnrollment()
+          .fetchLoginResponse(
+        intentId: paymentIntent['id'],
+        courseId: courseID, // Replace with actual course ID
+        studentId: studentID, // Replace with actual student ID
+      )
+          .then((response) {
+        if (response is CourseSuccessRes) {
+          onSuccess('Payment successful and course enrolled');
+        } else if (response is ApiError) {
+          onError('Failed to enroll in course');
+        }
+      });
     } catch (err) {
       if (err is StripeException) {
         onError(err.error.localizedMessage ?? 'An error occurred during payment');
