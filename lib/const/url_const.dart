@@ -11,4 +11,5 @@ class UrlConst {
   static final String getCoursesEndpoint = '$testApiVersion/course-categories';
   static final String getProfileEndpoint = '$testApiVersion/me';
   static final String courseEnrollmentEndpoint = '$testApiVersion/stripe/course-enrollment';
+  static final String coursesEndpoint = '$testApiVersion/courses';
 }
