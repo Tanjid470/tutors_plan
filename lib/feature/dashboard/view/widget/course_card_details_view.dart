@@ -26,12 +26,15 @@ class CourseDetailsScreen extends StatelessWidget {
   final double oldPrice = 50;
   final double newPrice = 40;
   final int discount = 20;
+  final int courseid = 190, studentId = 2;
 
-  Future<void> _handlePayment(BuildContext context) async {
+  Future<void> _handlePayment(BuildContext context, {required int courseID, required int studentId}) async {
     try {
       await StripeService.makePayment(
         amount: newPrice,
         currency: 'usd',
+        courseID: courseID, // Replace with actual course ID
+        studentID: studentId, // Replace with actual student ID
         onSuccess: (message) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -72,7 +75,7 @@ class CourseDetailsScreen extends StatelessWidget {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16),
           child: BaseButton(
-            onClick: () => _handlePayment(context),
+            onClick: () => _handlePayment(context, courseID: courseid, studentId: studentId),
             title: "Buy Now for \$$newPrice",
             fontSize: TextSize.font14(context),
             padding: const EdgeInsets.symmetric(vertical: 12),

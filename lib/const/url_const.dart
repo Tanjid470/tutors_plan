@@ -1,7 +1,7 @@
-class UrlConst{
+class UrlConst {
   static final String betaApiVersion = '';
   static final String productionApiVersion = '';
-  static final String testApiVersion ='https://api.tutorsplan.com';
+  static final String testApiVersion = 'https://api.tutorsplan.com';
 
   static final String serverUrl = testApiVersion;
 
@@ -10,5 +10,5 @@ class UrlConst{
   static final String appRolesEndpoint = '$testApiVersion/app-roles';
   static final String getCoursesEndpoint = '$testApiVersion/course-categories';
   static final String getProfileEndpoint = '$testApiVersion/me';
-
+  static final String courseEnrollmentEndpoint = '$testApiVersion/stripe/course-enrollment';
 }
