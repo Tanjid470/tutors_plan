@@ -47,7 +47,7 @@ class RegistrationController extends GetxController{
 
   List<AppRoles>? appRoles = [];
 
-  final Map<String, UserRole> userRoleTypeList = {
+  final Map<String, UserRole>? userRoleTypeList = {
     'Student': UserRole(
       title: 'Student',
       imageUrl: 'assets/svg/graduation_cap.svg',
@@ -71,7 +71,6 @@ class RegistrationController extends GetxController{
     ),
   };
 
-
   @override
   void onClose() {
     super.onClose();
@@ -86,16 +85,6 @@ class RegistrationController extends GetxController{
     );
     if (result != null) {
       appRoles = result;
-      for (var role in appRoles!) {
-        final name = role.name;
-        if (name != null) {
-          final roleKey = name.trim();
-          if (userRoleTypeList != null && userRoleTypeList!.containsKey(roleKey)) {
-            userRoleTypeList![roleKey] =
-                userRoleTypeList![roleKey]!.copyWith(id: role.id);
-          }
-        }
-      }
     }
   }
 
