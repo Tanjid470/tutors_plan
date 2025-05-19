@@ -49,7 +49,7 @@ class Buttons extends StatelessWidget {
           vertical: 10,horizontal: 20
         ),
         decoration: BoxDecoration(
-          color: Colors.blueAccent,
+          color: ColorUtils.baseColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
@@ -62,8 +62,8 @@ class Buttons extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: TextSize.font18(context),
-                fontWeight: FontWeight.bold,
+                fontSize: TextSize.font16(context),
+                fontWeight: FontWeight.w500,
               ),
             ),
             icon ?? const SizedBox()
