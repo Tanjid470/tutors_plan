@@ -36,8 +36,8 @@ class _RegisterViewState extends State<RegisterView> {
       selectedColor: ColorUtils.baseOrangeColor,
       bgColor: ColorUtils.baseOrangeColorLight,
     ),
-    'Gradient': UserRole(
-      title: 'Admin',
+    'Guardian': UserRole(
+      title: 'Guardian',
       imageUrl: 'assets/svg/graduation_cap.svg',
       selectedColor: ColorUtils.basePurpleColor,
       bgColor: ColorUtils.basePurpleColorLight,
@@ -231,37 +231,70 @@ class _RegisterViewState extends State<RegisterView> {
                 );
               }).toList(),
             ),
-            ToggleSwitchTile(
-                title: 'Account Lock',
-                switchValue: registerController.isAccountLocked),
-            ToggleSwitchTile(
-              title: 'Active or Archive',
-              switchValue: registerController.isActiveOrArchive,
+            termsAndCondition(
+              registerController.isChecked.value,
+                  (bool? value) {
+                setState(() {
+                  registerController.isChecked.value = value ?? false;
+                });
+              },
             ),
-            ToggleSwitchTile(
-              title: 'Email Confirmed',
-              switchValue: registerController.isEmailConfirmed,
-            ),
-            ToggleSwitchTile(
-              title: 'Phone Number Confirmed',
-              switchValue: registerController.isPhoneNumberConfirmed,
-            ),
-            ToggleSwitchTile(
-              title: 'Two Factor Enabled',
-              switchValue: registerController.isTwoFactorEnabled,
-            ),
-            ToggleSwitchTile(
-              title: 'Lockout Enabled',
-              switchValue: registerController.isLockoutEnabled,
-            ),
+            //toggleCardList(),
 
-          verticalGap(context, 10)
+            verticalGap(context, 10)
           ],
         ),
       ),
     );
   }
 
+  Widget termsAndCondition(bool isChecked, ValueChanged<bool?> onChanged) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Checkbox(
+          value: isChecked,
+          onChanged: onChanged,
+        ),
+        Expanded(
+          child: Text(
+            'I agree to the TutorsPlan Terms of Service & Privacy Policy',
+            style: TextStyle(fontSize: 14),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget toggleCardList(){
+    return Column(
+      children: [
+        ToggleSwitchTile(
+            title: 'Account Lock',
+            switchValue: registerController.isAccountLocked),
+        ToggleSwitchTile(
+          title: 'Active or Archive',
+          switchValue: registerController.isActiveOrArchive,
+        ),
+        ToggleSwitchTile(
+          title: 'Email Confirmed',
+          switchValue: registerController.isEmailConfirmed,
+        ),
+        ToggleSwitchTile(
+          title: 'Phone Number Confirmed',
+          switchValue: registerController.isPhoneNumberConfirmed,
+        ),
+        ToggleSwitchTile(
+          title: 'Two Factor Enabled',
+          switchValue: registerController.isTwoFactorEnabled,
+        ),
+        ToggleSwitchTile(
+          title: 'Lockout Enabled',
+          switchValue: registerController.isLockoutEnabled,
+        ),
+      ],
+    );
+  }
   Widget registerButton() {
     return Column(
       mainAxisSize: MainAxisSize.min,

@@ -31,6 +31,7 @@ class _DashboardViewState extends State<DashboardView> {
   @override
   void initState() {
     dashboardController.getCourseCategory();
+    dashboardController.getUserProfile();
     super.initState();
   }
 
@@ -50,7 +51,7 @@ class _DashboardViewState extends State<DashboardView> {
                     verticalGap(context, 1),
                     sliderView(),
                     ScholarPassBundle(),
-                    statView(),
+                    //statView(),
                     courseCardView(),
                     categoryView(),
                     programCardView(),
@@ -66,6 +67,7 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget appBar(){
+    bool isGuest = preferences.getBool('guest') ?? false;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -84,40 +86,41 @@ class _DashboardViewState extends State<DashboardView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 10,
               children: [
-                Expanded(
-                  child: Row(
-                    spacing: 10,
-                    children: [
-                      Container(
-                        clipBehavior: Clip.hardEdge, // Border thickness
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: ColorUtils.baseColor, width: 2), // Change color & width
+                isGuest ?
+                  SizedBox()
+                  : Expanded(
+                    child: Row(
+                      spacing: 10,
+                      children: [
+                        Container(
+                          clipBehavior: Clip.hardEdge, // Border thickness
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: ColorUtils.baseColor, width: 2), // Change color & width
+                          ),
+                          child: CircleAvatar(
+                            radius: ResponsiveScale.of(context).hp(3),
+                            backgroundColor: Colors.white,
+                            child: Image.asset('assets/images/profile.png',fit: BoxFit.fill),
+                          ),
                         ),
-                        child: CircleAvatar(
-                          radius: ResponsiveScale.of(context).hp(3),
-                          backgroundColor: Colors.white,
-                          child: Image.asset('assets/images/profile.png',fit: BoxFit.fill),
-                        ),
-                      ),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Tom David',
-                                maxLines: 1,overflow: TextOverflow.ellipsis,
-                                style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: ColorUtils.white)),
-                            Text('tom123@gmail.com',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: customTextStyle(context,fontSize: TextSize.font12(context),fontWeight: FontWeight.w600,color: ColorUtils.white))
-                          ],
-                        ),
-                      )
-                    ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Tom David',
+                                  maxLines: 1,overflow: TextOverflow.ellipsis,
+                                  style: customTextStyle(context,fontSize: TextSize.font16(context),fontWeight: FontWeight.bold,color: ColorUtils.white)),
+                              Text('tom123@gmail.com',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: customTextStyle(context,fontSize: TextSize.font12(context),fontWeight: FontWeight.w600,color: ColorUtils.white))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
                 Row(
                   spacing: 10,
                   children: [

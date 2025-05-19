@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
+import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
 
@@ -9,10 +10,11 @@ import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
 class DashboardController extends GetxController{
 
   DashboardRepository dashboardRepository = DashboardRepository();
-
+  ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
   List<CategoryListModel>? categoryList = [];
 
   RxBool isLoadingCategoryList = false.obs;
+  RxBool isProfileDataLoading = false.obs;
 
   Future<void> getCourseCategory() async {
     final result = await dashboardRepository.getCourseCategory(
@@ -22,6 +24,14 @@ class DashboardController extends GetxController{
     if (result != null) {
       isLoadingCategoryList.value = true;
       categoryList = result;
+    }
+  }
+
+  Future<void> getUserProfile() async {
+    final result = await dashboardRepository.getUserProfile();
+    if (result != null) {
+      isLoadingCategoryList.value = true;
+      profileGetResponseBody = result;
     }
   }
 
