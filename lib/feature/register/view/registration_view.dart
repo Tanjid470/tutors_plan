@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/common_widget/toggle_switch_tile.dart';
@@ -231,6 +230,7 @@ class _RegisterViewState extends State<RegisterView> {
                 );
               }).toList(),
             ),
+            SizedBox(height: 10),
             termsAndCondition(
               registerController.isChecked.value,
                   (bool? value) {
@@ -255,13 +255,36 @@ class _RegisterViewState extends State<RegisterView> {
         Checkbox(
           value: isChecked,
           onChanged: onChanged,
+          checkColor: Colors.white, // Check icon color (✓)
+          fillColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.selected)) {
+              return ColorUtils.baseColor; // When checked
+            }
+            return Colors.transparent; // When unchecked
+          }),
+          side: BorderSide(color: ColorUtils.baseColor, width: 2), // Border color
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         ),
         Expanded(
-          child: Text(
-            'I agree to the TutorsPlan Terms of Service & Privacy Policy',
-            style: TextStyle(fontSize: 14),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(fontSize: 14, color: Colors.black),
+              children: [
+                TextSpan(text: 'I agree to the TutorsPlan '),
+                TextSpan(
+                  text: 'Terms of Service',
+                  style: TextStyle(color: ColorUtils.baseColor,fontWeight: FontWeight.w500),
+                ),
+                TextSpan(text: ' & '),
+                TextSpan(
+                  text: 'Privacy Policy.',
+                  style: TextStyle(color: ColorUtils.baseColor,fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           ),
         ),
+
       ],
     );
   }
