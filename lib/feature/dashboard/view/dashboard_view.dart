@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/controller/dashboard_controller.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/stat_card.dart';
@@ -32,37 +34,50 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     dashboardController.getCourseCategory();
     dashboardController.getUserProfile();
+    dashboardController.getCourse();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          appBar(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  spacing: ResponsiveScale.of(context).hp(1),
-                  children: [
-                    verticalGap(context, 1),
-                    sliderView(),
-                    ScholarPassBundle(),
-                    //statView(),
-                    courseCardView(),
-                    categoryView(),
-                    programCardView(),
-                    verticalGap(context, 2),
-                  ],
+    return Stack(
+      children: [
+        Scaffold(
+          body: Column(
+            children: [
+              appBar(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      spacing: ResponsiveScale.of(context).hp(1),
+                      children: [
+                        verticalGap(context, 1),
+                        sliderView(),
+                        ScholarPassBundle(),
+                        //statView(),
+                        courseCardView(),
+                        categoryView(),
+                        programCardView(),
+                        verticalGap(context, 2),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        ),
+        Obx(() {
+          return dashboardController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
+              ? LoadingViewTransparent(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: ColorUtils.baseColor,
+          ): SizedBox(); // or any other widget when the state doesn't match
+        })
+      ],
     );
   }
 

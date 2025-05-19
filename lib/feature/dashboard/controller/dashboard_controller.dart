@@ -1,15 +1,21 @@
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
+import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
+import 'package:tutors_plan/utils/network/api_result.dart';
 
 
 
 class DashboardController extends GetxController{
+  final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
+  final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
   DashboardRepository dashboardRepository = DashboardRepository();
+  CourseGetResponseBody courseGetResponseBody = CourseGetResponseBody();
   ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
   List<CategoryListModel>? categoryList = [];
 
@@ -102,5 +108,36 @@ class DashboardController extends GetxController{
       },
     ),
   ];
+
+  Future<void> getCourse() async {
+    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
+
+    final result = await dashboardRepository.getCourse();
+
+    if (result is ApiSuccess<CourseGetResponseBody>) {
+      final data = result.data;
+      if (data.status == 'SUCCESS') {
+        courseGetResponseBody = data;
+      } else {
+
+      }
+
+    }
+    else if (result is ApiError) {
+      final apiError = result as ApiError;
+    }
+    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+  }
+
+
+  void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
+    if (screenStates != null) {
+      this.screenStates.value = screenStates;
+      loaderState.value = ScreenStates.LOADING_COMPLETE;
+    }
+    if (loadingState != null) loaderState.value = loadingState;
+    update();
+  }
+
 
 }
