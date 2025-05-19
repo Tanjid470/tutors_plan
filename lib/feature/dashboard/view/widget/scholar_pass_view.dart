@@ -57,32 +57,32 @@ class ScholarPassView extends StatelessWidget {
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.purple,
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            onPressed: () {},
-                            child: const Text("Apply Now"),
-                          ),
-                          const SizedBox(width: 16),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: Colors.white),
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            onPressed: () {},
-                            child: const Text("Learn More"),
-                          ),
-                        ],
-                      )
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     ElevatedButton(
+                      //       style: ElevatedButton.styleFrom(
+                      //         backgroundColor: Colors.white,
+                      //         foregroundColor: Colors.purple,
+                      //         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      //       ),
+                      //       onPressed: () {},
+                      //       child: const Text("Apply Now"),
+                      //     ),
+                      //     const SizedBox(width: 16),
+                      //     OutlinedButton(
+                      //       style: OutlinedButton.styleFrom(
+                      //         side: const BorderSide(color: Colors.white),
+                      //         foregroundColor: Colors.white,
+                      //         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                      //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      //       ),
+                      //       onPressed: () {},
+                      //       child: const Text("Learn More"),
+                      //     ),
+                      //   ],
+                      // )
                     ],
                   ),
                 ),

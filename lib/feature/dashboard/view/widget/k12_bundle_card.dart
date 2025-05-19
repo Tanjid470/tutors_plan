@@ -49,69 +49,69 @@ class ScholarPassBundle extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      child: Text('Enroll Now',style: TextStyle(color: Colors.white),),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.deepPurple),
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      child: Text('Check Eligibility',
-                          style: TextStyle(color: Colors.deepPurple)),
-                    ),
-                  ),
-                ],
-              )
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: ElevatedButton(
+              //         onPressed: () {},
+              //         style: ElevatedButton.styleFrom(
+              //           backgroundColor: Colors.deepPurple,
+              //           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              //           shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(10)),
+              //         ),
+              //         child: Text('Enroll Now',style: TextStyle(color: Colors.white),),
+              //       ),
+              //     ),
+              //     const SizedBox(width: 12),
+              //     Expanded(
+              //       child: OutlinedButton(
+              //         onPressed: () {},
+              //         style: OutlinedButton.styleFrom(
+              //           side: BorderSide(color: Colors.deepPurple),
+              //           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              //           shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(10)),
+              //         ),
+              //         child: Text('Check Eligibility',
+              //             style: TextStyle(color: Colors.deepPurple)),
+              //       ),
+              //     ),
+              //   ],
+              // )
             ],
           ),
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  'assets/images/tutorsPlan_logo.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                bottom: 16,
-                right: 16,
-                child: Container(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.star, color: Colors.white, size: 16),
-                      SizedBox(width: 6),
-                      Text('Most Popular Choice',
-                          style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+          // Stack(
+          //   children: [
+          //     ClipRRect(
+          //       borderRadius: BorderRadius.circular(20),
+          //       child: Image.asset(
+          //         'assets/images/tutorsPlan_logo.png',
+          //         fit: BoxFit.cover,
+          //       ),
+          //     ),
+          //     Positioned(
+          //       bottom: 16,
+          //       right: 16,
+          //       child: Container(
+          //         padding:
+          //         EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          //         decoration: BoxDecoration(
+          //           color: Colors.deepPurple,
+          //           borderRadius: BorderRadius.circular(20),
+          //         ),
+          //         child: Row(
+          //           children: [
+          //             Icon(Icons.star, color: Colors.white, size: 16),
+          //             SizedBox(width: 6),
+          //             Text('Most Popular Choice',
+          //                 style: TextStyle(color: Colors.white)),
+          //           ],
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );

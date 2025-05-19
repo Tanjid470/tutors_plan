@@ -22,6 +22,7 @@ class RegistrationController extends GetxController{
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
+  RxBool isChecked = false.obs;
   RxString usernameError = ''.obs;
   RxString firstNameError = ''.obs;
   RxString lastNameError = ''.obs;
