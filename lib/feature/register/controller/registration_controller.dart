@@ -77,7 +77,7 @@ class RegistrationController extends GetxController{
       imageUrl: 'assets/svg/graduation_cap.svg',
       selectedColor: ColorUtils.basePurpleColor,
       bgColor: ColorUtils.basePurpleColorLight,
-      id: 0,
+      id: 5,
     ),
   ];
 
@@ -88,7 +88,6 @@ class RegistrationController extends GetxController{
     );
     if (result != null) {
       appRoles = result;
-
       update();
     }
   }
