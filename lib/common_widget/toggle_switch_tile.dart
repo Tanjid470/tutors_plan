@@ -9,6 +9,7 @@ class ToggleSwitchTile extends StatelessWidget {
   final String? subtitle;
   final RxBool switchValue;
   final Widget? textFieldWidget;
+  final bool disableSwitch; // New parameter
 
   const ToggleSwitchTile({
     super.key,
@@ -16,6 +17,7 @@ class ToggleSwitchTile extends StatelessWidget {
     this.subtitle,
     required this.switchValue,
     this.textFieldWidget,
+    this.disableSwitch = false, // Default to false
   });
 
   @override
@@ -24,23 +26,43 @@ class ToggleSwitchTile extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: const Color(0xFF3A3946),
-              fontSize: TextSize.font18(context),
-              fontFamily: 'Rubik',
-              fontWeight: FontWeight.w500,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: const Color(0xFF3A3946),
+                    fontSize: TextSize.font16(context),
+                    fontFamily: 'Rubik',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                if (subtitle != null)
+                  Text(
+                    subtitle!,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: TextSize.font14(context),
+                      fontFamily: 'Rubik',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+              ],
             ),
           ),
-          Switch(
-            value: switchValue.value,
-            onChanged: (newValue) => switchValue.value = newValue,
-            activeTrackColor: ColorUtils.baseColor,
-            activeColor: Colors.white,
-            inactiveTrackColor: Colors.transparent,
-            inactiveThumbColor: Colors.black,
-          )
+          IgnorePointer(
+            ignoring: disableSwitch,
+            child: Switch(
+              value: switchValue.value,
+              onChanged: (newValue) => switchValue.value = newValue,
+              activeTrackColor: ColorUtils.baseColor,
+              activeColor: Colors.white,
+              inactiveTrackColor: Colors.transparent,
+              inactiveThumbColor: Colors.black,
+            ),
+          ),
         ],
       );
     });

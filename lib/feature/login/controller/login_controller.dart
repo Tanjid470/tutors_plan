@@ -32,14 +32,17 @@ class LoginController extends GetxController{
       final headers = result.headers;
       if (loginResponse.status == 'SUCCESS') {
         preferences.setInt('initScreen', 1);
+        headers?.forEach((key, value) {
+          if (headers.containsKey('x-tutorsplan-key')) {
+            preferences.setString('accessToken', '${headers['x-tutorsplan-key']}');
+          }
+        });
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
         Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
       }
-      headers?.forEach((key, value) {
-        debugPrint('Header: $key => $value');
-      });
+
     }
     else if (result is ApiError) {
       final apiError = result as ApiError;
@@ -83,4 +86,5 @@ class LoginController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
+
 }
