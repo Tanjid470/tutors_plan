@@ -1,16 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
 import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
 import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
 
+import 'app_roles_get_body.dart';
+
 class RegistrationRepository {
-  Dio _dio = Dio();
+  Dio dio = Dio();
+
   Future<ApiResult<RegistrationResponseBody>> fetchRegistrationResponse(RegistrationPostBody registrationPostBody) async {
     try {
-      _dio = await ApiClient.dioClient(false);
-      final response = await _dio.post(
+      dio = await ApiClient.dioClient(false);
+      final response = await dio.post(
         UrlConst.registerEndpoint,
         data: registrationPostBody.toJson(),
         options: Options(
@@ -55,4 +59,33 @@ class RegistrationRepository {
     }
   }
 
+  Future<List<AppRoles>?> getAppRole({
+    String? page,
+    String? limit,
+  }) async {
+    try {
+      final queryParameters = {
+        "pagination": true,
+        "page": page ?? "1",
+        "limit": limit ?? "",
+      };
+      dio = await ApiClient.dioClient(true);
+
+      Response response = await dio.get(
+        '${UrlConst.appRolesEndpoint}/',
+        queryParameters: queryParameters,
+      );
+      AppRolesGetBody data = AppRolesGetBody.fromJson(response.data);
+
+      if (data.status == 'SUCCESS') {
+        return data.data;
+      }
+      else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
 }
