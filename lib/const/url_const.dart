@@ -7,6 +7,7 @@ class UrlConst{
 
   static final String loginEndpoint = '$testApiVersion/login';
   static final String registerEndpoint = '$testApiVersion/app-users';
+  static final String appRolesEndpoint = '$testApiVersion/app-roles';
   static final String getCoursesEndpoint = '$testApiVersion/course-categories';
   static final String getProfileEndpoint = '$testApiVersion/me';
 

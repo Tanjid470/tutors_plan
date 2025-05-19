@@ -5,8 +5,10 @@ import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
+import 'package:tutors_plan/feature/register/data/repository/app_roles_get_body.dart';
 import 'package:tutors_plan/feature/register/data/repository/registration_repository.dart';
 import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
+import 'package:tutors_plan/feature/register/domain/user_role.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
@@ -21,6 +23,7 @@ class RegistrationController extends GetxController{
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  int appRoleId = 0;
 
   RxBool isChecked = false.obs;
   RxString usernameError = ''.obs;
@@ -42,6 +45,32 @@ class RegistrationController extends GetxController{
   RegistrationRepository registrationRepository = RegistrationRepository();
   RegistrationPostBody registrationPostBody = RegistrationPostBody();
 
+  List<AppRoles>? appRoles = [];
+
+  final Map<String, UserRole> userRoleTypeList = {
+    'Student': UserRole(
+      title: 'Student',
+      imageUrl: 'assets/svg/graduation_cap.svg',
+      selectedColor: ColorUtils.baseColor,
+      bgColor: ColorUtils.baseBlueColorLight,
+      id: 0,
+    ),
+    'Tutor': UserRole(
+      title: 'Tutor',
+      imageUrl: 'assets/svg/graduation_cap.svg',
+      selectedColor: ColorUtils.baseOrangeColor,
+      bgColor: ColorUtils.baseOrangeColorLight,
+      id: 0,
+    ),
+    'Guardian': UserRole(
+      title: 'Guardian',
+      imageUrl: 'assets/svg/graduation_cap.svg',
+      selectedColor: ColorUtils.basePurpleColor,
+      bgColor: ColorUtils.basePurpleColorLight,
+      id: 0,
+    ),
+  };
+
 
   @override
   void onClose() {
@@ -50,6 +79,26 @@ class RegistrationController extends GetxController{
       print("Controller disposed");
     }
   }
+  Future<void> getAppRoles() async {
+    final result = await registrationRepository.getAppRole(
+        page: 1.toString(),
+        limit:20.toString()
+    );
+    if (result != null) {
+      appRoles = result;
+      for (var role in appRoles!) {
+        final name = role.name;
+        if (name != null) {
+          final roleKey = name.trim();
+          if (userRoleTypeList != null && userRoleTypeList!.containsKey(roleKey)) {
+            userRoleTypeList![roleKey] =
+                userRoleTypeList![roleKey]!.copyWith(id: role.id);
+          }
+        }
+      }
+    }
+  }
+
   Future<void> registerAccount(BuildContext context) async{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     //validationCheck();
@@ -91,6 +140,7 @@ class RegistrationController extends GetxController{
       twoFactorEnabled: isTwoFactorEnabled.value,
       lockoutEnabled: isLockoutEnabled.value,
       email: emailController.text.trim(),
+      roles: [appRoleId],
       passwordHash: passwordController.text.trim(),
     );
   }
