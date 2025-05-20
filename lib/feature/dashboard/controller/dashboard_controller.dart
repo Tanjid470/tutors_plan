@@ -105,6 +105,7 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getCourse({int? coursePage}) async {
+    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     final result = await dashboardRepository.getCourse(
       page: coursePage,
       limit: 10,
@@ -116,6 +117,7 @@ class DashboardController extends GetxController {
         courseList?.addAll(result);
       }
     }
+    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
 
   Future<void> getUserProfile() async {

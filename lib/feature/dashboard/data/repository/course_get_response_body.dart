@@ -2,10 +2,9 @@ class CourseGetResponseBody {
   String? status;
   List<CourseModel>? data;
   String? message;
-  bool? pagination;
 
   CourseGetResponseBody(
-      {this.status, this.data, this.message, this.pagination});
+      {this.status, this.data, this.message});
 
   CourseGetResponseBody.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -16,7 +15,6 @@ class CourseGetResponseBody {
       });
     }
     message = json['message'];
-    pagination = json['pagination'];
   }
 
   Map<String, dynamic> toJson() {
@@ -26,7 +24,6 @@ class CourseGetResponseBody {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['message'] = this.message;
-    data['pagination'] = this.pagination;
     return data;
   }
 }
