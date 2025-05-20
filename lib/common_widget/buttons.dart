@@ -77,40 +77,25 @@ class Buttons extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        margin: const EdgeInsets.only(right: 2),
         padding: const EdgeInsets.symmetric(
-          vertical: 10,
+            vertical: 10,horizontal: 20
         ),
-        decoration: ShapeDecoration(
-          color: bgColor,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1,  color: shadowColor ?? ColorUtils.baseColor),
-            borderRadius: BorderRadius.circular(29),
-          ),
-          shadows: [
-            BoxShadow(
-              color: shadowColor ?? const Color(0xFF8E263B),
-              blurRadius: 0,
-              offset: Offset(3, 3),
-              spreadRadius: 0,
-            )
-          ],
+        decoration: BoxDecoration(
+          color: bgColor ?? ColorUtils.baseColor,
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
-
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Text(
-                title ?? '',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: textColor ?? Colors.white,
-                  fontSize: TextSize.font16(context),
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              title ?? '',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor ?? Colors.white,
+                fontSize: TextSize.font16(context),
+                fontWeight: FontWeight.bold,
               ),
             ),
             icon ?? const SizedBox()
