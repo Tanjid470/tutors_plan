@@ -6,7 +6,7 @@ import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
 
-import 'app_roles_get_body.dart';
+import '../app_roles_get_body.dart';
 
 class RegistrationRepository {
   Dio dio = Dio();
@@ -14,8 +14,12 @@ class RegistrationRepository {
   Future<ApiResult<RegistrationResponseBody>> fetchRegistrationResponse(RegistrationPostBody registrationPostBody) async {
     try {
       dio = await ApiClient.dioClient(false);
+      final queryParameters = {
+        "tokenonly": true,
+      };
       final response = await dio.post(
         UrlConst.registerEndpoint,
+        //queryParameters: queryParameters,
         data: registrationPostBody.toJson(),
         options: Options(
           validateStatus: (status) => status != null && status < 500,
