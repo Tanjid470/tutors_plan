@@ -69,12 +69,18 @@ class DashboardRepository {
    return null;
  }
 
- Future<ApiResult<CourseGetResponseBody>> getCourse() async {
+ Future<ApiResult<CourseGetResponseBody>> getCourse({int? page, int? limit}) async {
    try {
      dio = await ApiClient.dioClient(false);
+     final queryParameters = {
+       "pagination": true,
+       "page": page.toString(),
+       "limit": limit.toString(),
+     };
      var accessToken = preferences.getString('accessToken');
      final response = await dio.get(
        UrlConst.coursesEndpoint,
+       queryParameters: queryParameters,
        options: Options(
          headers: {
            'Authorization': 'Bearer $accessToken',
