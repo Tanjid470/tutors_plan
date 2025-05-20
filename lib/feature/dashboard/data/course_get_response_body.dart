@@ -1,6 +1,6 @@
 class CourseGetResponseBody {
   String? status;
-  List<Data>? data;
+  List<CourseItemModel>? data;
   String? message;
   int? pagination;
 
@@ -10,9 +10,9 @@ class CourseGetResponseBody {
   CourseGetResponseBody.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <CourseItemModel>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(CourseItemModel.fromJson(v));
       });
     }
     message = json['message'];
@@ -31,7 +31,7 @@ class CourseGetResponseBody {
   }
 }
 
-class Data {
+class CourseItemModel {
   int? id;
   String? name;
   String? shortDescription;
@@ -98,7 +98,7 @@ class Data {
   int? primaryTutorId;
   int? masterVideoLibraryId;
 
-  Data(
+  CourseItemModel(
       {this.id,
         this.name,
         this.shortDescription,
@@ -165,7 +165,7 @@ class Data {
         this.primaryTutorId,
         this.masterVideoLibraryId});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CourseItemModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     shortDescription = json['short_description'];

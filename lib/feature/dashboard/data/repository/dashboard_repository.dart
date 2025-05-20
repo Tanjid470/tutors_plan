@@ -11,15 +11,17 @@ import 'package:tutors_plan/utils/network/api_result.dart';
 class DashboardRepository {
  Dio dio = Dio();
   Future<List<CategoryListModel>?> getCourseCategory({
-    String? page,
-    String? limit,
+    int? page,
+    int? limit,
   }) async {
     try {
+      final int currentPage = page ?? 1;
       final queryParameters = {
-        "pagination": true,
-        "page": page ?? "1",
-        "limit": limit ?? "",
+        "pagination": "true",
+        "page": "$currentPage",
+        "limit": "${(limit ?? 10) * currentPage}",
       };
+
       dio = await ApiClient.dioClient(true);
 
       Response response = await dio.get(
@@ -69,7 +71,7 @@ class DashboardRepository {
    return null;
  }
 
- Future<ApiResult<CourseGetResponseBody>> getCourse({int? page, int? limit}) async {
+ Future<CourseGetResponseBody?> getCourse({int? page, int? limit}) async {
    try {
      dio = await ApiClient.dioClient(false);
      final queryParameters = {
@@ -89,40 +91,24 @@ class DashboardRepository {
        ),
      );
      if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
-       var loginResponse = CourseGetResponseBody.fromJson(response.data);
-       var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
-       return ApiSuccess(loginResponse, headers: headers);
+       var courseResponse = CourseGetResponseBody.fromJson(response.data);
+       return courseResponse;
      }
      else {
-       return ApiError(
-         statusCode: response.statusCode,
-         message: (response.data is Map<String, dynamic>)
-             ? response.data['message']?.toString() ?? 'Unknown Error'
-             : response.data?.toString() ?? 'Unknown Error',
-       );
+       return null;
      }
    }
    catch (e) {
      if (e is DioException) {
        final responseData = e.response?.data;
-
        if (responseData is Map<String, dynamic>) {
          final message = responseData['message']?.toString() ?? 'Unknown Error';
-         return ApiError(
-           statusCode: e.response?.statusCode ?? 500,
-           message: message,
-         );
+         return null;
        } else {
-         return ApiError(
-           statusCode: e.response?.statusCode ?? 500,
-           message: responseData?.toString() ?? 'Unknown Error',
-         );
+         return null;
        }
      }
-     return const ApiError(
-       statusCode: 500,
-       message: "Network or unexpected error",
-     );
+     return null;
    }
  }
 

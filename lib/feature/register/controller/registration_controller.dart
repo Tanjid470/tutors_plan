@@ -134,6 +134,7 @@ class RegistrationController extends GetxController{
       lockoutEnabled: isLockoutEnabled.value,
       email: emailController.text.trim(),
       roles: [appRoleId],
+      primaryRole: appRoleId,
       passwordHash: passwordController.text.trim(),
     );
   }
