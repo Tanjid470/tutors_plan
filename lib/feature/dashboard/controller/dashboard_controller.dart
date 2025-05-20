@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
-import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
@@ -15,10 +16,8 @@ class DashboardController extends GetxController{
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
   DashboardRepository dashboardRepository = DashboardRepository();
-  CourseGetResponseBody courseGetResponseBody = CourseGetResponseBody();
   ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
   List<CategoryListModel>? categoryList = [];
-  List<CourseItemModel>? courseList = [];
 
   RxBool isLoadingCategoryList = false.obs;
   RxBool isProfileDataLoading = false.obs;
@@ -123,27 +122,6 @@ class DashboardController extends GetxController{
 
   RxBool isLoadingMore = false.obs;
 
-  Future<void> getCourse() async {
-    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-
-    final result = await dashboardRepository.getCourse(
-        page: coursePage++,
-        limit: courseLimit
-    );
-    if (result != null) {
-      final data = result.data;
-      if (result.status == 'SUCCESS') {
-        if (courseList?.isEmpty == true) {
-          courseList = data;
-        } else {
-          courseList?.addAll(data!);
-        }
-        courseGetResponseBody = result;
-      }
-    }
-    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  }
-
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {
       this.screenStates.value = screenStates;
@@ -152,4 +130,5 @@ class DashboardController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
+
 }

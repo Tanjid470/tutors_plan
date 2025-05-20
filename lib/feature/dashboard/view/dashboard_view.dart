@@ -34,7 +34,6 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     dashboardController.getCourseCategory(categoryPage: dashboardController.categoryPage);
     dashboardController.getUserProfile();
-    dashboardController.getCourse();
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _DashboardViewState extends State<DashboardView> {
                         sliderView(),
                         ScholarPassBundle(),
                         //statView(),
-                        courseCardView(),
+                        //courseCardView(),
                         categoryView(),
                         programCardView(),
                         verticalGap(context, 2),
@@ -364,49 +363,50 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget courseCardView(){
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Trending courses ${dashboardController.courseList?.length}',
-          style: customTextStyle(
-              context,
-              fontSize: TextSize.font20(context),
-              fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.435,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: dashboardController.courseList?.length,
-            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              var courses = dashboardController.courseList?[index];
-              return CourseCard(
-                title: courses?.name ?? 'title of the course',
-                itemNo: index,
-                description: courses?.shortDescription ?? 'shortDescription of the course',
-                imageUrl: courses?.image ?? '',
-                author: courses?.credits ?? '',
-                originalPrice: courses?.regularPrice ?? 0,
-                discountedPrice: courses?.discountedPrice ?? 0,
-                hasScholarship: courses?.hasScholarship ?? false,
-                features: [],
-                duration: courses?.courseDuration ?? 0,
-                sessions: courses?.numberOfLiveTutorsLessons ?? 0,
-                videos: courses?.numberOfVideoLessons ?? 0,
-                books: courses?.numberOfBookLessons ?? 0,
-                modules: courses?.numberOfBookLessons ?? 0,
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
+
+  // Widget courseCardView(){
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text('Trending courses }',
+  //         style: customTextStyle(
+  //             context,
+  //             fontSize: TextSize.font20(context),
+  //             fontWeight: FontWeight.bold),
+  //       ),
+  //       SizedBox(
+  //         height: MediaQuery.of(context).size.height * 0.435,
+  //         child: ListView.builder(
+  //           scrollDirection: Axis.horizontal,
+  //           itemCount: dashboardController.courseGetResponseBody.data?.length,
+  //           padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+  //           shrinkWrap: true,
+  //           itemBuilder: (context, index) {
+  //             var courses = dashboardController.courseGetResponseBody.data?[index];
+  //             return CourseCard(
+  //               title: courses?.name ?? 'title of the course',
+  //               itemNo: index,
+  //               description: courses?.shortDescription ?? 'shortDescription of the course',
+  //               imageUrl: courses?.image ?? '',
+  //               author: courses?.credits ?? '',
+  //               originalPrice: courses?.regularPrice ?? 0,
+  //               discountedPrice: courses?.discountedPrice ?? 0,
+  //               hasScholarship: courses?.hasScholarship ?? false,
+  //               features: [],
+  //               duration: courses?.courseDuration ?? 0,
+  //               sessions: courses?.numberOfLiveTutorsLessons ?? 0,
+  //               videos: courses?.numberOfVideoLessons ?? 0,
+  //               books: courses?.numberOfBookLessons ?? 0,
+  //               modules: courses?.numberOfBookLessons ?? 0,
+  //             );
+  //           },
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget programCardView(){
     return Row(
