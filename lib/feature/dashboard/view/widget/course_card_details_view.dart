@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tutors_plan/common_widget/buttons.dart';
 import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
+import 'package:tutors_plan/main.dart';
+import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/services/stripe_service.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
@@ -75,7 +79,42 @@ class CourseDetailsScreen extends StatelessWidget {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16),
           child: BaseButton(
-            onClick: () => _handlePayment(context, courseID: courseid, studentId: studentId),
+            onClick: () {
+              String? accessToken = preferences.getString('accessToken');
+
+              if (accessToken == null) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Center(child: Text("Login Required")),
+                    content: Text("You are sign-in as guest user.For enroll course you need to sign-in."),
+                    actionsAlignment: MainAxisAlignment.center,
+                    actions: [
+                      Buttons(
+                          style: ButtonsStyle.dynamicButton,
+                          title: 'Cancel',
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        bgColor: Colors.grey.shade400,
+                        textColor: Colors.black87,
+                      ),
+                      Buttons(
+                          style: ButtonsStyle.blueButton,
+                          title: 'Sign in',
+                          onTap: () async{
+                            await preferences.clear();
+                            Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                          },
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                _handlePayment(context, courseID: courseid, studentId: studentId);
+              }
+            },
+
             title: "Buy Now for \$$newPrice",
             fontSize: TextSize.font14(context),
             padding: const EdgeInsets.symmetric(vertical: 12),
