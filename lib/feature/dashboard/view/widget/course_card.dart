@@ -1,4 +1,4 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
 import 'package:tutors_plan/config/font_constants.dart';
@@ -9,19 +9,32 @@ import 'course_card_details_view.dart';
 
 class CourseCard extends StatelessWidget {
   final String title;
+  final int? itemNo;
   final String description;
   final String imageUrl;
   final String author;
   final int originalPrice;
   final int discountedPrice;
+  final int duration;
+  final int sessions;
+  final int videos;
+  final int books;
+  final int modules;
   final bool hasScholarship;
   final List<String> features;
 
-  const CourseCard({super.key,
+  const CourseCard({
+    super.key,
     required this.title,
+    this.itemNo,
     required this.description,
     required this.imageUrl,
     required this.author,
+    required this.duration,
+    required this.sessions,
+    required this.videos,
+    required this.books,
+    required this.modules,
     required this.originalPrice,
     required this.discountedPrice,
     required this.hasScholarship,
@@ -44,73 +57,82 @@ class CourseCard extends StatelessWidget {
             ),
           ],
           border: Border.all(color: Colors.grey.shade400),
-          borderRadius: BorderRadius.all(Radius.circular(10))
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
-              Image.asset(
-                height: 100,
-                width: MediaQuery.of(context).size.width * 0.5,
-                imageUrl,
-                fit: BoxFit.fill,
-              ),
+              imageUrl.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      height: 100,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Image.asset(
+                        'assets/images/dummy_image.jpg',
+                        height: 100,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  : Image.asset(
+                      'assets/images/dummy_image.jpg',
+                      height: 100,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      fit: BoxFit.fill,
+                    ),
               Positioned(
                   bottom: 5,
                   left: 5,
                   child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 3),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          gradient: LinearGradient(
-                              colors: [
-                                ColorUtils.baseBlueColorShade100,
-                                ColorUtils.baseBlueColorShade300,
-                              ]
-                          ),
-                        border: Border.all(color: Colors.grey,width: 1)
-                      ),
+                          gradient: LinearGradient(colors: [
+                            ColorUtils.baseBlueColorShade100,
+                            ColorUtils.baseBlueColorShade300,
+                          ]),
+                          border: Border.all(color: Colors.grey, width: 1)),
                       child: Text('Scholarship available',
-                          style:whiteText(fontWeight: FontWeight.w400,TextSize.font8(context)))
-                  )
-              ),
+                          style: whiteText(
+                              fontWeight: FontWeight.w400,
+                              TextSize.font8(context))))),
               Positioned(
                   top: 7,
                   right: 7,
                   child: CircleAvatar(
-                    radius: 10,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.favorite_border,color: Colors.red,size: TextSize.font14(context))
-                  )
-              ),
+                      radius: 10,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.favorite_border,
+                          color: Colors.red, size: TextSize.font14(context)))),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Column(
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
-                    style: customTextStyle(
-                        context,
+                Text('$title ${itemNo != null ? '$itemNo.' : ''}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: customTextStyle(context,
                         fontSize: TextSize.font16(context),
                         fontWeight: FontWeight.bold,
-                        color: ColorUtils.black
-                    )
-                ),
+                        color: ColorUtils.black)),
                 Align(
                   alignment: Alignment.center,
-                  child: Text(description,
-                    style: customTextStyle(
-                        context,
+                  child: Text(
+                    description,
+                    style: customTextStyle(context,
                         fontSize: TextSize.font12(context),
                         fontWeight: FontWeight.bold,
-                        color: ColorUtils.black54
-                    ),
+                        color: ColorUtils.black54),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -120,27 +142,26 @@ class CourseCard extends StatelessWidget {
                   children: [
                     CourseSubplotCard(
                         context: context,
-                        title: '4 months Duration',
-                        icon: Icons.date_range
-                    ),
+                        title: '$duration months Duration',
+                        icon: Icons.date_range),
                     CourseSubplotCard(
                       context: context,
-                      title: '25 Tutoring Sessions',
+                      title: '$sessions Tutoring Sessions',
                       icon: Icons.school,
                     ),
                     CourseSubplotCard(
                       context: context,
-                      title: '18 Video Lessons',
+                      title: '$videos Video Lessons',
                       icon: Icons.play_circle_fill,
                     ),
                     CourseSubplotCard(
                       context: context,
-                      title: '12 Book Lessons',
+                      title: '$books Book Lessons',
                       icon: Icons.menu_book,
                     ),
                     CourseSubplotCard(
                       context: context,
-                      title: '8 Modules',
+                      title: '$modules Modules',
                       icon: Icons.view_module,
                     ),
                   ],
@@ -153,24 +174,23 @@ class CourseCard extends StatelessWidget {
                         spacing: 3,
                         children: [
                           Container(
-                            height : 20,
-                            width : 20,
+                            height: 20,
+                            width: 20,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: ColorUtils.grey)
-                            ),
-                            child: Icon(Icons.person,size: TextSize.font14(context)),
+                                border: Border.all(color: ColorUtils.grey)),
+                            child: Icon(Icons.person,
+                                size: TextSize.font14(context)),
                           ),
                           Expanded(
-                            child: Text(author,
+                            child: Text(
+                              author,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: customTextStyle(
-                                  context,
+                              style: customTextStyle(context,
                                   fontSize: TextSize.font12(context),
                                   fontWeight: FontWeight.bold,
-                                  color: ColorUtils.black54
-                              ),
+                                  color: ColorUtils.black54),
                             ),
                           ),
                         ],
@@ -183,33 +203,31 @@ class CourseCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('\$ $originalPrice',
-                            style: customTextStyle(
-                                context,
+                          Text(
+                            '\$ $originalPrice',
+                            style: customTextStyle(context,
                                 fontSize: TextSize.font10(context),
                                 fontWeight: FontWeight.w500,
-                                color: ColorUtils.grey
-                            ),
+                                color: ColorUtils.grey),
                           ),
-                          Text('\$ $discountedPrice',
-                            style: customTextStyle(
-                                context,
+                          Text(
+                            '\$ $discountedPrice',
+                            style: customTextStyle(context,
                                 fontSize: TextSize.font12(context),
                                 fontWeight: FontWeight.bold,
-                                color: ColorUtils.black54
-                            ),
+                                color: ColorUtils.black54),
                           ),
                         ],
                       ),
                     ),
                   ],
                 ),
-
                 BaseButton(
-                  onClick: (){
+                  onClick: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const CourseDetailsScreen()),
+                      MaterialPageRoute(
+                          builder: (_) => const CourseDetailsScreen()),
                     );
                   },
                   title: 'Enroll Now',
