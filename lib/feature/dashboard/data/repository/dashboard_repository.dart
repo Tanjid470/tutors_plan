@@ -6,7 +6,6 @@ import 'package:tutors_plan/feature/dashboard/data/repository/course_get_respons
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
-import 'package:tutors_plan/utils/network/api_result.dart';
 
 class DashboardRepository {
  Dio dio = Dio();

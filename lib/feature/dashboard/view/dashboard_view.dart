@@ -9,7 +9,6 @@ import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/controller/dashboard_controller.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/stat_card.dart';
-import 'package:tutors_plan/feature/dashboard/data/course.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/course_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/k12_bundle_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/learning_art_view.dart';
