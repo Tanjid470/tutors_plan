@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
+import 'package:tutors_plan/feature/dashboard/data/repository/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
@@ -24,11 +25,42 @@ class DashboardRepository {
      dio = await ApiClient.dioClient(true);
 
      Response response = await dio.get(
-       '${UrlConst.getCoursesEndpoint}/',
+       '${UrlConst.getCourseCategoryEndpoint}/',
        queryParameters: queryParameters,
      );
      CourseCategoriesResponseBody data = CourseCategoriesResponseBody.fromJson(response.data);
 
+     if (data.status == 'SUCCESS') {
+       return data.data;
+     }
+     else {
+       return null;
+     }
+   } catch (e) {
+     debugPrint(e.toString());
+   }
+   return null;
+ }
+
+ Future<List<CourseModel>?> getCourse({
+   int? page,
+   int? limit,
+ }) async {
+   try {
+     final int currentPage = page ?? 1;
+     final queryParameters = {
+       "pagination": "true",
+       "page": "$currentPage",
+       "limit": "${(limit ?? 10) * currentPage}",
+     };
+
+     dio = await ApiClient.dioClient(true);
+
+     Response response = await dio.get(
+       UrlConst.getCoursesEndpoint,
+       queryParameters: queryParameters,
+     );
+     CourseGetResponseBody data = CourseGetResponseBody.fromJson(response.data);
      if (data.status == 'SUCCESS') {
        return data.data;
      }
