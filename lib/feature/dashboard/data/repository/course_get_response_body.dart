@@ -40,7 +40,7 @@ class CourseModel {
   int? discountedAmount;
   bool? hasScholarship;
   bool? isTrendingCourse;
-  dynamic courseDuration;
+  String? courseDuration;
   int? numberOfModules;
   int? numberOfBookLessons;
   int? numberOfVideoLessons;
