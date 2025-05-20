@@ -46,6 +46,8 @@ class DashboardController extends GetxController{
   void changePage(int value) {
     selectedPage.value = value;
   }
+  int coursePage = 1;
+  int courseLimit = 10;
 
   List<Slider> splashList = [
     Slider(
@@ -112,7 +114,10 @@ class DashboardController extends GetxController{
   Future<void> getCourse() async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
 
-    final result = await dashboardRepository.getCourse();
+    final result = await dashboardRepository.getCourse(
+        page: coursePage++,
+        limit: courseLimit
+    );
 
     if (result is ApiSuccess<CourseGetResponseBody>) {
       final data = result.data;
@@ -129,7 +134,6 @@ class DashboardController extends GetxController{
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
 
-
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {
       this.screenStates.value = screenStates;
@@ -138,6 +142,5 @@ class DashboardController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
-
 
 }
