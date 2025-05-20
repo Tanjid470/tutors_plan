@@ -7,7 +7,7 @@ import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
-import 'package:tutors_plan/feature/register/data/repository/app_roles_get_body.dart';
+import 'package:tutors_plan/feature/register/data/app_roles_get_body.dart';
 import 'package:tutors_plan/feature/register/data/repository/registration_repository.dart';
 import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
 import 'package:tutors_plan/feature/register/domain/user_role.dart';
