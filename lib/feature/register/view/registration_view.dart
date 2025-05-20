@@ -199,21 +199,24 @@ class _RegisterViewState extends State<RegisterView> {
               children: registerController.userRoleTypeList.map((role) {
                 final isSelected = selectedMethod == role.title;
                 return Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedMethod = role.title;
-                        registerController.appRoleId = role.id ?? 4;
-                        log(registerController.appRoleId.toString());
-                      });
-                    },
-                    child: UserRoleCard(
-                      context: context,
-                      title: role.title,
-                      imageUrl: role.imageUrl,
-                      color: role.selectedColor,
-                      bgColor: role.bgColor,
-                      isSelected: isSelected,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedMethod = role.title;
+                          registerController.appRoleId = role.id ?? 4;
+                          log(registerController.appRoleId.toString());
+                        });
+                      },
+                      child: UserRoleCard(
+                        context: context,
+                        title: role.title,
+                        imageUrl: role.imageUrl,
+                        color: role.selectedColor,
+                        bgColor: role.bgColor,
+                        isSelected: isSelected,
+                      ),
                     ),
                   ),
                 );
