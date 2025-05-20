@@ -15,7 +15,7 @@ class CourseCard extends StatelessWidget {
   final String author;
   final int originalPrice;
   final int discountedPrice;
-  final int duration;
+  final String duration;
   final int sessions;
   final int videos;
   final int books;
@@ -118,7 +118,7 @@ class CourseCard extends StatelessWidget {
               spacing: 10,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('$title ${itemNo != null ? '$itemNo.' : ''}',
+                Text(title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: customTextStyle(context,

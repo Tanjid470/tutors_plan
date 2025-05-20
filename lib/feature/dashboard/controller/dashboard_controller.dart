@@ -16,6 +16,7 @@ class DashboardController extends GetxController {
 
   RxBool isLoadingMore = false.obs;
   RxBool isLoadingCategoryList = false.obs;
+  RxBool isLoadingCourseList = false.obs;
   RxBool isProfileDataLoading = false.obs;
 
   List<Slider> splashList = [
@@ -111,6 +112,7 @@ class DashboardController extends GetxController {
       limit: 10,
     );
     if (result != null) {
+      isLoadingCourseList.value = true;
       if (courseList?.isEmpty == true) {
         courseList = result;
       } else {
