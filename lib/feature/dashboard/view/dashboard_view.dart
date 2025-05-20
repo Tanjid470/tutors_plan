@@ -360,57 +360,6 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget courseCardView(){
-    final List<Course> dummyCourses = [
-      Course(
-        title: 'Math Mastery',
-        description: 'Master arithmetic and algebra for Grade 6 students',
-        imageUrl: 'assets/images/math.jpeg',
-        author: 'Alice Johnson',
-        originalPrice: 70,
-        discountedPrice: 55,
-        hasScholarship: true,
-        features: [
-          '6 months Duration',
-          '30 Tutoring Sessions',
-          '20 Video Lessons',
-          '15 Book Lessons',
-          '10 Modules',
-        ],
-      ),
-      Course(
-        title: 'Science Explorers',
-        description: 'Discover science through fun experiments and videos',
-        imageUrl: 'assets/images/science.jpeg',
-        author: 'David Kim',
-        originalPrice: 80,
-        discountedPrice: 65,
-        hasScholarship: false,
-        features: [
-          '5 months Duration',
-          '28 Tutoring Sessions',
-          '22 Video Lessons',
-          '10 Book Lessons',
-          '9 Modules',
-        ],
-      ),
-      Course(
-        title: 'History Adventure',
-        description: 'Explore world history with Grade 5-level activities and stories',
-        imageUrl: 'assets/images/history.jpeg',
-        author: 'Tanjid Hossain Amran',
-        originalPrice: 60,
-        discountedPrice: 50,
-        hasScholarship: true,
-        features: [
-          '4 months Duration',
-          '25 Tutoring Sessions',
-          '18 Video Lessons',
-          '12 Book Lessons',
-          '8 Modules',
-        ],
-      ),
-    ];
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -426,19 +375,26 @@ class _DashboardViewState extends State<DashboardView> {
           height: MediaQuery.of(context).size.height * 0.435,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: dummyCourses.length,
+            itemCount: dashboardController.courseGetResponseBody.data?.length,
             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
             shrinkWrap: true,
             itemBuilder: (context, index) {
+              var courses = dashboardController.courseGetResponseBody.data?[index];
               return CourseCard(
-                title: dummyCourses[index].title,
-                description: dummyCourses[index].description,
-                imageUrl: dummyCourses[index].imageUrl,
-                author: dummyCourses[index].author,
-                originalPrice: dummyCourses[index].originalPrice,
-                discountedPrice: dummyCourses[index].discountedPrice,
-                hasScholarship: dummyCourses[index].hasScholarship,
+                title: courses?.name ?? 'title of the course',
+                itemNo: index,
+                description: courses?.shortDescription ?? 'shortDescription of the course',
+                imageUrl: courses?.image ?? '',
+                author: courses?.credits ?? '',
+                originalPrice: courses?.regularPrice ?? 0,
+                discountedPrice: courses?.discountedPrice ?? 0,
+                hasScholarship: courses?.hasScholarship ?? false,
                 features: [],
+                duration: courses?.courseDuration ?? 0,
+                sessions: courses?.numberOfLiveTutorsLessons ?? 0,
+                videos: courses?.numberOfVideoLessons ?? 0,
+                books: courses?.numberOfBookLessons ?? 0,
+                modules: courses?.numberOfBookLessons ?? 0,
               );
             },
           ),
