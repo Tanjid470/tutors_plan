@@ -5,7 +5,7 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/course_subplot_card.dart';
-import 'course_card_details_view.dart';
+import '../../../course_details/view/course_card_details_view.dart';
 
 class CourseCard extends StatelessWidget {
   final String title;
