@@ -32,7 +32,7 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   void initState() {
-    dashboardController.getCourseCategory();
+    dashboardController.getCourseCategory(categoryPage: dashboardController.categoryPage);
     dashboardController.getUserProfile();
     dashboardController.getCourse();
     super.initState();
@@ -253,11 +253,16 @@ class _DashboardViewState extends State<DashboardView> {
             ),
             const Spacer(),
 
-            Text('See all',
-                style: customTextStyle(
-                  context,
-                  fontSize: TextSize.font14(context),
-                )
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, RouteNames.categoryView);
+              },
+              child: Text('See all',
+                  style: customTextStyle(
+                    context,
+                    fontSize: TextSize.font14(context),
+                  )
+              ),
             ),
           ],
         ),
@@ -365,7 +370,7 @@ class _DashboardViewState extends State<DashboardView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Trending courses',
+        Text('Trending courses ${dashboardController.courseList?.length}',
           style: customTextStyle(
               context,
               fontSize: TextSize.font20(context),
@@ -375,11 +380,11 @@ class _DashboardViewState extends State<DashboardView> {
           height: MediaQuery.of(context).size.height * 0.435,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: dashboardController.courseGetResponseBody.data?.length,
+            itemCount: dashboardController.courseList?.length,
             padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              var courses = dashboardController.courseGetResponseBody.data?[index];
+              var courses = dashboardController.courseList?[index];
               return CourseCard(
                 title: courses?.name ?? 'title of the course',
                 itemNo: index,

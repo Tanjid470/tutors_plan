@@ -18,19 +18,29 @@ class DashboardController extends GetxController{
   CourseGetResponseBody courseGetResponseBody = CourseGetResponseBody();
   ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
   List<CategoryListModel>? categoryList = [];
+  List<CourseItemModel>? courseList = [];
 
   RxBool isLoadingCategoryList = false.obs;
   RxBool isProfileDataLoading = false.obs;
 
-  Future<void> getCourseCategory() async {
+  int categoryPage = 1;
+
+  Future<void> getCourseCategory({int? categoryPage}) async {
+    isLoadingMore.value = true;
+
     final result = await dashboardRepository.getCourseCategory(
-      page: 1.toString(),
-      limit:10.toString()
+      page: categoryPage,
+      limit:10,
     );
     if (result != null) {
       isLoadingCategoryList.value = true;
-      categoryList = result;
+      if (categoryList?.isEmpty == true) {
+        categoryList = result;
+      } else {
+        categoryList?.addAll(result);
+      }
     }
+    isLoadingMore.value = false;
   }
 
   Future<void> getUserProfile() async {
@@ -111,6 +121,8 @@ class DashboardController extends GetxController{
     ),
   ];
 
+  RxBool isLoadingMore = false.obs;
+
   Future<void> getCourse() async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
 
@@ -118,18 +130,16 @@ class DashboardController extends GetxController{
         page: coursePage++,
         limit: courseLimit
     );
-
-    if (result is ApiSuccess<CourseGetResponseBody>) {
+    if (result != null) {
       final data = result.data;
-      if (data.status == 'SUCCESS') {
-        courseGetResponseBody = data;
-      } else {
-
+      if (result.status == 'SUCCESS') {
+        if (courseList?.isEmpty == true) {
+          courseList = data;
+        } else {
+          courseList?.addAll(data!);
+        }
+        courseGetResponseBody = result;
       }
-
-    }
-    else if (result is ApiError) {
-      final apiError = result as ApiError;
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
@@ -142,5 +152,4 @@ class DashboardController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
-
 }

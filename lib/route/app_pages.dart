@@ -1,6 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/feature/bottom_navigator/view/bottom_navigation_view.dart';
+import 'package:tutors_plan/feature/category/view/category_view.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/feature/learning/view/library_view.dart';
 import 'package:tutors_plan/feature/login/view/login_view.dart';
@@ -41,6 +42,12 @@ class AppPages{
     GetPage(
       name:_Paths.loginView,
       page: () =>  const LoginView(),
+      transition: Transition.rightToLeft,
+      curve: Curves.fastOutSlowIn,
+    ),
+    GetPage(
+      name:_Paths.categoryView,
+      page: () =>  const CategoryView(),
       transition: Transition.rightToLeft,
       curve: Curves.fastOutSlowIn,
     ),
