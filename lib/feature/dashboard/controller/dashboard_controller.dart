@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
-import 'package:tutors_plan/feature/dashboard/data/repository/course_get_response_body.dart';
+import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';

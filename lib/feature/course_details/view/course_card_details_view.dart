@@ -1,36 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/buttons.dart';
+import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
+import 'package:tutors_plan/feature/course_details/controller/course_details_controller.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/services/stripe_service.dart';
 
-class CourseDetailsScreen extends StatelessWidget {
-  const CourseDetailsScreen({super.key});
+class CourseDetailsScreen extends StatefulWidget {
+   const CourseDetailsScreen({super.key});
 
+  @override
+  State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
+}
+
+class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   final String courseTitle = "Creative Art & Design - Grade 6";
+
   final String instructor = "Tanjid Hossain Amran";
+
   final String location = "Dhaka, Bangladesh";
+
   final String description = "This course encourages students to express themselves through drawing, painting, and design principles.";
+
   final String outcome = "Students will learn various artistic techniques and improve their creativity through hands-on projects.";
+
   final String prerequisites = "Basic drawing and painting skills.";
 
   final int bookLessons = 12;
+
   final int videoLessons = 18;
+
   final int liveSessions = 10;
+
   final int quizzes = 10;
+
   final int modules = 9;
+
   final int enrolledStudents = 60;
+
   final String duration = "3 months";
 
   final double oldPrice = 50;
+
   final double newPrice = 40;
+
   final int discount = 20;
+
   final int courseid = 190, studentId = 2;
+
+  CourseDetailsController courseDetailsController = Get.put(CourseDetailsController());
+
+  @override
+  void initState() {
+    courseDetailsController.getCourseDetails();
+    super.initState();
+  }
 
   Future<void> _handlePayment(BuildContext context, {required int courseID, required int studentId}) async {
     try {
@@ -69,153 +99,166 @@ class CourseDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        backgroundColor: ColorUtils.white,
-        appBar: AppBar(
-          title: Text(courseTitle),
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(16),
-          child: BaseButton(
-            onClick: () {
-              String? accessToken = preferences.getString('accessToken');
+    return Stack(
+      children: [
+        DefaultTabController(
+          length: 4,
+          child: Scaffold(
+            backgroundColor: ColorUtils.white,
+            appBar: AppBar(
+              title: Text(courseTitle),
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.all(16),
+              child: BaseButton(
+                onClick: () {
+                  String? accessToken = preferences.getString('accessToken');
 
-              if (accessToken == null) {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Center(child: Text("Login Required")),
-                    content: Text("You are sign-in as guest user.For enroll course you need to sign-in."),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actions: [
-                      Buttons(
-                          style: ButtonsStyle.dynamicButton,
-                          title: 'Cancel',
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        bgColor: Colors.grey.shade400,
-                        textColor: Colors.black87,
+                  if (accessToken == null) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Center(child: Text("Login Required")),
+                        content: Text("You are sign-in as guest user.For enroll course you need to sign-in."),
+                        actionsAlignment: MainAxisAlignment.center,
+                        actions: [
+                          Buttons(
+                              style: ButtonsStyle.dynamicButton,
+                              title: 'Cancel',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            bgColor: Colors.grey.shade400,
+                            textColor: Colors.black87,
+                          ),
+                          Buttons(
+                              style: ButtonsStyle.blueButton,
+                              title: 'Sign in',
+                              onTap: () async{
+                                await preferences.clear();
+                                Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                              },
+                          ),
+                        ],
                       ),
-                      Buttons(
-                          style: ButtonsStyle.blueButton,
-                          title: 'Sign in',
-                          onTap: () async{
-                            await preferences.clear();
-                            Navigator.pushReplacementNamed(context, RouteNames.loginView);
-                          },
+                    );
+                  } else {
+                    _handlePayment(context, courseID: courseid, studentId: studentId);
+                  }
+                },
+
+                title: "Buy Now for \$$newPrice",
+                fontSize: TextSize.font14(context),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                borderRadius: 12,
+              ),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Image.asset(
+                        'assets/images/dummy_image.jpg',
+                        width: double.infinity,
+                        height: 180,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        bottom: 12,
+                        left: 12,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          color: Colors.black54,
+                          child: Text(
+                            "$discount% OFF",
+                            style: customTextStyle(context, fontSize: TextSize.font12(context), fontWeight: FontWeight.bold, color: ColorUtils.white),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                );
-              } else {
-                _handlePayment(context, courseID: courseid, studentId: studentId);
-              }
-            },
-
-            title: "Buy Now for \$$newPrice",
-            fontSize: TextSize.font14(context),
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            borderRadius: 12,
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/dummy_image.jpg',
-                    width: double.infinity,
-                    height: 180,
-                    fit: BoxFit.cover,
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(courseTitle,
+                            style: customTextStyle(context, fontSize: TextSize.font20(context), fontWeight: FontWeight.bold, color: ColorUtils.black)),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                            Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                            Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                            Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                            Icon(Icons.star_half, color: Colors.orangeAccent, size: 18),
+                            const SizedBox(width: 8),
+                            Text(courseDetailsController.courseDetails.name.toString()),
+                            Text("4.5 ($enrolledStudents Students)",
+                                style:
+                                    customTextStyle(context, fontSize: TextSize.font12(context), fontWeight: FontWeight.w500, color: ColorUtils.black54)),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text("\$$oldPrice",
+                                style: customTextStyle(
+                                  context,
+                                  fontSize: TextSize.font14(context),
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.red,
+                                )),
+                            const SizedBox(width: 8),
+                            Text("\$$newPrice",
+                                style: customTextStyle(context,
+                                    fontSize: TextSize.font18(context), fontWeight: FontWeight.bold, color: ColorUtils.baseColor)),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Positioned(
-                    bottom: 12,
-                    left: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      color: Colors.black54,
-                      child: Text(
-                        "$discount% OFF",
-                        style: customTextStyle(context, fontSize: TextSize.font12(context), fontWeight: FontWeight.bold, color: ColorUtils.white),
-                      ),
+                  TabBar(
+                    isScrollable: true,
+                    labelColor: ColorUtils.baseColor,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: ColorUtils.baseColor,
+                    tabAlignment: TabAlignment.center,
+                    labelStyle: customTextStyle(context, fontSize: TextSize.font16(context), fontWeight: FontWeight.bold, color: ColorUtils.black),
+                    tabs: const [
+                      Tab(text: "Overview"),
+                      Tab(text: "Curriculum"),
+                      Tab(text: "Tutor"),
+                      Tab(text: "Institution"),
+                    ],
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        _overviewTab(context),
+                        _curriculumTab(context),
+                        _tutorTab(context),
+                        _institutionTab(context),
+                      ],
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(courseTitle,
-                        style: customTextStyle(context, fontSize: TextSize.font20(context), fontWeight: FontWeight.bold, color: ColorUtils.black)),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                        Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                        Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                        Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                        Icon(Icons.star_half, color: Colors.orangeAccent, size: 18),
-                        const SizedBox(width: 8),
-                        Text("4.5 ($enrolledStudents Students)",
-                            style:
-                                customTextStyle(context, fontSize: TextSize.font12(context), fontWeight: FontWeight.w500, color: ColorUtils.black54)),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text("\$$oldPrice",
-                            style: customTextStyle(
-                              context,
-                              fontSize: TextSize.font14(context),
-                              fontWeight: FontWeight.w400,
-                              color: Colors.red,
-                            )),
-                        const SizedBox(width: 8),
-                        Text("\$$newPrice",
-                            style: customTextStyle(context,
-                                fontSize: TextSize.font18(context), fontWeight: FontWeight.bold, color: ColorUtils.baseColor)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              TabBar(
-                isScrollable: true,
-                labelColor: ColorUtils.baseColor,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: ColorUtils.baseColor,
-                tabAlignment: TabAlignment.center,
-                labelStyle: customTextStyle(context, fontSize: TextSize.font16(context), fontWeight: FontWeight.bold, color: ColorUtils.black),
-                tabs: const [
-                  Tab(text: "Overview"),
-                  Tab(text: "Curriculum"),
-                  Tab(text: "Tutor"),
-                  Tab(text: "Institution"),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    _overviewTab(context),
-                    _curriculumTab(context),
-                    _tutorTab(context),
-                    _institutionTab(context),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        Obx(() {
+          return courseDetailsController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
+              ? LoadingViewTransparent(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: ColorUtils.baseColor,
+          ): SizedBox(); // or any other widget when the state doesn't match
+        })
+      ],
     );
   }
 
