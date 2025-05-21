@@ -34,6 +34,7 @@ class RegistrationController extends GetxController{
   RxString emailError = ''.obs;
   RxString phoneError = ''.obs;
   RxString passwordError = ''.obs;
+  RxString roleSelect = ''.obs;
 
   RxBool isActiveOrArchive = true.obs;
   RxBool isEmailConfirmed = true.obs;
