@@ -37,7 +37,8 @@ class ColorUtils{
   static Color errorBorderColor = Colors.red;
   static Color competeBorderColor = baseColor;
 
-  static Color successSnackBarColor = Color(0xFFC8E6C9); // green.shade100
-  static Color errorSnackBarColor = Color(0xFFFFCDD2);   // red.shade100
+  static const Color successSnackBarColor = Color(0xFF81C784); // green.shade300
+  static const Color errorSnackBarColor = Color(0xFFE57373);   // red.shade300
+
 
 }

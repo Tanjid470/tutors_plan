@@ -50,8 +50,6 @@ class Data {
   bool? smsSubscribed;
   int? customerIdStripe;
   int? activeSubscriptionId;
-  int? primaryRole;
-  List<String>? appUserRoles;
   int? masterCountryId;
   int? zoneId;
   int? studentId;
@@ -85,8 +83,6 @@ class Data {
         this.smsSubscribed,
         this.customerIdStripe,
         this.activeSubscriptionId,
-        this.primaryRole,
-        this.appUserRoles,
         this.masterCountryId,
         this.zoneId,
         this.studentId,
@@ -120,8 +116,6 @@ class Data {
     smsSubscribed = json['sms_subscribed'];
     customerIdStripe = json['customer_id_stripe'];
     activeSubscriptionId = json['active_subscription_id'];
-    primaryRole = json['primary_role'];
-    appUserRoles = json['app_user_roles'].cast<String>();
     masterCountryId = json['master_country_id'];
     zoneId = json['zone_id'];
     studentId = json['student_id'];
@@ -157,8 +151,6 @@ class Data {
     data['sms_subscribed'] = smsSubscribed;
     data['customer_id_stripe'] = customerIdStripe;
     data['active_subscription_id'] = activeSubscriptionId;
-    data['primary_role'] = primaryRole;
-    data['app_user_roles'] = appUserRoles;
     data['master_country_id'] = masterCountryId;
     data['zone_id'] = zoneId;
     data['student_id'] = studentId;
