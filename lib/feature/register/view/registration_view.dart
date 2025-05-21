@@ -186,13 +186,26 @@ class _RegisterViewState extends State<RegisterView> {
               onChanged: (_) => registerController.passwordError.value = Validators.validatePassword(registerController.passwordController.text) ?? '',
               showPassIcon: true,
             )),
-            Text('Choose your role',
-                style: customTextStyle(
-                  context,
-                  fontSize: TextSize.font18(context),
-                  color: ColorUtils.black,
-                  fontWeight: FontWeight.w500,
-                )
+            Row(
+              spacing: 5,
+              children: [
+                Text('Choose your role',
+                    style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font18(context),
+                      color: ColorUtils.black,
+                      fontWeight: FontWeight.w500,
+                    )
+                ),
+                Text('*',
+                    style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font18(context),
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.w500,
+                    )
+                ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -205,6 +218,7 @@ class _RegisterViewState extends State<RegisterView> {
                       onTap: () {
                         setState(() {
                           selectedMethod = role.title;
+                          registerController.roleSelect.value = '';
                           registerController.appRoleId = role.id ?? 4;
                           log(registerController.appRoleId.toString());
                         });
@@ -222,7 +236,10 @@ class _RegisterViewState extends State<RegisterView> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 10),
+            Obx((){
+              return registerController.roleSelect.value.isEmpty ?
+                  Text('') : Text(registerController.roleSelect.value,style: customTextStyle(context,color: Colors.redAccent),);
+            }),
             termsAndCondition(
               registerController.isChecked.value,
                   (bool? value) {
@@ -328,6 +345,10 @@ class _RegisterViewState extends State<RegisterView> {
             }
             if (registerController.passwordController.text.isEmpty) {
               registerController.passwordError.value = 'Please enter password';
+              return;
+            }
+            if (registerController.appRoleId == 0) {
+              registerController.roleSelect.value = 'Please chose your role';
               return;
             }
             registerController.registerAccount(context);
