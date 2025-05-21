@@ -17,6 +17,7 @@ class _InAppWebViewState extends State<InAppWebView> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setUserAgent("tutorsplanApp")
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (String url) {

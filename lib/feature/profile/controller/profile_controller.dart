@@ -40,6 +40,7 @@ class ProfileController extends GetxController {
     if (result != null) {
       profileGetResponseBody = result;
       setProfileData();
+      update();
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }

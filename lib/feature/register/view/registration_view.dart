@@ -352,7 +352,6 @@ class _RegisterViewState extends State<RegisterView> {
               return;
             }
             registerController.registerAccount(context);
-            SmartDialog.showToast('not implemented yet');
 
           }, title: 'Register',),
         ),
