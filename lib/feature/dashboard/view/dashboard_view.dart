@@ -323,7 +323,7 @@ class _DashboardViewState extends State<DashboardView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "0 courses",
+                                        "1 courses",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
