@@ -328,7 +328,7 @@ class _DashboardViewState extends State<DashboardView> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "0 students",
+                                        "2 students",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
