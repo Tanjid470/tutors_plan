@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/common_widget/toggle_switch_tile.dart';
@@ -11,7 +8,6 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/registration_controller.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
-import 'package:tutors_plan/feature/register/domain/user_role.dart';
 import 'package:tutors_plan/feature/register/view/widget/user_role_card.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 
@@ -30,7 +26,6 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   void initState() {
-    registerController.getAppRoles();
     super.initState();
   }
   @override
@@ -216,12 +211,7 @@ class _RegisterViewState extends State<RegisterView> {
                     padding: const EdgeInsets.all(5),
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          selectedMethod = role.title;
-                          registerController.roleSelect.value = '';
-                          registerController.appRoleId = role.id ?? 4;
-                          log(registerController.appRoleId.toString());
-                        });
+
                       },
                       child: UserRoleCard(
                         context: context,
@@ -351,7 +341,7 @@ class _RegisterViewState extends State<RegisterView> {
               registerController.roleSelect.value = 'Please chose your role';
               return;
             }
-            registerController.registerAccount(context);
+
 
           }, title: 'Register',),
         ),

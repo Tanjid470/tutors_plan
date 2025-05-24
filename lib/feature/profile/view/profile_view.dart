@@ -27,7 +27,6 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   void initState() {
     accessToken= preferences.getString('accessToken');
-    profileController.getUserProfile();
     super.initState();
   }
 

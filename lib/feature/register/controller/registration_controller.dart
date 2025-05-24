@@ -1,19 +1,9 @@
-import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
-import 'package:tutors_plan/feature/register/data/app_roles_get_body.dart';
-import 'package:tutors_plan/feature/register/data/repository/registration_repository.dart';
-import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
-import 'package:tutors_plan/feature/register/domain/user_role.dart';
-import 'package:tutors_plan/main.dart';
-import 'package:tutors_plan/route/app_pages.dart';
-import 'package:tutors_plan/utils/network/api_result.dart';
+import 'package:tutors_plan/feature/register/view/widget/user_role.dart';
 
 class RegistrationController extends GetxController{
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
@@ -45,18 +35,7 @@ class RegistrationController extends GetxController{
 
   RxString selectedUserRole = ''.obs;
 
-  RegistrationRepository registrationRepository = RegistrationRepository();
-  RegistrationPostBody registrationPostBody = RegistrationPostBody();
 
-  @override
-  void onClose() {
-    super.onClose();
-    if (kDebugMode) {
-      print("Controller disposed");
-    }
-  }
-
-  List<AppRoles>? appRoles = [];
 
   final List<UserRole> userRoleTypeList = [
     UserRole(
@@ -81,64 +60,6 @@ class RegistrationController extends GetxController{
       id: 5,
     ),
   ];
-
-  Future<void> getAppRoles() async {
-    final result = await registrationRepository.getAppRole(
-        page: 1.toString(),
-        limit:20.toString()
-    );
-    if (result != null) {
-      appRoles = result;
-      update();
-    }
-  }
-
-  Future<void> registerAccount(BuildContext context) async{
-    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-    //validationCheck();
-    await insertRegistrationBody();
-    final response = await registrationRepository.fetchRegistrationResponse(registrationPostBody);
-    if (response is ApiSuccess<RegistrationResponseBody>) {
-      final loginResponse = response.data;
-      final headers = response.headers;
-      if (loginResponse.status == 'SUCCESS') {
-        preferences.setInt('initScreen', 1);
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
-        Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
-      }
-      headers?.forEach((key, value) {
-        debugPrint('Header: $key => $value');
-      });
-    }
-    else if (response is ApiError) {
-      final apiError = response as ApiError;
-      ScaffoldMessenger.of(context).showSnackBar(
-          customSnackBar('Login failed...!',context,subtitle: apiError.message,color: ColorUtils.errorSnackBarColor)
-      );
-    }
-    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  }
-
-  insertRegistrationBody() {
-    registrationPostBody = RegistrationPostBody(
-      username: userNameController.text.trim(),
-      firstName: firstNameController.text.trim(),
-      lastName: lastNameController.text.trim(),
-      phoneNumber: phoneController.text.trim(),
-      activeOrArchive: isActiveOrArchive.value,
-      emailConfirmed: isEmailConfirmed.value,
-      accountLock: isAccountLocked.value,
-      phoneNumberConfirmed: isPhoneNumberConfirmed.value,
-      twoFactorEnabled: isTwoFactorEnabled.value,
-      lockoutEnabled: isLockoutEnabled.value,
-      email: emailController.text.trim(),
-      roles: [appRoleId],
-      primaryRole: appRoleId,
-      passwordHash: passwordController.text.trim(),
-    );
-  }
 
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {

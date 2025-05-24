@@ -131,7 +131,7 @@ class _LoginViewState extends State<LoginView> {
               loginController.passwordError.value = 'Please enter password';
               return;
             }
-            loginController.login(context);
+            Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
           }, title: 'Login'),
 
           SizedBox(height: ResponsiveScale.of(context).hp(2)),

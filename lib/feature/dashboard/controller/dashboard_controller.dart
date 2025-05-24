@@ -1,18 +1,13 @@
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
-import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
-import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
-import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
 
 class DashboardController extends GetxController {
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
-  DashboardRepository dashboardRepository = DashboardRepository();
-  ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
+
 
   RxBool isLoadingMore = false.obs;
   RxBool isLoadingCategoryList = false.obs;
@@ -81,54 +76,10 @@ class DashboardController extends GetxController {
       },
     ),
   ];
-  List<CategoryListModel>? categoryList = [];
-  List<CourseModel>? courseList = [];
 
   int categoryPage = 1;
   int coursePage = 1;
 
-  Future<void> getCourseCategory({int? categoryPage}) async {
-    isLoadingMore.value = true;
-
-    final result = await dashboardRepository.getCourseCategory(
-      page: categoryPage,
-      limit: 10,
-    );
-    if (result != null) {
-      isLoadingCategoryList.value = true;
-      if (categoryList?.isEmpty == true) {
-        categoryList = result;
-      } else {
-        categoryList?.addAll(result);
-      }
-    }
-    isLoadingMore.value = false;
-  }
-
-  Future<void> getCourse({int? coursePage}) async {
-    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-    final result = await dashboardRepository.getCourse(
-      page: coursePage,
-      limit: 10,
-    );
-    if (result != null) {
-      isLoadingCourseList.value = true;
-      if (courseList?.isEmpty == true) {
-        courseList = result;
-      } else {
-        courseList?.addAll(result);
-      }
-    }
-    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  }
-
-  Future<void> getUserProfile() async {
-    final result = await dashboardRepository.getUserProfile();
-    if (result != null) {
-      isLoadingCategoryList.value = true;
-      profileGetResponseBody = result;
-    }
-  }
 
   var selectedPage = 0.obs;
   void changePage(int value) {

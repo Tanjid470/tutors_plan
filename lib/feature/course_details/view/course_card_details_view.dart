@@ -41,7 +41,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   @override
   void initState() {
-    courseDetailsController.getCourseDetails();
     super.initState();
   }
 
@@ -62,7 +61,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         icon: Icon(Icons.arrow_back_ios, color: ColorUtils.black),
                         onPressed: () => Navigator.pop(context),
                       ),
-                      title: Text('${courseDetailsController.courseDetails.value.name}'),
+                      title: Text('courseDetailsController.courseDetails.value.name'),
                     ),
                     body: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -71,15 +70,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         children: [
                           Stack(
                             children: [
-                              if (courseDetailsController.courseDetails.value.image != null)
-                                featuredImageWidget('${courseDetailsController.courseDetails.value.image}'),
+                              featuredImageWidget('{courseDetailsController.courseDetails.value.image}'),
                               Positioned(
                                 bottom: 12,
                                 left: 12,
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                                   color: Colors.black,
-                                  child: Text("${courseDetailsController.courseDetails.value.discountedPercentage}% OFF",
+                                  child: Text("10% OFF",
                                     style: customTextStyle(context,
                                         fontSize: TextSize.font14(context),
                                         fontWeight: FontWeight.bold,
@@ -94,12 +92,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(courseDetailsController.courseDetails.value.name ?? " ",
+                                Text("courseDetails name",
                                     style: customTextStyle(context,
                                         fontSize: TextSize.font20(context),
                                         fontWeight: FontWeight.bold,
                                         color: ColorUtils.black)),
-                                Text(courseDetailsController.courseDetails.value.shortDescription ?? " ",
+                                Text("shortDescription",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: customTextStyle(context,
@@ -116,7 +114,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                     Icon(Icons.star_half, color: Colors.orangeAccent, size: 18),
                                     const SizedBox(width: 8),
                                     Text(
-                                        "4.5 (${courseDetailsController.courseDetails.value.credits ?? 0} Credits)",
+                                        "4.5  || 0 Credits)",
                                         style: customTextStyle(context,
                                             fontSize: TextSize.font12(context),
                                             fontWeight: FontWeight.w500,
@@ -127,7 +125,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                        "\$${courseDetailsController.courseDetails.value.regularPrice}",
+                                        "\$regularPrice",
                                         style: customTextStyle(
                                           context,
                                           fontSize: TextSize.font14(context),
@@ -136,7 +134,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                         )),
                                     const SizedBox(width: 8),
                                     Text(
-                                        "\$${courseDetailsController.courseDetails.value.discountedPrice}",
+                                        "\$discountedPrice",
                                         style: customTextStyle(context,
                                             fontSize: TextSize.font18(context),
                                             fontWeight: FontWeight.bold,
@@ -215,10 +213,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             );
                           } else {
                             _handlePayment(context,
-                                courseID: courseDetailsController.courseDetails.value.id ?? 0, studentId: courseDetailsController.courseDetails.value.id ?? 0);
+                                courseID:  240, studentId: 1 );
                           }
                         },
-                        title: "Buy Now for \$${courseDetailsController.courseDetails.value.discountedPrice}",
+                        title: "Buy Now for \$discountedPrice",
                         fontSize: TextSize.font14(context),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         borderRadius: 12,
@@ -305,23 +303,23 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildOverviewItem(context, Icons.description, "Course Description",
-                '${courseDetailsController.courseDetails.value.description}'),
+                'Course Description'),
             _buildOverviewItem(context, Icons.check_circle_outline, "Course Outcomes",
-                '${courseDetailsController.courseDetails.value.courseOutcome}'),
+                'Course Description'),
             Column(
               children: [
                 Row(
                   children: [
-                    overViewCard(context, Icons.calendar_today, "Duration", '${courseDetailsController.courseDetails.value.courseDuration}'),
-                    overViewCard(context, Icons.view_module, "Modules", "${courseDetailsController.courseDetails.value.numberOfModules ?? 0}"),
-                    overViewCard(context, Icons.menu_book, "Book Lessons", "${courseDetailsController.courseDetails.value.numberOfBookLessons ?? 0}"),
+                    overViewCard(context, Icons.calendar_today, "Duration", '0'),
+                    overViewCard(context, Icons.view_module, "Modules", "0"),
+                    overViewCard(context, Icons.menu_book, "Book Lessons", "0"),
                   ],
                 ),
                 Row(
                   children: [
-                    overViewCard(context, Icons.play_circle_fill, "Video Lessons", "${courseDetailsController.courseDetails.value.numberOfVideoLessons ?? 0}"),
-                    overViewCard(context, Icons.school, "Live Sessions", "${courseDetailsController.courseDetails.value.numberOfLiveTutorsLessons ?? 0}"),
-                    overViewCard(context, Icons.quiz, "Quizzes", "${courseDetailsController.courseDetails.value.numberOfQuizzes ?? 0}"),
+                    overViewCard(context, Icons.play_circle_fill, "Video Lessons", "0"),
+                    overViewCard(context, Icons.school, "Live Sessions", "0"),
+                    overViewCard(context, Icons.quiz, "Quizzes", "0"),
                   ],
                 )
               ],
@@ -368,7 +366,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: courseDetailsController.courseDetails.value.courseModules?.length ?? 0,
+      itemCount: 5,
       itemBuilder: (BuildContext context, int index) {
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -398,14 +396,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         ),
                       ),
                     ),
-                    Text('${courseDetailsController.courseDetails.value.courseModules?[index].title}',
+                    Text('title',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: customTextStyle(context,fontSize: TextSize.font16(context),color: Colors.black,fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
-                Text('${courseDetailsController.courseDetails.value.courseModules?[index].description}',
+                Text('description',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
@@ -420,7 +418,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         spacing: 3,
                         children: [
                           Icon(Icons.timelapse,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-                          Text('${courseDetailsController.courseDetails.value.courseModules?[index].duration}',
+                          Text('duration',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
@@ -431,7 +429,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         spacing: 3,
                         children: [
                           Icon(Icons.play_lesson_outlined,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-                          Text('${courseDetailsController.courseDetails.value.courseModules?[index].numberOfLessons} Lessons',
+                          Text('0 Lessons',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
@@ -456,7 +454,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       padding: EdgeInsets.zero,
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: courseDetailsController.courseDetails.value.courseLessons?.length ?? 0,
+      itemCount: 5,
       itemBuilder: (BuildContext context, int index) {
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -470,12 +468,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${courseDetailsController.courseDetails.value.courseLessons?[index].title}',
+                Text('title',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: customTextStyle(context,fontSize: TextSize.font16(context),color: Colors.black,fontWeight: FontWeight.w500),
                 ),
-                Text('${courseDetailsController.courseDetails.value.courseLessons?[index].description}',
+                Text('description',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
@@ -490,7 +488,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         spacing: 3,
                         children: [
                           Icon(Icons.timelapse,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-                          Text('${courseDetailsController.courseDetails.value.courseLessons?[index].duration}',
+                          Text('0 duration',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
@@ -543,31 +541,28 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       color: ColorUtils.baseColor,
                     ),
                     image: DecorationImage(
-                      image: courseDetailsController.courseDetails.value.institute?.logo?.contains('http') == true
-                          ? CachedNetworkImageProvider('${courseDetailsController.courseDetails.value.institute?.logo}') as ImageProvider
-                          : const AssetImage('assets/images/dummy_image.jpg'),
+                      image: const AssetImage('assets/images/dummy_image.jpg'),
                       fit: BoxFit.cover,
 
                     ),
                   ),
                 ),
-                Text("${courseDetailsController.courseDetails.value.institute?.name}", style: customTextStyle(context, fontSize: TextSize.font16(context), fontWeight: FontWeight.bold)),
+                Text("name}", style: customTextStyle(context, fontSize: TextSize.font16(context), fontWeight: FontWeight.bold)),
               ],
             ),
-            institutionSubsection(context,'Email: ', '${courseDetailsController.courseDetails.value.institute?.email}'),
-            institutionSubsection(context,'Contact: ', '${courseDetailsController.courseDetails.value.institute?.phone}'),
-            institutionSubsection(context,'Industry: ', '${courseDetailsController.courseDetails.value.institute?.industry}'),
+            institutionSubsection(context,'Email: ', 'test@gmail.com'),
+            institutionSubsection(context,'Contact: ', '0239439838'),
+            institutionSubsection(context,'Industry: ', 'BlackBook'),
             institutionSubsection(
               context,
-              'Since: ',
-              formatToMonthYear(courseDetailsController.courseDetails.value.institute?.onboardedSinceDate),
+              'Since: ', "24 MAy",
             ),
 
             Row(
               spacing: 10,
               children: [
-                institutionSubsection(context,'City: ', '${courseDetailsController.courseDetails.value.institute?.city}'),
-                institutionSubsection(context,'ZIP code: ', '${courseDetailsController.courseDetails.value.institute?.zipCode}'),
+                institutionSubsection(context,'City: ', 'Dhaka'),
+                institutionSubsection(context,'ZIP code: ', '1234'),
               ],
             )
           ],
@@ -603,14 +598,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           children: [
             const Icon(Icons.person, size: 20),
             const SizedBox(width: 6),
-            Text('${courseDetailsController.courseDetails.value.managerEmployee?.name}',
+            Text('Tutor name',
                 style: customTextStyle(context,
                     fontSize: TextSize.font14(context),
                     fontWeight: FontWeight.w500,
                     color: ColorUtils.black54)),
           ],
         ),
-        Text(courseDetailsController.courseDetails.value.managerEmployee?.businessEmail ?? "email",
+        Text("email",
             style: customTextStyle(context,
                 fontSize: TextSize.font12(context),
                 fontWeight: FontWeight.w500,
@@ -619,7 +614,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           children: [
             const Icon(Icons.location_on, size: 18, color: Colors.redAccent),
             const SizedBox(width: 4),
-            Text('${courseDetailsController.courseDetails.value.managerEmployee?.address}',
+            Text('Location',
                 style: customTextStyle(context,
                     fontSize: TextSize.font12(context),
                     fontWeight: FontWeight.w500,
@@ -630,7 +625,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           children: [
             const Icon(Icons.local_activity_outlined, size: 18, color: Colors.black),
             const SizedBox(width: 4),
-            Text('${courseDetailsController.courseDetails.value.managerEmployee?.city}, ${courseDetailsController.courseDetails.value.managerEmployee?.countryCode} ${courseDetailsController.courseDetails.value.managerEmployee?.zipCode}',
+            Text('City, Country Code',
                 style: customTextStyle(context,
                     fontSize: TextSize.font12(context),
                     fontWeight: FontWeight.w500,
@@ -645,7 +640,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       {required int courseID, required int studentId}) async {
     try {
       await StripeService.makePayment(
-        amount: double.tryParse('${courseDetailsController.courseDetails.value.discountedPrice}') ?? 0.0,
+        amount: double.tryParse('100') ?? 0.0,
         currency: 'usd',
         courseID: courseID,
         studentID: studentId,

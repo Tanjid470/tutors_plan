@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
-import 'package:tutors_plan/feature/profile/data/repository/profile_repository.dart';
 
 class ProfileController extends GetxController {
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
@@ -26,24 +24,6 @@ class ProfileController extends GetxController {
   RxBool isTwoFactorAuth = false.obs;
   RxBool isProfileVisible = true.obs;
 
-  ProfileRepository profileRepository = ProfileRepository();
-  ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
-
-
-  void pickImage() {
-    Get.snackbar("Change Avatar", "Feature not implemented yet.");
-  }
-  Future<void> getUserProfile() async {
-    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-
-    final result = await profileRepository.getUserProfile();
-    if (result != null) {
-      profileGetResponseBody = result;
-      setProfileData();
-      update();
-    }
-    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  }
 
 
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
@@ -55,18 +35,6 @@ class ProfileController extends GetxController {
     update();
   }
 
-  void setProfileData() {
-    final data = profileGetResponseBody.data;
-    if (data != null) {
-      firstNameController.text = data.firstName ?? '';
-      lastNameController.text = data.lastName ?? '';
-      usernameController.text = data.username ?? '';
-      emailController.text = data.email ?? '';
-      phoneController.text = data.phoneNumber ?? '';
-      profilePicture.value = data.profilePictureUrl ?? '';
-      update();
-    }
-  }
 
 
 }

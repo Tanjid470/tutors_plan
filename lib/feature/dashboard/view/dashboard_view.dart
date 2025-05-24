@@ -31,9 +31,6 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   void initState() {
-    dashboardController.getCourseCategory(categoryPage: dashboardController.categoryPage);
-    dashboardController.getCourse(coursePage: dashboardController.coursePage);
-    dashboardController.getUserProfile();
     super.initState();
   }
 
@@ -273,9 +270,9 @@ class _DashboardViewState extends State<DashboardView> {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
-                  itemCount: dashboardController.categoryList?.length,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
-                    final categoryItem = dashboardController.categoryList?[index];
+
                     return Container(
                       height: MediaQuery.of(context).size.height * 0.15,
                       width: MediaQuery.of(context).size.width * 0.75,
@@ -301,14 +298,7 @@ class _DashboardViewState extends State<DashboardView> {
                         padding: const EdgeInsets.all(12),
                         child: Row(
                           children: [
-                            categoryItem?.image != null
-                              ? Image.network(
-                              categoryItem?.image ?? '',
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.cover,
-                            )
-                              : Image.asset(
+                             Image.asset(
                                 'assets/images/dummy_image.jpg',
                                 width: 70,
                                 height: 70,
@@ -319,14 +309,14 @@ class _DashboardViewState extends State<DashboardView> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(categoryItem?.name ?? '',
+                                  Text("categoryItem?.name",
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold, fontSize: TextSize.font16(context))
                                   ),
                                   Text(
-                                    "${categoryItem?.seoKeywords.toString() ?? ''} courses",
+                                    "0 courses",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -335,12 +325,12 @@ class _DashboardViewState extends State<DashboardView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "${categoryItem?.totalCourse.toString() ?? ''} courses",
+                                        "totalCourse courses",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "${categoryItem?.enrolledStudents.toString() ?? ''} students",
+                                        "enrolledStudents students",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -382,26 +372,26 @@ class _DashboardViewState extends State<DashboardView> {
                 height: MediaQuery.of(context).size.height * 0.435,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: dashboardController.courseList?.length,
+                  itemCount: 10,
                   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    var courses = dashboardController.courseList?[index];
+
                     return CourseCard(
-                      title: courses?.name ?? 'title of the course',
+                      title: 'title of the course',
                       itemNo: index,
-                      description: courses?.shortDescription ?? 'shortDescription of the course',
+                      description: 'shortDescription of the course',
                       imageUrl: '',
                       author:  '',
                       originalPrice:  0,
-                      discountedPrice: courses?.discountedPrice ?? 0,
-                      hasScholarship: courses?.hasScholarship ?? false,
+                      discountedPrice:  0,
+                      hasScholarship: false,
                       features: [],
-                      duration: courses?.courseDuration ?? "0",
-                      sessions: courses?.numberOfLiveTutorsLessons ?? 0,
-                      videos: courses?.numberOfVideoLessons ?? 0,
-                      books: courses?.numberOfBookLessons ?? 0,
-                      modules: courses?.numberOfBookLessons ?? 0,
+                      duration:  "0",
+                      sessions:  0,
+                      videos:  0,
+                      books:  0,
+                      modules: 0,
                     );
                   },
                 ),

@@ -21,15 +21,15 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   void initState() {
     super.initState();
-    categoryScrollController.addListener(() {
-      if (categoryScrollController.position.pixels >=
-          categoryScrollController.position.maxScrollExtent &&
-          !dashboardController.isLoadingMore.value) {
-        dashboardController.getCourseCategory(
-          categoryPage: ++dashboardController.categoryPage,
-        );
-      }
-    });
+    // categoryScrollController.addListener(() {
+    //   if (categoryScrollController.position.pixels >=
+    //       categoryScrollController.position.maxScrollExtent &&
+    //       !dashboardController.isLoadingMore.value) {
+    //     dashboardController.getCourseCategory(
+    //       categoryPage: ++dashboardController.categoryPage,
+    //     );
+    //   }
+    // });
   }
 
   @override
@@ -40,8 +40,6 @@ class _CategoryViewState extends State<CategoryView> {
         leading: InkWell(
           onTap: (){
             dashboardController.categoryPage = 1;
-            dashboardController.categoryList?.clear();
-            dashboardController.getCourseCategory(categoryPage: 1);
             Get.back();
           },
           child: Icon(Icons.arrow_back_ios),
@@ -59,17 +57,16 @@ class _CategoryViewState extends State<CategoryView> {
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-          itemCount: dashboardController.categoryList!.length +
+          itemCount: 10 +
                 (dashboardController.isLoadingMore.value ? 1 : 0),
           itemBuilder: (context, index) {
-            if (index == dashboardController.categoryList?.length) {
+            if (index == 10) {
               return const Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Center(child: CircularProgressIndicator()),
               );
             }
 
-            final categoryItem = dashboardController.categoryList![index];
             return Container(
               height: MediaQuery.of(context).size.height * 0.15,
               width: MediaQuery.of(context).size.width,
@@ -94,22 +91,7 @@ class _CategoryViewState extends State<CategoryView> {
                 padding: const EdgeInsets.all(12),
                 child: Row(
                   children: [
-                    categoryItem.image != null && categoryItem.image!.isNotEmpty
-                        ? CachedNetworkImage(
-                      imageUrl: categoryItem.image!,
-                      height: 70,
-                      width: 70,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) => Image.asset(
-                        'assets/images/dummy_image.jpg',
-                        height: 100,
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        fit: BoxFit.fill,
-                      ),
-                    )
-                        : Image.asset(
+                    Image.asset(
                       'assets/images/dummy_image.jpg',
                       width: 70,
                       height: 70,
@@ -121,7 +103,7 @@ class _CategoryViewState extends State<CategoryView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            categoryItem.name ?? '',
+                       'categoryItem.name',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -130,7 +112,7 @@ class _CategoryViewState extends State<CategoryView> {
                             ),
                           ),
                           Text(
-                            "${categoryItem.seoKeywords ?? ''} courses",
+                            "0 courses",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -139,12 +121,12 @@ class _CategoryViewState extends State<CategoryView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${categoryItem.totalCourse ?? '0'} courses",
+                                "0 courses",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                "${categoryItem.enrolledStudents ?? '0'} students",
+                                "10 students",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
