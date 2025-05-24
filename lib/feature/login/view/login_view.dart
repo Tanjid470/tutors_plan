@@ -147,8 +147,7 @@ class _LoginViewState extends State<LoginView> {
             children: [
               Text('Don\'t have an account?'),
               TextButton(onPressed: (){
-                Navigator.push(
-                  context,
+                Navigator.push(context,
                   MaterialPageRoute(
                       builder: (context) => const RegisterView()),
                 );
