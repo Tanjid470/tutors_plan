@@ -262,9 +262,7 @@ class _DashboardViewState extends State<DashboardView> {
             ),
           ],
         ),
-        Obx((){
-          return dashboardController.isLoadingCategoryList.value
-              ? SizedBox(
+       SizedBox(
                 height: MediaQuery.of(context).size.height * 0.175,
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -325,12 +323,12 @@ class _DashboardViewState extends State<DashboardView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "totalCourse courses",
+                                        "0 courses",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        "enrolledStudents students",
+                                        "0 students",
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -347,8 +345,6 @@ class _DashboardViewState extends State<DashboardView> {
                   },
                 ),
               )
-              : SizedBox();
-        })
       ]
     );
   }
