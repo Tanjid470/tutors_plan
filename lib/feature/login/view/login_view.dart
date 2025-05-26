@@ -37,6 +37,8 @@ class _LoginViewState extends State<LoginView> {
     return Stack(
       children: [
         Scaffold(
+          extendBody: true,
+            resizeToAvoidBottomInset: false,
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: _view(),
@@ -115,10 +117,6 @@ class _LoginViewState extends State<LoginView> {
               icon: Icons.lock_outline,
               keyboardType: TextInputType.emailAddress,
               showPassIcon: true,
-              forgotPass: true,
-              forgotPassOntap: (){
-                SmartDialog.showToast('not implemented yet');
-              },
             );
           }),
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
@@ -138,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
           BaseButton(onClick: (){
             preferences.setInt('initScreen', 1);
             preferences.setBool('guest', true);
-            ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login as guest',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor));
+            ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login as guest',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor),);
             Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
           }, title: 'Login as guest'),
           Row(

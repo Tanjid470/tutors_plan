@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutors_plan/const/color_utils.dart';
 
 class ScholarPassBundle extends StatelessWidget {
   const ScholarPassBundle({super.key});
@@ -40,8 +41,8 @@ class ScholarPassBundle extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _priceCard('REGULAR PRICE', '\$1,500', Colors.grey[200]!),
-                  _priceCard('SCHOLARSPASS COVERS', '\$1,000',
+                  _priceCard('REGULAR PRICE', '\$1,500', ColorUtils.baseOrangeColorLight,textColor:Colors.deepOrangeAccent),
+                  _priceCard('SCHOLARSPASS', '\$1,000',
                       Colors.deepPurple.shade50, textColor: Colors.deepPurple),
                   _priceCard('STUDENT PAYS', '\$500',
                       Colors.greenAccent.withOpacity(0.2),
@@ -49,36 +50,36 @@ class ScholarPassBundle extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: ElevatedButton(
-              //         onPressed: () {},
-              //         style: ElevatedButton.styleFrom(
-              //           backgroundColor: Colors.deepPurple,
-              //           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              //           shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(10)),
-              //         ),
-              //         child: Text('Enroll Now',style: TextStyle(color: Colors.white),),
-              //       ),
-              //     ),
-              //     const SizedBox(width: 12),
-              //     Expanded(
-              //       child: OutlinedButton(
-              //         onPressed: () {},
-              //         style: OutlinedButton.styleFrom(
-              //           side: BorderSide(color: Colors.deepPurple),
-              //           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              //           shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(10)),
-              //         ),
-              //         child: Text('Check Eligibility',
-              //             style: TextStyle(color: Colors.deepPurple)),
-              //       ),
-              //     ),
-              //   ],
-              // )
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple,
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      child: Text('Enroll Now',style: TextStyle(color: Colors.white),),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: Colors.deepPurple),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      child: Text('Check Eligibility',
+                          style: TextStyle(color: Colors.deepPurple)),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
           // Stack(

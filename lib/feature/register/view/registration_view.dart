@@ -172,7 +172,7 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.phone_android_outlined,
               keyboardType: TextInputType.phone,
               errorText: registerController.phoneError.value,
-              onChanged: (_) => registerController.phoneError.value = Validators.validatePhone(registerController.phoneController.text) ?? '',
+              //onChanged: (_) => registerController.phoneError.value = Validators.validatePhone(registerController.phoneController.text) ?? '',
             )),
             Obx(() => KField(
               headLine: 'Password',
