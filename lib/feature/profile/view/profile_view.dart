@@ -5,6 +5,7 @@ import 'package:tutors_plan/common_widget/k_field.dart';
 import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/common_widget/toggle_switch_tile.dart';
 import 'package:tutors_plan/config/font_constants.dart';
+import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/profile/controller/profile_controller.dart';
@@ -53,14 +54,20 @@ class _ProfileViewState extends State<ProfileView> {
                   Center(
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 45,
-                          backgroundImage: profileController.profilePicture.value.isNotEmpty
-                              ? NetworkImage(profileController.profilePicture.value)
-                              : null,
-                          child: profileController.profilePicture.value.isEmpty
-                              ? const Icon(Icons.person, size: 45)
-                              : null,
+                        Container(
+                          padding: EdgeInsets.all(3), // Border thickness
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: ColorUtils.baseColor, width: 2), // Border color and width
+                          ),
+                          child: CircleAvatar(
+                            radius: ResponsiveScale.of(context).hp(6),
+                            backgroundColor: Colors.white,
+                            child: Image.asset(
+                              'assets/images/profile.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 12),
                         // Buttons(

@@ -11,10 +11,14 @@ class InAppWebView extends StatefulWidget {
 class _InAppWebViewState extends State<InAppWebView> {
   late final WebViewController _controller;
   bool isLoading = true;
+  String accessToken = 'your_real_token_here';
 
   @override
   void initState() {
     super.initState();
+
+    final url = Uri.parse('https://games.tutorsplan.com?token=$accessToken');
+
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setUserAgent("tutorsplanApp")
@@ -37,7 +41,7 @@ class _InAppWebViewState extends State<InAppWebView> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://games.tutorsplan.com'));
+      ..loadRequest(url);
   }
 
   @override

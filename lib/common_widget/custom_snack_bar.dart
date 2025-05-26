@@ -13,16 +13,9 @@ SnackBar customSnackBar(String title, BuildContext context,{Color? color, String
       ],
     ),
     duration: const Duration(seconds: 1),
-    clipBehavior: Clip.hardEdge,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
     ),
-    action: SnackBarAction(
-      label: 'Close',
-      textColor: Colors.white,
-      onPressed: () {
-        Get.back();
-      },),
     backgroundColor: color ?? Colors.grey.shade300,
   );
 }

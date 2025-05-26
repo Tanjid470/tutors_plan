@@ -17,7 +17,7 @@ class DashboardController extends GetxController {
   RxBool isLoadingMore = false.obs;
   RxBool isLoadingCategoryList = false.obs;
   RxBool isLoadingCourseList = false.obs;
-  RxBool isProfileDataLoading = false.obs;
+  RxBool isProfileLoading = false.obs;
 
   List<Slider> splashList = [
     Slider(
@@ -123,11 +123,12 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getUserProfile() async {
+    isProfileLoading.value = true;
     final result = await dashboardRepository.getUserProfile();
     if (result != null) {
-      isLoadingCategoryList.value = true;
       profileGetResponseBody = result;
     }
+    isProfileLoading.value = false;
   }
 
   var selectedPage = 0.obs;
