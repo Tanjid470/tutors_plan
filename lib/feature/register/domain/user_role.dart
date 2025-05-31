@@ -5,7 +5,7 @@ class UserRole {
   final String imageUrl;
   final Color selectedColor;
   final Color bgColor;
-  int? id;
+  final String? id;
 
   UserRole({
     required this.title,
@@ -20,7 +20,7 @@ class UserRole {
     String? imageUrl,
     Color? selectedColor,
     Color? bgColor,
-    int? id,
+    String? id,
   }) {
     return UserRole(
       title: title ?? this.title,

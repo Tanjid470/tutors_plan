@@ -27,7 +27,7 @@ class RegistrationController extends GetxController{
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  int appRoleId = 0;
+  String? appRoleId;
 
   RxBool isChecked = false.obs;
   RxString usernameError = ''.obs;
@@ -61,37 +61,56 @@ class RegistrationController extends GetxController{
 
   List<AppRoles>? appRoles = [];
 
-  final List<UserRole> userRoleTypeList = [
-    UserRole(
-      title: 'Student',
-      imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.baseColor,
-      bgColor: ColorUtils.baseBlueColorLight,
-      id: 4,
-    ),
-    UserRole(
-      title: 'Tutor',
-      imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.baseOrangeColor,
-      bgColor: ColorUtils.baseOrangeColorLight,
-      id: 3,
-    ),
-    UserRole(
-      title: 'Guardian',
-      imageUrl: 'assets/svg/graduation_cap.svg',
-      selectedColor: ColorUtils.basePurpleColor,
-      bgColor: ColorUtils.basePurpleColorLight,
-      id: 5,
-    ),
-  ];
+  final RxList<UserRole> userRoleTypeList = <UserRole>[].obs;
 
   Future<void> getAppRoles() async {
     final result = await registrationRepository.getAppRole();
     if (result != null) {
       appRoles = result;
+
+      final filteredRoles = appRoles!.where((role) {
+        final roleName = role.name?.toLowerCase();
+        return roleName == 'tutor' || roleName == 'student' || roleName == 'guardian';
+      }).map((role) => UserRole(
+        title: role.name ?? '',
+        imageUrl: 'assets/svg/graduation_cap.svg',
+        id: role.id,
+        selectedColor: _getColorByRoleName(role.name),
+        bgColor: _getBgColorByRoleName(role.name),
+      )).toList();
+
+      userRoleTypeList.assignAll(filteredRoles);
       update();
     }
   }
+
+
+  Color _getColorByRoleName(String? name) {
+    switch (name?.toLowerCase()) {
+      case 'student':
+        return ColorUtils.baseColor;
+      case 'tutor':
+        return ColorUtils.baseOrangeColor;
+      case 'guardian':
+        return ColorUtils.basePurpleColor;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  Color _getBgColorByRoleName(String? name) {
+    switch (name?.toLowerCase()) {
+      case 'student':
+        return ColorUtils.baseBlueColorLight;
+      case 'tutor':
+        return ColorUtils.baseOrangeColorLight;
+      case 'guardian':
+        return ColorUtils.basePurpleColorLight;
+      default:
+        return Colors.grey.shade200;
+    }
+  }
+
 
   Future<void> registerAccount(BuildContext context) async{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
@@ -99,17 +118,13 @@ class RegistrationController extends GetxController{
     final response = await registrationRepository.fetchRegistrationResponse(registrationPostBody);
     if (response is ApiSuccess<RegistrationResponseBody>) {
       final loginResponse = response.data;
-      final headers = response.headers;
       if (loginResponse.status == 201) {
         preferences.setInt('initScreen', 1);
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Otp sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTP sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
         Navigator.pushNamed(context, RouteNames.otpView);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
-      }
-      headers?.forEach((key, value) {
-        debugPrint('Header: $key => $value');
-      });
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTO status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
+      };
     }
     else if (response is ApiError) {
       final apiError = response as ApiError;
@@ -128,7 +143,7 @@ class RegistrationController extends GetxController{
       lastName: lastNameController.text.trim(),
       profilePicture: "",
       phone: phoneController.text.trim(),
-      roles: ["b5f9f43e-4703-4cb4-98b7-cfc6d04546e2"],
+      roles: [appRoleId ?? ''],
     );
   }
 
