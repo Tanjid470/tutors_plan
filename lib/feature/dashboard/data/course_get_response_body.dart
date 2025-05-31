@@ -1,114 +1,127 @@
-class CourseGetResponseBody {
-  String? status;
-  List<CourseModel>? data;
+class CoursesResponseBody {
+  bool? ok;
+  int? status;
   String? message;
+  Results? results;
+  Meta? meta;
 
-  CourseGetResponseBody(
-      {this.status, this.data, this.message});
+  CoursesResponseBody(
+      {this.ok, this.status, this.message, this.results, this.meta});
 
-  CourseGetResponseBody.fromJson(Map<String, dynamic> json) {
+  CoursesResponseBody.fromJson(Map<String, dynamic> json) {
+    ok = json['ok'];
     status = json['status'];
+    message = json['message'];
+    results =
+    json['results'] != null ? new Results.fromJson(json['results']) : null;
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ok'] = ok;
+    data['status'] = status;
+    data['message'] = message;
+    if (results != null) {
+      data['results'] = results!.toJson();
+    }
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
+    }
+    return data;
+  }
+}
+
+class Results {
+  List<CourseModel>? data;
+  int? total;
+
+  Results({this.data, this.total});
+
+  Results.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = <CourseModel>[];
       json['data'].forEach((v) {
         data!.add(new CourseModel.fromJson(v));
       });
     }
-    message = json['message'];
+    total = json['total'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
+    data['total'] = total;
     return data;
   }
 }
 
 class CourseModel {
-  int? id;
+  String? id;
   String? name;
   String? shortDescription;
-  String? description;
-  String? publicUrl;
-  int? regularPrice;
   int? discountedPrice;
   int? discountedPercentage;
   int? discountedAmount;
-  bool? hasScholarship;
-  bool? isTrendingCourse;
-  String? courseDuration;
-  int? numberOfModules;
-  int? numberOfBookLessons;
-  int? numberOfVideoLessons;
-  int? numberOfLiveTutorsLessons;
-  int? numberOfLabs;
-  int? numberOfQuizzes;
+  bool? isFreeCourse;
+  bool? isCourseApproved;
+  String? thumbnailImage;
 
   CourseModel(
       {this.id,
         this.name,
         this.shortDescription,
-        this.description,
-        this.publicUrl,
-        this.regularPrice,
         this.discountedPrice,
         this.discountedPercentage,
         this.discountedAmount,
-        this.hasScholarship,
-        this.isTrendingCourse,
-        this.courseDuration,
-        this.numberOfModules,
-        this.numberOfBookLessons,
-        this.numberOfVideoLessons,
-        this.numberOfLiveTutorsLessons,
-        this.numberOfLabs,
-        this.numberOfQuizzes});
+        this.isFreeCourse,
+        this.isCourseApproved,
+        this.thumbnailImage});
 
   CourseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     shortDescription = json['short_description'];
-    description = json['description'];
-    publicUrl = json['public_url'];
-    regularPrice = json['regular_price'];
     discountedPrice = json['discounted_price'];
     discountedPercentage = json['discounted_percentage'];
     discountedAmount = json['discounted_amount'];
-    hasScholarship = json['has_scholarship'];
-    isTrendingCourse = json['is_trending_course'];
-    courseDuration = json['course_duration'];
-    numberOfModules = json['number_of_modules'];
-    numberOfBookLessons = json['number_of_book_lessons'];
-    numberOfVideoLessons = json['number_of_video_lessons'];
-    numberOfLiveTutorsLessons = json['number_of_live_tutors_lessons'];
-    numberOfLabs = json['number_of_labs'];
-    numberOfQuizzes = json['number_of_quizzes'];
+    isFreeCourse = json['is_free_course'];
+    isCourseApproved = json['is_course_approved'];
+    thumbnailImage = json['thumbnail_image'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['short_description'] = this.shortDescription;
-    data['description'] = this.description;
-    data['public_url'] = this.publicUrl;
-    data['regular_price'] = this.regularPrice;
-    data['discounted_price'] = this.discountedPrice;
-    data['discounted_percentage'] = this.discountedPercentage;
-    data['discounted_amount'] = this.discountedAmount;
-    data['has_scholarship'] = this.hasScholarship;
-    data['is_trending_course'] = this.isTrendingCourse;
-    data['course_duration'] = this.courseDuration;
-    data['number_of_modules'] = this.numberOfModules;
-    data['number_of_book_lessons'] = this.numberOfBookLessons;
-    data['number_of_video_lessons'] = this.numberOfVideoLessons;
-    data['number_of_live_tutors_lessons'] = this.numberOfLiveTutorsLessons;
-    data['number_of_labs'] = this.numberOfLabs;
-    data['number_of_quizzes'] = this.numberOfQuizzes;
+    data['id'] = id;
+    data['name'] = name;
+    data['short_description'] = shortDescription;
+    data['discounted_price'] = discountedPrice;
+    data['discounted_percentage'] = discountedPercentage;
+    data['discounted_amount'] = discountedAmount;
+    data['is_free_course'] = isFreeCourse;
+    data['is_course_approved'] = isCourseApproved;
+    data['thumbnail_image'] = thumbnailImage;
+    return data;
+  }
+}
+
+class Meta {
+  String? timestamp;
+  int? responseTime;
+
+  Meta({this.timestamp, this.responseTime});
+
+  Meta.fromJson(Map<String, dynamic> json) {
+    timestamp = json['timestamp'];
+    responseTime = json['response_time'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['timestamp'] = timestamp;
+    data['response_time'] = responseTime;
     return data;
   }
 }

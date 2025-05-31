@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
 import 'package:tutors_plan/feature/course_details/data/course_details_response_body.dart';
-import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/main.dart';

@@ -52,11 +52,11 @@ class AppPages{
       transition: Transition.rightToLeft,
       curve: Curves.fastOutSlowIn,
     ),
-    GetPage(
-      name:_Paths.categoryView,
-      page: () =>  const CategoryView(),
-      transition: Transition.rightToLeft,
-      curve: Curves.fastOutSlowIn,
-    ),
+    // GetPage(
+    //   name:_Paths.categoryView,
+    //   page: () =>  const CategoryView(),
+    //   transition: Transition.rightToLeft,
+    //   curve: Curves.fastOutSlowIn,
+    // ),
   ];
 }

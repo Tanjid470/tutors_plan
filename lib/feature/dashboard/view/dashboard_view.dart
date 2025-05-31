@@ -30,10 +30,9 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   void initState() {
-    dashboardController.getCourseCategory(
-        categoryPage: dashboardController.categoryPage);
+    // dashboardController.getCourseCategory(categoryPage: dashboardController.categoryPage);
     dashboardController.getCourse(coursePage: dashboardController.coursePage);
-    dashboardController.getUserProfile();
+    //dashboardController.getUserProfile();
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _DashboardViewState extends State<DashboardView> {
                         ScholarPassBundle(),
                         //statView(),
                         courseCardView(),
-                        categoryView(),
+                       // categoryView(),
                         programCardView(),
                         verticalGap(context, 2),
                       ],
@@ -380,126 +379,126 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget categoryView() {
-    return Column(children: [
-      Row(
-        children: [
-          Text(
-            'Categories',
-            style: customTextStyle(context,
-                fontSize: TextSize.font20(context),
-                fontWeight: FontWeight.bold),
-          ),
-          const Spacer(),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RouteNames.categoryView);
-            },
-            child: Text('See all',
-                style: customTextStyle(
-                  context,
-                  fontSize: TextSize.font14(context),
-                )),
-          ),
-        ],
-      ),
-      Obx(() {
-        return dashboardController.isLoadingCategoryList.value
-            ? SizedBox(
-                height: MediaQuery.of(context).size.height * 0.175,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  itemCount: dashboardController.categoryList?.length,
-                  itemBuilder: (context, index) {
-                    final categoryItem =
-                        dashboardController.categoryList?[index];
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      margin: const EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade200,
-                              blurStyle: BlurStyle.outer,
-                              offset: Offset(0, 0),
-                              blurRadius: 5,
-                            ),
-                          ],
-                          border: Border(
-                            left: BorderSide(
-                                color: ColorUtils.baseColor, width: 4),
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            categoryItem?.image != null
-                                ? Image.network(
-                                    categoryItem?.image ?? '',
-                                    width: 70,
-                                    height: 70,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.asset(
-                                    'assets/images/dummy_image.jpg',
-                                    width: 70,
-                                    height: 70,
-                                    fit: BoxFit.cover,
-                                  ),
-                            SizedBox(width: ResponsiveScale.of(context).wp(2)),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(categoryItem?.name ?? '',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: TextSize.font16(context))),
-                                  Text(
-                                    "${categoryItem?.seoKeywords.toString() ?? ''} courses",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const Spacer(),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "${categoryItem?.totalCourse.toString() ?? ''} courses",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Text(
-                                        "${categoryItem?.enrolledStudents.toString() ?? ''} students",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              )
-            : SizedBox();
-      })
-    ]);
-  }
+  // Widget categoryView() {
+  //   return Column(children: [
+  //     Row(
+  //       children: [
+  //         Text(
+  //           'Categories',
+  //           style: customTextStyle(context,
+  //               fontSize: TextSize.font20(context),
+  //               fontWeight: FontWeight.bold),
+  //         ),
+  //         const Spacer(),
+  //         InkWell(
+  //           onTap: () {
+  //             Navigator.pushNamed(context, RouteNames.categoryView);
+  //           },
+  //           child: Text('See all',
+  //               style: customTextStyle(
+  //                 context,
+  //                 fontSize: TextSize.font14(context),
+  //               )),
+  //         ),
+  //       ],
+  //     ),
+  //     Obx(() {
+  //       return dashboardController.isLoadingCategoryList.value
+  //           ? SizedBox(
+  //               height: MediaQuery.of(context).size.height * 0.175,
+  //               child: ListView.builder(
+  //                 shrinkWrap: true,
+  //                 scrollDirection: Axis.horizontal,
+  //                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+  //                 itemCount: dashboardController.categoryList?.length,
+  //                 itemBuilder: (context, index) {
+  //                   final categoryItem =
+  //                       dashboardController.categoryList?[index];
+  //                   return Container(
+  //                     height: MediaQuery.of(context).size.height * 0.15,
+  //                     width: MediaQuery.of(context).size.width * 0.75,
+  //                     padding: const EdgeInsets.symmetric(
+  //                         horizontal: 10, vertical: 5),
+  //                     margin: const EdgeInsets.only(right: 10),
+  //                     decoration: BoxDecoration(
+  //                         color: Colors.white,
+  //                         boxShadow: [
+  //                           BoxShadow(
+  //                             color: Colors.grey.shade200,
+  //                             blurStyle: BlurStyle.outer,
+  //                             offset: Offset(0, 0),
+  //                             blurRadius: 5,
+  //                           ),
+  //                         ],
+  //                         border: Border(
+  //                           left: BorderSide(
+  //                               color: ColorUtils.baseColor, width: 4),
+  //                         ),
+  //                         borderRadius: BorderRadius.all(Radius.circular(10))),
+  //                     child: Padding(
+  //                       padding: const EdgeInsets.all(12),
+  //                       child: Row(
+  //                         children: [
+  //                           categoryItem?.image != null
+  //                               ? Image.network(
+  //                                   categoryItem?.image ?? '',
+  //                                   width: 70,
+  //                                   height: 70,
+  //                                   fit: BoxFit.cover,
+  //                                 )
+  //                               : Image.asset(
+  //                                   'assets/images/dummy_image.jpg',
+  //                                   width: 70,
+  //                                   height: 70,
+  //                                   fit: BoxFit.cover,
+  //                                 ),
+  //                           SizedBox(width: ResponsiveScale.of(context).wp(2)),
+  //                           Expanded(
+  //                             child: Column(
+  //                               crossAxisAlignment: CrossAxisAlignment.start,
+  //                               children: [
+  //                                 Text(categoryItem?.name ?? '',
+  //                                     maxLines: 1,
+  //                                     overflow: TextOverflow.ellipsis,
+  //                                     style: TextStyle(
+  //                                         fontWeight: FontWeight.bold,
+  //                                         fontSize: TextSize.font16(context))),
+  //                                 Text(
+  //                                   "${categoryItem?.seoKeywords.toString() ?? ''} courses",
+  //                                   maxLines: 2,
+  //                                   overflow: TextOverflow.ellipsis,
+  //                                 ),
+  //                                 const Spacer(),
+  //                                 Row(
+  //                                   mainAxisAlignment:
+  //                                       MainAxisAlignment.spaceBetween,
+  //                                   children: [
+  //                                     Text(
+  //                                       "${categoryItem?.totalCourse.toString() ?? ''} courses",
+  //                                       maxLines: 2,
+  //                                       overflow: TextOverflow.ellipsis,
+  //                                     ),
+  //                                     Text(
+  //                                       "${categoryItem?.enrolledStudents.toString() ?? ''} students",
+  //                                       maxLines: 2,
+  //                                       overflow: TextOverflow.ellipsis,
+  //                                     ),
+  //                                   ],
+  //                                 ),
+  //                               ],
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                   );
+  //                 },
+  //               ),
+  //             )
+  //           : SizedBox();
+  //     })
+  //   ]);
+  // }
 
   Widget courseCardView() {
     return Obx(() {
@@ -527,19 +526,14 @@ class _DashboardViewState extends State<DashboardView> {
                       return CourseCard(
                         title: courses?.name ?? 'title of the course',
                         itemNo: index,
-                        description: courses?.shortDescription ??
-                            'shortDescription of the course',
-                        imageUrl: '',
+                        description: courses?.shortDescription ?? 'shortDescription of the course',
+                        imageUrl: courses?.thumbnailImage ??'',
                         author: '',
-                        originalPrice: 0,
+                        originalPrice: courses?.discountedAmount ?? 0,
                         discountedPrice: courses?.discountedPrice ?? 0,
-                        hasScholarship: courses?.hasScholarship ?? false,
-                        features: [],
-                        duration: courses?.courseDuration ?? "0",
-                        sessions: courses?.numberOfLiveTutorsLessons ?? 0,
-                        videos: courses?.numberOfVideoLessons ?? 0,
-                        books: courses?.numberOfBookLessons ?? 0,
-                        modules: courses?.numberOfBookLessons ?? 0,
+                        hasScholarship: false,
+                        features: [], duration: '', sessions: 0, videos: 0, books: 0, modules: 0,
+
                       );
                     },
                   ),

@@ -71,7 +71,7 @@ class CourseCard extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.5,
                       fit: BoxFit.fill,
                       placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
+                          Center(child: const CircularProgressIndicator()),
                       errorWidget: (context, url, error) => Image.asset(
                         'assets/images/dummy_image.jpg',
                         height: 100,

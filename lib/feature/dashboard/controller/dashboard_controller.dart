@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/dashboard/data/course_categories_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
@@ -81,29 +80,29 @@ class DashboardController extends GetxController {
       },
     ),
   ];
-  List<CategoryListModel>? categoryList = [];
+
   List<CourseModel>? courseList = [];
 
   int categoryPage = 1;
   int coursePage = 1;
 
-  Future<void> getCourseCategory({int? categoryPage}) async {
-    isLoadingMore.value = true;
-
-    final result = await dashboardRepository.getCourseCategory(
-      page: categoryPage,
-      limit: 10,
-    );
-    if (result != null) {
-      isLoadingCategoryList.value = true;
-      if (categoryList?.isEmpty == true) {
-        categoryList = result;
-      } else {
-        categoryList?.addAll(result);
-      }
-    }
-    isLoadingMore.value = false;
-  }
+  // Future<void> getCourseCategory({int? categoryPage}) async {
+  //   isLoadingMore.value = true;
+  //
+  //   final result = await dashboardRepository.getCourseCategory(
+  //     page: categoryPage,
+  //     limit: 10,
+  //   );
+  //   if (result != null) {
+  //     isLoadingCategoryList.value = true;
+  //     if (categoryList?.isEmpty == true) {
+  //       categoryList = result;
+  //     } else {
+  //       categoryList?.addAll(result);
+  //     }
+  //   }
+  //   isLoadingMore.value = false;
+  // }
 
   Future<void> getCourse({int? coursePage}) async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
