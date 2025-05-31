@@ -1,16 +1,20 @@
 class UrlConst {
+
   static final String betaApiVersion = '';
-  static final String productionApiVersion = '';
+  static final String productionServerUrl = 'http://192.227.120.78:5002/';
   static final String testApiVersion = 'https://api.tutorsplan.com';
 
-  static final String serverUrl = testApiVersion;
+  static final apiVersion = 'api/v1';
 
-  static final String loginEndpoint = '$testApiVersion/login';
-  static final String registerEndpoint = '$testApiVersion/app-users';
-  static final String appRolesEndpoint = '$testApiVersion/app-roles';
-  static final String getCourseCategoryEndpoint = '$testApiVersion/course-categories';
-  static final String getProfileEndpoint = '$testApiVersion/me';
-  static final String courseEnrollmentEndpoint = '$testApiVersion/stripe/course-enrollment';
-  static final String getCoursesEndpoint = '$testApiVersion/courses';
-  static final String getCourseDetailsEndpoint = '$testApiVersion/courses';
+  static final String baseUrl = productionServerUrl+apiVersion;
+
+
+  static final String loginEndpoint = '$baseUrl/login';
+  static final String registerEndpoint = '$baseUrl/auth/register';
+  static final String appRolesEndpoint = '$baseUrl/roles';
+  static final String getCourseCategoryEndpoint = '$baseUrl/course-categories';
+  static final String getProfileEndpoint = '$baseUrl/me';
+  static final String courseEnrollmentEndpoint = '$baseUrl/stripe/course-enrollment';
+  static final String getCoursesEndpoint = '$baseUrl/courses';
+  static final String getCourseDetailsEndpoint = '$baseUrl/courses';
 }

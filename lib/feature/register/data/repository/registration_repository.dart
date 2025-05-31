@@ -63,26 +63,18 @@ class RegistrationRepository {
     }
   }
 
-  Future<List<AppRoles>?> getAppRole({
-    String? page,
-    String? limit,
-  }) async {
+  Future<List<AppRoles>?> getAppRole() async {
     try {
-      final queryParameters = {
-        "pagination": true,
-        "page": page ?? "1",
-        "limit": limit ?? "",
-      };
+
       dio = await ApiClient.dioClient(true);
 
       Response response = await dio.get(
-        '${UrlConst.appRolesEndpoint}/',
-        queryParameters: queryParameters,
+        UrlConst.appRolesEndpoint,
       );
       AppRolesGetBody data = AppRolesGetBody.fromJson(response.data);
 
-      if (data.status == 'SUCCESS') {
-        return data.data;
+      if (data.status == 200) {
+        return data.results?.data;
       }
       else {
         return null;

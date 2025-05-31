@@ -6,6 +6,7 @@ import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/feature/learning/view/library_view.dart';
 import 'package:tutors_plan/feature/login/view/login_view.dart';
 import 'package:tutors_plan/feature/onboard/view/onboard_view.dart';
+import 'package:tutors_plan/feature/register/view/widget/otp_view.dart';
 import 'package:tutors_plan/main.dart';
 part 'app_routes.dart';
 class AppPages{
@@ -42,6 +43,12 @@ class AppPages{
     GetPage(
       name:_Paths.loginView,
       page: () =>  const LoginView(),
+      transition: Transition.rightToLeft,
+      curve: Curves.fastOutSlowIn,
+    ),
+    GetPage(
+      name:_Paths.otpView,
+      page: () =>  const OtpView(),
       transition: Transition.rightToLeft,
       curve: Curves.fastOutSlowIn,
     ),

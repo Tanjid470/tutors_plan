@@ -19,7 +19,7 @@ class RegistrationController extends GetxController{
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -83,10 +83,7 @@ class RegistrationController extends GetxController{
   ];
 
   Future<void> getAppRoles() async {
-    final result = await registrationRepository.getAppRole(
-        page: 1.toString(),
-        limit:20.toString()
-    );
+    final result = await registrationRepository.getAppRole();
     if (result != null) {
       appRoles = result;
       update();
@@ -95,16 +92,15 @@ class RegistrationController extends GetxController{
 
   Future<void> registerAccount(BuildContext context) async{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-    //validationCheck();
     await insertRegistrationBody();
     final response = await registrationRepository.fetchRegistrationResponse(registrationPostBody);
     if (response is ApiSuccess<RegistrationResponseBody>) {
       final loginResponse = response.data;
       final headers = response.headers;
-      if (loginResponse.status == 'SUCCESS') {
+      if (loginResponse.status == 201) {
         preferences.setInt('initScreen', 1);
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
-        Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Otp sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
+        Navigator.pushReplacementNamed(context, RouteNames.otpView);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
       }
@@ -123,20 +119,13 @@ class RegistrationController extends GetxController{
 
   insertRegistrationBody() {
     registrationPostBody = RegistrationPostBody(
-      username: userNameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
       firstName: firstNameController.text.trim(),
       lastName: lastNameController.text.trim(),
-      phoneNumber: phoneController.text.trim(),
-      activeOrArchive: isActiveOrArchive.value,
-      emailConfirmed: isEmailConfirmed.value,
-      accountLock: isAccountLocked.value,
-      phoneNumberConfirmed: isPhoneNumberConfirmed.value,
-      twoFactorEnabled: isTwoFactorEnabled.value,
-      lockoutEnabled: isLockoutEnabled.value,
-      email: emailController.text.trim(),
-      roles: [appRoleId],
-      primaryRole: appRoleId,
-      passwordHash: passwordController.text.trim(),
+      profilePicture: "",
+      phone: phoneController.text.trim(),
+      roles: ["b5f9f43e-4703-4cb4-98b7-cfc6d04546e2"],
     );
   }
 
