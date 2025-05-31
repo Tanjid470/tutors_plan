@@ -9,8 +9,9 @@ class UrlConst {
   static final String baseUrl = productionServerUrl+apiVersion;
 
 
-  static final String loginEndpoint = '$baseUrl/login';
+  static final String loginEndpoint = '$baseUrl/auth/login';
   static final String registerEndpoint = '$baseUrl/auth/register';
+  static final String otpEndpoint = '$baseUrl/auth/verify-email';
   static final String appRolesEndpoint = '$baseUrl/roles';
   static final String getCourseCategoryEndpoint = '$baseUrl/course-categories';
   static final String getProfileEndpoint = '$baseUrl/me';

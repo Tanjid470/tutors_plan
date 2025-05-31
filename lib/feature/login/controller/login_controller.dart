@@ -29,16 +29,19 @@ class LoginController extends GetxController{
 
     if (result is ApiSuccess<LoginResponseBody>) {
       final loginResponse = result.data;
-      final headers = result.headers;
-      if (loginResponse.status == 'SUCCESS') {
-        preferences.setInt('initScreen', 1);
-        headers?.forEach((key, value) {
-          if (headers.containsKey('x-tutorsplan-key')) {
-            preferences.setString('accessToken', '${headers['x-tutorsplan-key']}');
-          }
-        });
-        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
-        Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+      if (loginResponse.status == 200) {
+        String? accessToken =  loginResponse.results?.token;
+        if (accessToken == null) {
+          ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login failed...!',context,subtitle: "Login shut down for server issue",color: ColorUtils.errorSnackBarColor));
+          return;
+        }
+        else{
+          preferences.setInt('initScreen', 1);
+          preferences.setString('accessToken', accessToken);
+          ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login successfully',context,subtitle: "Explore your journey TutorsPlan",color: ColorUtils.successSnackBarColor));
+          Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+        }
+
       } else {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
       }

@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
+import 'package:tutors_plan/feature/register/data/otp_response_body.dart';
 import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
 import 'package:tutors_plan/feature/register/data/app_roles_get_body.dart';
 import 'package:tutors_plan/feature/register/data/repository/registration_repository.dart';
+import 'package:tutors_plan/feature/register/domain/otp_body.dart';
 import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
 import 'package:tutors_plan/feature/register/domain/user_role.dart';
 import 'package:tutors_plan/main.dart';
@@ -47,6 +49,7 @@ class RegistrationController extends GetxController{
 
   RegistrationRepository registrationRepository = RegistrationRepository();
   RegistrationPostBody registrationPostBody = RegistrationPostBody();
+  OTPBody otpBody = OTPBody();
 
   @override
   void onClose() {
@@ -100,7 +103,7 @@ class RegistrationController extends GetxController{
       if (loginResponse.status == 201) {
         preferences.setInt('initScreen', 1);
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Otp sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
-        Navigator.pushReplacementNamed(context, RouteNames.otpView);
+        Navigator.pushNamed(context, RouteNames.otpView);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
       }
@@ -129,6 +132,41 @@ class RegistrationController extends GetxController{
     );
   }
 
+
+  Future<void> otpVerify(BuildContext context) async{
+    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
+    await insertOTPBody();
+    final response = await registrationRepository.fetchOTPResponse(otpBody);
+    if (response is ApiSuccess<OtpResponseBody>) {
+      final otpResponse = response.data;
+      final headers = response.headers;
+      if (otpResponse.status == 201) {
+        preferences.setInt('initScreen', 1);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register successfully',context,subtitle: "Email verified",color: ColorUtils.successSnackBarColor));
+        Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register status : ${otpResponse.status}',context,subtitle: otpResponse.message,color: ColorUtils.errorSnackBarColor));
+      }
+      headers?.forEach((key, value) {
+        debugPrint('Header: $key => $value');
+      });
+    }
+    else if (response is ApiError) {
+      final apiError = response as ApiError;
+      ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar('Email verification failed...!',context,subtitle: apiError.message,color: ColorUtils.errorSnackBarColor)
+      );
+    }
+    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+  }
+
+  insertOTPBody() {
+    otpBody = OTPBody(
+      email: emailController.text.trim(),
+      otp: otpController.text.trim(),
+    );
+  }
+
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {
       this.screenStates.value = screenStates;
@@ -137,4 +175,6 @@ class RegistrationController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
+
+
 }

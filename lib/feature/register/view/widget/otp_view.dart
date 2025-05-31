@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:tutors_plan/common_widget/base_button.dart';
+import 'package:tutors_plan/config/font_constants.dart';
+import 'package:tutors_plan/const/color_utils.dart';
+import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/registration_controller.dart';
 
 class OtpView extends StatefulWidget {
@@ -16,39 +21,82 @@ class _OtpViewState extends State<OtpView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(""),
+        title: const Text(""),
         leading: InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          },
+          onTap: () => Navigator.pop(context),
           child: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Enter the 6-digit OTP sent to your email"),
-            const SizedBox(height: 20),
-            TextField(
-              controller: registrationController.otpController,
-              keyboardType: TextInputType.number,
-              maxLength: 6,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'OTP',
+             Text("We just sent an email",
+              style: customTextStyle(
+                context,
+                fontSize: TextSize.font18(context),
+                color: ColorUtils.black,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final otp = registrationController.otpController.text;
-                // Handle OTP submission
-                print("Entered OTP: $otp");
-              },
-              child: const Text("Verify"),
+            Text("Enter the security code we sent to ",
+              style: customTextStyle(
+                context,
+                fontSize: TextSize.font16(context),
+                color: ColorUtils.black,
+                fontWeight: FontWeight.w500,
+              ),
             ),
+            Text(registrationController.emailController.text,
+              style: customTextStyle(
+                context,
+                fontSize: TextSize.font16(context),
+                color: ColorUtils.black,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 30),
+            PinCodeTextField(
+              appContext: context,
+              controller: registrationController.otpController,
+              length: 6,
+              obscuringCharacter: '*',
+              keyboardType: TextInputType.number,
+              animationType: AnimationType.fade,
+              pinTheme: PinTheme(
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(10),
+                fieldHeight: 50,
+                fieldWidth: 40,
+                activeColor: ColorUtils.baseColor,
+                selectedColor: ColorUtils.baseColor,
+                inactiveColor: Colors.grey,
+              ),
+              onChanged: (value) {},
+            ),
+            const SizedBox(height: 30),
+            BaseButton(
+                onClick: () async{
+                  await registrationController.otpVerify(context);
+                },
+                borderRadius: 10,
+                title: 'Verify'
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Don\'t receive OTP code?'),
+                TextButton(onPressed: (){
+                  // Navigator.push(context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const RegisterView()),
+                  // );
+                }, child: Text('Resend',style: TextStyle(color: ColorUtils.baseColor)))
+              ],
+            )
+
           ],
         ),
       ),
