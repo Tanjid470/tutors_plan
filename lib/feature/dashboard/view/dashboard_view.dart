@@ -515,7 +515,7 @@ class _DashboardViewState extends State<DashboardView> {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.435,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: dashboardController.courseList?.length,
@@ -532,8 +532,12 @@ class _DashboardViewState extends State<DashboardView> {
                         originalPrice: courses?.discountedAmount ?? 0,
                         discountedPrice: courses?.discountedPrice ?? 0,
                         hasScholarship: false,
-                        features: [], duration: '', sessions: 0, videos: 0, books: 0, modules: 0,
-
+                        features: [],
+                        duration: courses?.courseDuration ?? '',
+                        credits: courses?.credits ?? 0,
+                        students: courses?.studentCount ?? 0,
+                        modules: courses?.moduleCount ?? 0,
+                        courseId: courses?.id ?? '',
                       );
                     },
                   ),
@@ -552,7 +556,7 @@ class _DashboardViewState extends State<DashboardView> {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.435,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 2,
@@ -570,10 +574,10 @@ class _DashboardViewState extends State<DashboardView> {
                         hasScholarship: false,
                         features: [],
                         duration: "0",
-                        sessions: 0,
-                        videos: 0,
-                        books: 0,
+                        credits: 0,
+                        students: 0,
                         modules: 0,
+                        courseId: '',
                       );
                     },
                   ),

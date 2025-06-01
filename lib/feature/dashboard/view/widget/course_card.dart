@@ -9,6 +9,7 @@ import '../../../course_details/view/course_card_details_view.dart';
 
 class CourseCard extends StatelessWidget {
   final String title;
+  final String courseId;
   final int? itemNo;
   final String description;
   final String imageUrl;
@@ -16,9 +17,8 @@ class CourseCard extends StatelessWidget {
   final int originalPrice;
   final int discountedPrice;
   final String duration;
-  final int sessions;
-  final int videos;
-  final int books;
+  final int credits;
+  final int students;
   final int modules;
   final bool hasScholarship;
   final List<String> features;
@@ -26,14 +26,14 @@ class CourseCard extends StatelessWidget {
   const CourseCard({
     super.key,
     required this.title,
+    required this.courseId,
     this.itemNo,
     required this.description,
     required this.imageUrl,
     required this.author,
     required this.duration,
-    required this.sessions,
-    required this.videos,
-    required this.books,
+    required this.credits,
+    required this.students,
     required this.modules,
     required this.originalPrice,
     required this.discountedPrice,
@@ -45,7 +45,6 @@ class CourseCard extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
       margin: EdgeInsets.only(right: 10),
-      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -142,22 +141,17 @@ class CourseCard extends StatelessWidget {
                   children: [
                     CourseSubplotCard(
                         context: context,
-                        title: '$duration months Duration',
+                        title: duration,
                         icon: Icons.date_range),
                     CourseSubplotCard(
                       context: context,
-                      title: '$sessions Tutoring Sessions',
-                      icon: Icons.school,
+                      title: '$credits Credits',
+                      icon: Icons.credit_score_sharp,
                     ),
                     CourseSubplotCard(
                       context: context,
-                      title: '$videos Video Lessons',
-                      icon: Icons.play_circle_fill,
-                    ),
-                    CourseSubplotCard(
-                      context: context,
-                      title: '$books Book Lessons',
-                      icon: Icons.menu_book,
+                      title: '$students Students',
+                      icon: Icons.groups,
                     ),
                     CourseSubplotCard(
                       context: context,
@@ -226,8 +220,7 @@ class CourseCard extends StatelessWidget {
                   onClick: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (_) => const CourseDetailsScreen()),
+                      MaterialPageRoute(builder: (_) => CourseDetailsScreen(courseId : courseId)),
                     );
                   },
                   title: 'Enroll Now',

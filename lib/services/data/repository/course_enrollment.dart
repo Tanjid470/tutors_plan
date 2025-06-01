@@ -9,7 +9,7 @@ import 'package:tutors_plan/utils/network/api_result.dart';
 class CourseEnrollment {
   Dio _dio = Dio();
   var accessToken = preferences.getString('accessToken');
-  Future<ApiResult<CourseSuccessRes>> fetchLoginResponse({String? intentId, int? courseId, int? studentId}) async {
+  Future<ApiResult<CourseSuccessRes>> fetchLoginResponse({String? intentId, String? courseId, int? studentId}) async {
     try {
       _dio = await ApiClient.dioClient(false);
       final response = await _dio.post(

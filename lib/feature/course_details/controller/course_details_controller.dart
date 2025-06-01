@@ -12,9 +12,9 @@ class CourseDetailsController extends GetxController {
   final Rx<CourseDetails> courseDetails = CourseDetails().obs;
 
 
-  Future<void> getCourseDetails() async {
+  Future<void> getCourseDetails(String courseId) async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-    final result = await courseDetailsRepository.getCourseDetailsResponse();
+    final result = await courseDetailsRepository.getCourseDetailsResponse(courseId);
     if (result != null) {
       courseDetails.value = result;
       updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);

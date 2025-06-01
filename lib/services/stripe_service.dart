@@ -41,7 +41,7 @@ class StripeService {
   static Future<void> makePayment({
     required double amount,
     required String currency,
-    required int courseID,
+    required String courseID,
     required int studentID,
     required Function(String) onSuccess,
     required Function(String) onError,

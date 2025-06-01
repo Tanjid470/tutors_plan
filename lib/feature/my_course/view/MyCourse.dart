@@ -19,7 +19,7 @@ class _MyCourseViewState extends State<MyCourseView> {
 
   @override
   void initState() {
-    courseDetailsController.getCourseDetails();
+    //courseDetailsController.getCourseDetails();
     super.initState();
   }
 
@@ -99,7 +99,7 @@ class _MyCourseViewState extends State<MyCourseView> {
                               ],
                             ),
                             Text(
-                              '${courseDetailsController.courseDetails.value.courseModules?.length.toString()} modules',
+                              'modules',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style:  TextStyle(
@@ -108,7 +108,7 @@ class _MyCourseViewState extends State<MyCourseView> {
                               ),
                             ),
                             Text(
-                              '${courseDetailsController.courseDetails.value.courseLessons?.length.toString()} lessons',
+                              'lessons',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -122,7 +122,7 @@ class _MyCourseViewState extends State<MyCourseView> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              '${courseDetailsController.courseDetails.value.numberOfVideoLessons ?? '0'} videos',
+                              ' videos',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style:  TextStyle(
@@ -131,7 +131,7 @@ class _MyCourseViewState extends State<MyCourseView> {
                               ),
                             ),
                             Text(
-                              '${courseDetailsController.courseDetails.value.numberOfBookLessons ?? '0'} books',
+                              ' books',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style:  TextStyle(
@@ -140,7 +140,7 @@ class _MyCourseViewState extends State<MyCourseView> {
                               ),
                             ),
                             Text(
-                              '${courseDetailsController.courseDetails.value.numberOfQuizzes ?? '0'} quizzes',
+                              '0 quizzes',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

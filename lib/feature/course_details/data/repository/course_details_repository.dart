@@ -9,18 +9,19 @@ import 'package:tutors_plan/utils/network/api_client.dart';
 
 class CourseDetailsRepository {
   Dio dio = Dio();
-  Future<CourseDetails?> getCourseDetailsResponse({
+
+  Future<CourseDetails?> getCourseDetailsResponse(String courseId, {
     int? page,
     int? limit,
   }) async {
     try {
       dio = await ApiClient.dioClient(true);
 
-      Response response = await dio.get('${UrlConst.getCourseDetailsEndpoint}/240',);
+      Response response = await dio.get('${UrlConst.getCourseDetailsEndpoint}/$courseId',);
       CourseDetailResponseBody data = CourseDetailResponseBody.fromJson(response.data);
 
-      if (data.status == 'SUCCESS') {
-        return data.data;
+      if (data.status == 200) {
+        return data.results;
       }
       else {
         return null;

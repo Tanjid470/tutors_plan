@@ -16,8 +16,8 @@ import 'package:tutors_plan/services/stripe_service.dart';
 import 'package:intl/intl.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
-  const CourseDetailsScreen({super.key});
-
+  const CourseDetailsScreen({super.key, required this.courseId});
+  final String courseId;
   @override
   State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
 }
@@ -41,7 +41,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   @override
   void initState() {
-    courseDetailsController.getCourseDetails();
+    courseDetailsController.getCourseDetails(widget.courseId);
     super.initState();
   }
 
@@ -54,7 +54,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           return courseDetailsController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
               ? shimmerCourseDetailsView(context)
               : DefaultTabController(
-                  length: 4,
+                  length: 2,
                   child: Scaffold(
                     backgroundColor: ColorUtils.white,
                     appBar: AppBar(
@@ -71,8 +71,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         children: [
                           Stack(
                             children: [
-                              if (courseDetailsController.courseDetails.value.image != null)
-                                featuredImageWidget('${courseDetailsController.courseDetails.value.image}'),
+                              if (courseDetailsController.courseDetails.value.thumbnailImage != null)
+                                featuredImageWidget('${courseDetailsController.courseDetails.value.thumbnailImage}'),
                               Positioned(
                                 bottom: 12,
                                 left: 12,
@@ -159,17 +159,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             tabs: const [
                               Tab(text: "Overview"),
                               Tab(text: "Curriculum"),
-                              Tab(text: "Tutor"),
-                              Tab(text: "Institution"),
                             ],
                           ),
                           Expanded(
                             child: TabBarView(
                               children: [
                                 _overviewTab(context),
-                                _curriculumTab(context),
-                                _tutorTab(context),
-                                _institutionTab(context),
+                                _overviewTab(context),
+                                //_curriculumTab(context),
                               ],
                             ),
                           ),
@@ -215,7 +212,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             );
                           } else {
                             _handlePayment(context,
-                                courseID: courseDetailsController.courseDetails.value.id ?? 0, studentId: courseDetailsController.courseDetails.value.id ?? 0);
+                                courseID: courseDetailsController.courseDetails.value.id ?? '', studentId: 0);
                           }
                         },
                         title: "Buy Now for \$${courseDetailsController.courseDetails.value.discountedPrice}",
@@ -313,17 +310,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 Row(
                   children: [
                     overViewCard(context, Icons.calendar_today, "Duration", '${courseDetailsController.courseDetails.value.courseDuration}'),
-                    overViewCard(context, Icons.view_module, "Modules", "${courseDetailsController.courseDetails.value.numberOfModules ?? 0}"),
-                    overViewCard(context, Icons.menu_book, "Book Lessons", "${courseDetailsController.courseDetails.value.numberOfBookLessons ?? 0}"),
+                    overViewCard(context, Icons.view_module, "Modules", "${0}"),
+                    overViewCard(context, Icons.menu_book, "Book Lessons", "${0}"),
                   ],
                 ),
-                Row(
-                  children: [
-                    overViewCard(context, Icons.play_circle_fill, "Video Lessons", "${courseDetailsController.courseDetails.value.numberOfVideoLessons ?? 0}"),
-                    overViewCard(context, Icons.school, "Live Sessions", "${courseDetailsController.courseDetails.value.numberOfLiveTutorsLessons ?? 0}"),
-                    overViewCard(context, Icons.quiz, "Quizzes", "${courseDetailsController.courseDetails.value.numberOfQuizzes ?? 0}"),
-                  ],
-                )
               ],
             ),
 
@@ -361,218 +351,94 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       ),
     );
   }
-
-  Widget _curriculumTab(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
-    child: ListView.builder(
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: courseDetailsController.courseDetails.value.courseModules?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.shade300), // subtle border
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  spacing: 5,
-                  children: [
-                    Container(
-                      height: ResponsiveScale.of(context).hp(2),
-                      width: ResponsiveScale.of(context).hp(2),
-                      decoration: BoxDecoration(
-                        color: ColorUtils.baseColor,
-                        shape: BoxShape.circle
-                      ),
-                      child: Center(
-                        child: Text('$index',
-                          style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.white,fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                    Text('${courseDetailsController.courseDetails.value.courseModules?[index].title}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: customTextStyle(context,fontSize: TextSize.font16(context),color: Colors.black,fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-                Text('${courseDetailsController.courseDetails.value.courseModules?[index].description}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    spacing: 15,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        spacing: 3,
-                        children: [
-                          Icon(Icons.timelapse,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-                          Text('${courseDetailsController.courseDetails.value.courseModules?[index].duration}',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        spacing: 3,
-                        children: [
-                          Icon(Icons.play_lesson_outlined,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-                          Text('${courseDetailsController.courseDetails.value.courseModules?[index].numberOfLessons} Lessons',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-
-    ),
-  );
-
-  Widget _lesson(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
-    child: ListView.builder(
-      padding: EdgeInsets.zero,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: courseDetailsController.courseDetails.value.courseLessons?.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.shade300), // subtle border
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('${courseDetailsController.courseDetails.value.courseLessons?[index].title}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: customTextStyle(context,fontSize: TextSize.font16(context),color: Colors.black,fontWeight: FontWeight.w500),
-                ),
-                Text('${courseDetailsController.courseDetails.value.courseLessons?[index].description}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    spacing: 10,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        spacing: 3,
-                        children: [
-                          Icon(Icons.timelapse,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-                          Text('${courseDetailsController.courseDetails.value.courseLessons?[index].duration}',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-
-    ),
-  );
-
-  Widget _tutorTab(BuildContext context) => SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle(context, "Course Instructor"),
-            _buildInstructorRow(context),
-            const SizedBox(height: 8),
-          ],
-        ),
-      );
-
-  Widget _institutionTab(BuildContext context) => SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          spacing: 5,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSectionTitle(context, "Institution Info"),
-            Row(
-              spacing: 10,
-              children: [
-                Container(
-                  clipBehavior: Clip.hardEdge,
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    // color: Colors.grey[200],
-                    border: Border.all(
-                      color: ColorUtils.baseColor,
-                    ),
-                    image: DecorationImage(
-                      image: courseDetailsController.courseDetails.value.institute?.logo?.contains('http') == true
-                          ? CachedNetworkImageProvider('${courseDetailsController.courseDetails.value.institute?.logo}') as ImageProvider
-                          : const AssetImage('assets/images/dummy_image.jpg'),
-                      fit: BoxFit.cover,
-
-                    ),
-                  ),
-                ),
-                Text("${courseDetailsController.courseDetails.value.institute?.name}", style: customTextStyle(context, fontSize: TextSize.font16(context), fontWeight: FontWeight.bold)),
-              ],
-            ),
-            institutionSubsection(context,'Email: ', '${courseDetailsController.courseDetails.value.institute?.email}'),
-            institutionSubsection(context,'Contact: ', '${courseDetailsController.courseDetails.value.institute?.phone}'),
-            institutionSubsection(context,'Industry: ', '${courseDetailsController.courseDetails.value.institute?.industry}'),
-            institutionSubsection(
-              context,
-              'Since: ',
-              formatToMonthYear(courseDetailsController.courseDetails.value.institute?.onboardedSinceDate),
-            ),
-
-            Row(
-              spacing: 10,
-              children: [
-                institutionSubsection(context,'City: ', '${courseDetailsController.courseDetails.value.institute?.city}'),
-                institutionSubsection(context,'ZIP code: ', '${courseDetailsController.courseDetails.value.institute?.zipCode}'),
-              ],
-            )
-          ],
-        ),
-      );
+  //
+  // Widget _curriculumTab(BuildContext context) => Padding(
+  //   padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+  //   child: ListView.builder(
+  //     padding: EdgeInsets.zero,
+  //     scrollDirection: Axis.vertical,
+  //     shrinkWrap: true,
+  //     itemCount: courseDetailsController.courseDetails.value.courseModules?.length ?? 0,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return Container(
+  //         margin: const EdgeInsets.only(bottom: 8),
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(12),
+  //           border: Border.all(color: Colors.grey.shade300), // subtle border
+  //         ),
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Row(
+  //                 spacing: 5,
+  //                 children: [
+  //                   Container(
+  //                     height: ResponsiveScale.of(context).hp(2),
+  //                     width: ResponsiveScale.of(context).hp(2),
+  //                     decoration: BoxDecoration(
+  //                       color: ColorUtils.baseColor,
+  //                       shape: BoxShape.circle
+  //                     ),
+  //                     child: Center(
+  //                       child: Text('$index',
+  //                         style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.white,fontWeight: FontWeight.w500),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Text('${courseDetailsController.courseDetails.value.courseModules?[index].title}',
+  //                     maxLines: 1,
+  //                     overflow: TextOverflow.ellipsis,
+  //                     style: customTextStyle(context,fontSize: TextSize.font16(context),color: Colors.black,fontWeight: FontWeight.w500),
+  //                   ),
+  //                 ],
+  //               ),
+  //               Text('${courseDetailsController.courseDetails.value.courseModules?[index].description}',
+  //                 maxLines: 2,
+  //                 overflow: TextOverflow.ellipsis,
+  //                 style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
+  //               ),
+  //               Padding(
+  //                 padding: const EdgeInsets.all(8.0),
+  //                 child: Row(
+  //                   spacing: 15,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     Row(
+  //                       spacing: 3,
+  //                       children: [
+  //                         Icon(Icons.timelapse,color: ColorUtils.baseColor,size: TextSize.font14(context)),
+  //                         Text('${courseDetailsController.courseDetails.value.courseModules?[index].duration}',
+  //                           maxLines: 2,
+  //                           overflow: TextOverflow.ellipsis,
+  //                           style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                     Row(
+  //                       spacing: 3,
+  //                       children: [
+  //                         Icon(Icons.play_lesson_outlined,color: ColorUtils.baseColor,size: TextSize.font14(context)),
+  //                         Text('${courseDetailsController.courseDetails.value.courseModules?[index].numberOfLessons} Lessons',
+  //                           maxLines: 2,
+  //                           overflow: TextOverflow.ellipsis,
+  //                           style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ],
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //
+  //   ),
+  // );
 
   Widget institutionSubsection(BuildContext context,String key,String value) {
     return Row(
@@ -585,64 +451,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   }
 
 
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Text(title,
-          style: customTextStyle(context,
-              fontSize: TextSize.font16(context),
-              fontWeight: FontWeight.bold,
-              color: ColorUtils.black)),
-    );
-  }
-
-  Widget _buildInstructorRow(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.person, size: 20),
-            const SizedBox(width: 6),
-            Text('${courseDetailsController.courseDetails.value.managerEmployee?.name}',
-                style: customTextStyle(context,
-                    fontSize: TextSize.font14(context),
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black54)),
-          ],
-        ),
-        Text(courseDetailsController.courseDetails.value.managerEmployee?.businessEmail ?? "email",
-            style: customTextStyle(context,
-                fontSize: TextSize.font12(context),
-                fontWeight: FontWeight.w500,
-                color: ColorUtils.black54)),
-        Row(
-          children: [
-            const Icon(Icons.location_on, size: 18, color: Colors.redAccent),
-            const SizedBox(width: 4),
-            Text('${courseDetailsController.courseDetails.value.managerEmployee?.address}',
-                style: customTextStyle(context,
-                    fontSize: TextSize.font12(context),
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black54)),
-          ],
-        ),
-        Row(
-          children: [
-            const Icon(Icons.local_activity_outlined, size: 18, color: Colors.black),
-            const SizedBox(width: 4),
-            Text('${courseDetailsController.courseDetails.value.managerEmployee?.city}, ${courseDetailsController.courseDetails.value.managerEmployee?.countryCode} ${courseDetailsController.courseDetails.value.managerEmployee?.zipCode}',
-                style: customTextStyle(context,
-                    fontSize: TextSize.font12(context),
-                    fontWeight: FontWeight.w500,
-                    color: ColorUtils.black54)),
-          ],
-        ),
-      ],
-    );
-  }
 
   Future<void> _handlePayment(BuildContext context,
-      {required int courseID, required int studentId}) async {
+      {required String courseID, required int studentId}) async {
     try {
       await StripeService.makePayment(
         amount: double.tryParse('${courseDetailsController.courseDetails.value.discountedPrice}') ?? 0.0,
