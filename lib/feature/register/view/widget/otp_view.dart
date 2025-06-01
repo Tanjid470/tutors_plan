@@ -22,7 +22,7 @@ class OtpView extends StatefulWidget {
 
 class _OtpViewState extends State<OtpView> {
   final RegistrationController registrationController = Get.find();
-  //final CountdownController countdownController = Get.put(CountdownController());
+  final CountdownController countdownController = Get.put(CountdownController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,95 +38,94 @@ class _OtpViewState extends State<OtpView> {
         children: [
           Padding(
               padding: const EdgeInsets.all(24.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("We just sent an email",
-                      style: customTextStyle(
-                        context,
-                        fontSize: TextSize.font18(context),
-                        color: ColorUtils.black,
-                        fontWeight: FontWeight.w500,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("We just sent an email",
+                    style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font18(context),
+                      color: ColorUtils.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text("Enter the security code we sent to ",
+                    style: customTextStyle(
+                      context,
+                      fontSize: TextSize.font16(context),
+                      color: ColorUtils.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(preferences.getString('email') ?? '',
+                    style: TextStyle(
+                      fontSize: TextSize.font16(context),
+                      color: ColorUtils.black,
+                      fontWeight: FontWeight.w500,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+
+                  // PinCodeTextField(
+                  //   appContext: context,
+                  //   controller: registrationController.otpController,
+                  //   length: 6,
+                  //   obscuringCharacter: '*',
+                  //   keyboardType: TextInputType.number,
+                  //   animationType: AnimationType.fade,
+                  //   pinTheme: PinTheme(
+                  //     shape: PinCodeFieldShape.box,
+                  //     borderRadius: BorderRadius.circular(10),
+                  //     fieldHeight: 50,
+                  //     fieldWidth: 40,
+                  //     activeColor: ColorUtils.baseColor,
+                  //     selectedColor: ColorUtils.baseColor,
+                  //     inactiveColor: Colors.grey,
+                  //   ),
+                  //   onChanged: (value) {},
+                  // ),
+                  const SizedBox(height: 30),
+                  BaseButton(
+                      onClick: () async{
+                        await registrationController.otpVerify(context);
+                      },
+                      borderRadius: 10,
+                      title: 'Verify'
+                  ),
+                  SizedBox(height: ResponsiveScale.of(context).hp(2)),
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 5,
+                    children: [
+                      Text('Don\'t receive OTP code?',
+                        style: TextStyle(color: ColorUtils.grey,fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    Text("Enter the security code we sent to ",
-                      style: customTextStyle(
-                        context,
-                        fontSize: TextSize.font16(context),
-                        color: ColorUtils.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(preferences.getString('email') ?? '',
-                      style: TextStyle(
-                        fontSize: TextSize.font16(context),
-                        color: ColorUtils.black,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    PinCodeTextField(
-                      appContext: context,
-                      controller: registrationController.otpController,
-                      length: 6,
-                      obscuringCharacter: '*',
-                      keyboardType: TextInputType.number,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(10),
-                        fieldHeight: 50,
-                        fieldWidth: 40,
-                        activeColor: ColorUtils.baseColor,
-                        selectedColor: ColorUtils.baseColor,
-                        inactiveColor: Colors.grey,
-                      ),
-                      onChanged: (value) {},
-                    ),
-                    const SizedBox(height: 30),
-                    BaseButton(
-                        onClick: () async{
-                          await registrationController.otpVerify(context);
-                        },
-                        borderRadius: 10,
-                        title: 'Verify'
-                    ),
-                    SizedBox(height: ResponsiveScale.of(context).hp(2)),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 5,
-                      children: [
-                        Text('Don\'t receive OTP code?',
-                          style: TextStyle(color: ColorUtils.grey,fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          spacing: 10,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            //countdown(),
-                            Buttons(
-                              style: ButtonsStyle.blueButton,
-                              title: 'Resend',
-                              titleSize: TextSize.font12(context),
-                              horizontalPadding: 10,
-                              verticalPadding: 5,
-                              borderRadius: 5,
-                              onTap: () async {
-                                await registrationController.resendOtp(context);
-                               // countdownController.startCountdown();
-                              },
-                            ),
-                
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                      Row(
+                        spacing: 10,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          countdown(),
+                          Buttons(
+                            style: ButtonsStyle.blueButton,
+                            title: 'Resend',
+                            titleSize: TextSize.font12(context),
+                            horizontalPadding: 10,
+                            verticalPadding: 5,
+                            borderRadius: 5,
+                            onTap: () async {
+                              await registrationController.resendOtp(context);
+                             // countdownController.startCountdown();
+                            },
+                          ),
+
+                        ],
+                      )
+                    ],
+                  )
+                ],
               ),
           ),
           Obx(() {
@@ -143,19 +142,19 @@ class _OtpViewState extends State<OtpView> {
     );
   }
 
-  // Widget countdown() {
-  //   countdownController.startCountdown(); // Start when widget is built
-  //
-  //   return Obx(() {
-  //     final minutes = countdownController.secondsLeft.value ~/ 60;
-  //     final seconds = countdownController.secondsLeft.value % 60;
-  //     final time = '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-  //
-  //     return Text(
-  //       time,
-  //       style: TextStyle(fontSize: TextSize.font16(context), fontWeight: FontWeight.w600),
-  //     );
-  //   });
-  // }
+  Widget countdown() {
+    countdownController.startCountdown(); // Start when widget is built
+
+    return Obx(() {
+      final minutes = countdownController.secondsLeft.value ~/ 60;
+      final seconds = countdownController.secondsLeft.value % 60;
+      final time = '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+      return Text(
+        time,
+        style: TextStyle(fontSize: TextSize.font16(context), fontWeight: FontWeight.w600),
+      );
+    });
+  }
 
 }

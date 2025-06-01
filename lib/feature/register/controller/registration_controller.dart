@@ -110,7 +110,9 @@ class RegistrationController extends GetxController{
       final loginResponse = response.data;
       if (loginResponse.status == 201 || loginResponse.status == 208) {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTP sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
-        preferences.setString('email', emailController.text.trim());
+        if(loginResponse.status == 201) {
+          preferences.setString('email', emailController.text.trim());
+        }
         updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
         Navigator.pushNamed(context, RouteNames.otpView);
       } else {
@@ -198,7 +200,5 @@ class RegistrationController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
-
-
 
 }

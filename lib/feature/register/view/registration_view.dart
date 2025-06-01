@@ -26,7 +26,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
 
-  RegistrationController registrationController = Get.put(RegistrationController());
+  RegistrationController registrationController = Get.put(RegistrationController(), permanent: true);
 
   String? selectedMethod;
 
