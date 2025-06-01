@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tutors_plan/common_widget/buttons.dart';
-import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
@@ -23,9 +22,6 @@ class CourseDetailsScreen extends StatefulWidget {
 }
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
-
-  final String instructor = "Tanjid Hossain Amran";
-  final String location = "Dhaka, Bangladesh";
 
   CourseDetailsController courseDetailsController = Get.put(CourseDetailsController());
 
@@ -230,7 +226,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   Widget shimmerCourseDetailsView(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         backgroundColor: ColorUtils.white,
         appBar: AppBar(
