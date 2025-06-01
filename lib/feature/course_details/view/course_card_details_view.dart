@@ -234,6 +234,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       child: Scaffold(
         backgroundColor: ColorUtils.white,
         appBar: AppBar(
+          leading: Icon(Icons.arrow_back_ios, color: ColorUtils.black),
           title: Container(height: 20, width: 150, color: Colors.grey[300]),
         ),
         bottomNavigationBar: Padding(
