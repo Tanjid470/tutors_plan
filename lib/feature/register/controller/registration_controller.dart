@@ -157,6 +157,7 @@ class RegistrationController extends GetxController{
       final headers = response.headers;
       if (otpResponse.status == 201) {
         preferences.setInt('initScreen', 1);
+        preferences.setString('accessToken', otpResponse.results?.token ?? '');
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Register successfully',context,subtitle: "Email verified",color: ColorUtils.successSnackBarColor));
         Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
       } else {
@@ -171,6 +172,22 @@ class RegistrationController extends GetxController{
       ScaffoldMessenger.of(context).showSnackBar(
           customSnackBar('Email verification failed...!',context,subtitle: apiError.message,color: ColorUtils.errorSnackBarColor)
       );
+    }
+    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+  }
+
+  Future<void> resendOtp(BuildContext context) async {
+    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
+    final response = await registrationRepository.resendOTPResponse(emailController.text.trim());
+    if (response is OtpResponseBody) {
+      final otpResponse = response;
+      if (otpResponse?.status == 201) {
+        preferences.setInt('initScreen', 1);
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTP resend successfully',context,subtitle: "Please check your email.",color: ColorUtils.successSnackBarColor));
+        Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Failed OTP resend : ${otpResponse?.status}',context,subtitle: otpResponse?.message,color: ColorUtils.errorSnackBarColor));
+      }
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
@@ -190,6 +207,7 @@ class RegistrationController extends GetxController{
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
+
 
 
 }

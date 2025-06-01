@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
 import 'package:tutors_plan/feature/register/data/otp_response_body.dart';
 import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
+import 'package:tutors_plan/feature/register/data/resend_otp_response.dart';
 import 'package:tutors_plan/feature/register/domain/otp_body.dart';
 import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
@@ -107,6 +108,29 @@ class RegistrationRepository {
         message: "Network or unexpected error",
       );
     }
+  }
+
+  Future<ResendOTPResponse?> resendOTPResponse(String email) async {
+    try {
+      dio = await ApiClient.dioClient(false);
+      final response = await dio.post(
+        UrlConst.resendOtpEndpoint,
+        data: {
+          "email": email,
+        },
+        options: Options(
+          validateStatus: (status) => status != null && status < 500,
+        ),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201 && response.data is Map<String, dynamic>) {
+        var resendOtpResponse = ResendOTPResponse.fromJson(response.data);
+        return resendOtpResponse;
+      }
+    }
+    catch (e) {
+     return null;
+    }
+    return null;
   }
 
   Future<List<AppRoles>?> getAppRole() async {

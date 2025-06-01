@@ -25,14 +25,14 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  RegistrationController registerController = Get.put(RegistrationController());
+  RegistrationController registrationController = Get.put(RegistrationController());
 
   String? selectedMethod;
 
 
   @override
   void initState() {
-    registerController.getAppRoles();
+    registrationController.getAppRoles();
     super.initState();
   }
   @override
@@ -115,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
 
         ),
         Obx(() {
-          return registerController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
+          return registrationController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
               ? LoadingViewTransparent(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -138,56 +138,56 @@ class _RegisterViewState extends State<RegisterView> {
               headLine: 'Email',
               hintText: 'Enter your email',
               isRequiredField: true,
-              controller: registerController.emailController,
+              controller: registrationController.emailController,
               onTap: null,
               icon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
-              errorText: registerController.emailError.value,
-              onChanged: (_) => registerController.emailError.value = Validators.validateEmail(registerController.emailController.text) ?? '',
+              errorText: registrationController.emailError.value,
+              onChanged: (_) => registrationController.emailError.value = Validators.validateEmail(registrationController.emailController.text) ?? '',
             )),
             Obx(() => KField(
               headLine: 'Password',
               hintText: 'Enter your password',
               isRequiredField: true,
-              controller: registerController.passwordController,
+              controller: registrationController.passwordController,
               onTap: null,
               icon: Icons.lock_outline,
               keyboardType: TextInputType.text,
-              errorText: registerController.passwordError.value,
-              onChanged: (_) => registerController.passwordError.value = Validators.validatePassword(registerController.passwordController.text) ?? '',
+              errorText: registrationController.passwordError.value,
+              onChanged: (_) => registrationController.passwordError.value = Validators.validatePassword(registrationController.passwordController.text) ?? '',
               showPassIcon: true,
             )),
             Obx(() => KField(
               headLine: 'First Name',
               hintText: 'Enter your first name',
-              controller: registerController.firstNameController,
+              controller: registrationController.firstNameController,
               onTap: null,
               isRequiredField: true,
               icon: Icons.account_circle_outlined,
               keyboardType: TextInputType.text,
-              errorText: registerController.firstNameError.value,
-              onChanged: (_) => registerController.firstNameError.value = Validators.firstNameValidation(registerController.firstNameController.text),
+              errorText: registrationController.firstNameError.value,
+              onChanged: (_) => registrationController.firstNameError.value = Validators.firstNameValidation(registrationController.firstNameController.text),
             )),
             Obx(() => KField(
               headLine: 'Last Name',
               hintText: 'Enter your last name',
-              controller: registerController.lastNameController,
+              controller: registrationController.lastNameController,
               onTap: null,
               icon: Icons.person_outline,
               keyboardType: TextInputType.text,
-              errorText: registerController.lastNameError.value,
-              onChanged: (_) => registerController.lastNameError.value = Validators.lastNameValidation(registerController.lastNameController.text),
+              errorText: registrationController.lastNameError.value,
+              onChanged: (_) => registrationController.lastNameError.value = Validators.lastNameValidation(registrationController.lastNameController.text),
             )),
 
             Obx(() => KField(
               headLine: 'Phone Number',
               hintText: 'Enter your phone number',
               isRequiredField: true,
-              controller: registerController.phoneController,
+              controller: registrationController.phoneController,
               onTap: null,
               icon: Icons.phone_android_outlined,
               keyboardType: TextInputType.phone,
-              errorText: registerController.phoneError.value,
+              errorText: registrationController.phoneError.value,
               //onChanged: (_) => registerController.phoneError.value = Validators.validatePhone(registerController.phoneController.text) ?? '',
             )),
 
@@ -215,7 +215,7 @@ class _RegisterViewState extends State<RegisterView> {
             Obx((){
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: registerController.userRoleTypeList.map((role) {
+                children: registrationController.userRoleTypeList.map((role) {
                   final isSelected = selectedMethod == role.title;
                   return Expanded(
                     child: Padding(
@@ -224,9 +224,9 @@ class _RegisterViewState extends State<RegisterView> {
                         onTap: () {
                           setState(() {
                             selectedMethod = role.title;
-                            registerController.roleSelect.value = '';
-                            registerController.appRoleId = role.id ?? '';
-                            log(registerController.appRoleId.toString());
+                            registrationController.roleSelect.value = '';
+                            registrationController.appRoleId = role.id ?? '';
+                            log(registrationController.appRoleId.toString());
                           });
                         },
                         child: UserRoleCard(
@@ -244,14 +244,14 @@ class _RegisterViewState extends State<RegisterView> {
               );
             }),
             Obx((){
-              return registerController.roleSelect.value.isEmpty ?
-                  Text('') : Text(registerController.roleSelect.value,style: customTextStyle(context,color: Colors.redAccent),);
+              return registrationController.roleSelect.value.isEmpty ?
+                  Text('') : Text(registrationController.roleSelect.value,style: customTextStyle(context,color: Colors.redAccent),);
             }),
             termsAndCondition(
-              registerController.isChecked.value,
+              registrationController.isChecked.value,
                   (bool? value) {
                 setState(() {
-                  registerController.isChecked.value = value ?? false;
+                  registrationController.isChecked.value = value ?? false;
                 });
               },
             ),
@@ -310,26 +310,26 @@ class _RegisterViewState extends State<RegisterView> {
       children: [
         ToggleSwitchTile(
             title: 'Account Lock',
-            switchValue: registerController.isAccountLocked),
+            switchValue: registrationController.isAccountLocked),
         ToggleSwitchTile(
           title: 'Active or Archive',
-          switchValue: registerController.isActiveOrArchive,
+          switchValue: registrationController.isActiveOrArchive,
         ),
         ToggleSwitchTile(
           title: 'Email Confirmed',
-          switchValue: registerController.isEmailConfirmed,
+          switchValue: registrationController.isEmailConfirmed,
         ),
         ToggleSwitchTile(
           title: 'Phone Number Confirmed',
-          switchValue: registerController.isPhoneNumberConfirmed,
+          switchValue: registrationController.isPhoneNumberConfirmed,
         ),
         ToggleSwitchTile(
           title: 'Two Factor Enabled',
-          switchValue: registerController.isTwoFactorEnabled,
+          switchValue: registrationController.isTwoFactorEnabled,
         ),
         ToggleSwitchTile(
           title: 'Lockout Enabled',
-          switchValue: registerController.isLockoutEnabled,
+          switchValue: registrationController.isLockoutEnabled,
         ),
       ],
     );
@@ -343,19 +343,19 @@ class _RegisterViewState extends State<RegisterView> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: BaseButton(onClick: () {
-            if (registerController.emailController.text.isEmpty) {
-              registerController.emailError.value = 'Please enter email';
+            if (registrationController.emailController.text.isEmpty) {
+              registrationController.emailError.value = 'Please enter email';
               return;
             }
-            if (registerController.passwordController.text.isEmpty) {
-              registerController.passwordError.value = 'Please enter password';
+            if (registrationController.passwordController.text.isEmpty) {
+              registrationController.passwordError.value = 'Please enter password';
               return;
             }
-            if (registerController.appRoleId == 0) {
-              registerController.roleSelect.value = 'Please chose your role';
+            if (registrationController.appRoleId == 0) {
+              registrationController.roleSelect.value = 'Please chose your role';
               return;
             }
-            registerController.registerAccount(context);
+            registrationController.registerAccount(context);
 
           }, title: 'Register',),
         ),
