@@ -35,11 +35,7 @@ class _RegisterViewState extends State<RegisterView> {
     registrationController.getAppRoles();
     super.initState();
   }
-  @override
-  void dispose() {
-    Get.delete<RegistrationController>();
-    super.dispose();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(

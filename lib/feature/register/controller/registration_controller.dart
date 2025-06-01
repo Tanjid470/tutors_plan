@@ -84,7 +84,6 @@ class RegistrationController extends GetxController{
     }
   }
 
-
   Color _getColorByRoleName(String? name) {
     switch (name?.toLowerCase()) {
       case 'student':
@@ -111,15 +110,13 @@ class RegistrationController extends GetxController{
     }
   }
 
-
   Future<void> registerAccount(BuildContext context) async{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     await insertRegistrationBody();
     final response = await registrationRepository.fetchRegistrationResponse(registrationPostBody);
     if (response is ApiSuccess<RegistrationResponseBody>) {
       final loginResponse = response.data;
-      if (loginResponse.status == 201) {
-        preferences.setInt('initScreen', 1);
+      if (loginResponse.status == 201 || loginResponse.status == 204) {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTP sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
         Navigator.pushNamed(context, RouteNames.otpView);
       } else {
@@ -146,7 +143,6 @@ class RegistrationController extends GetxController{
       roles: [appRoleId ?? ''],
     );
   }
-
 
   Future<void> otpVerify(BuildContext context) async{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);

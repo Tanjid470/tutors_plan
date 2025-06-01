@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
+import 'package:tutors_plan/common_widget/buttons.dart';
 import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/font_constants.dart';
+import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
+import 'package:tutors_plan/feature/register/controller/countdown_controller.dart';
 import 'package:tutors_plan/feature/register/controller/registration_controller.dart';
 
 class OtpView extends StatefulWidget {
@@ -18,6 +21,7 @@ class OtpView extends StatefulWidget {
 
 class _OtpViewState extends State<OtpView> {
   final RegistrationController registrationController = Get.put(RegistrationController());
+  final CountdownController countdownController = Get.put(CountdownController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +57,11 @@ class _OtpViewState extends State<OtpView> {
                   ),
                 ),
                 Text(registrationController.emailController.text,
-                  style: customTextStyle(
-                    context,
+                  style: TextStyle(
                     fontSize: TextSize.font16(context),
                     color: ColorUtils.black,
                     fontWeight: FontWeight.w500,
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -87,16 +91,34 @@ class _OtpViewState extends State<OtpView> {
                     borderRadius: 10,
                     title: 'Verify'
                 ),
-                Row(
+                SizedBox(height: ResponsiveScale.of(context).hp(2)),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 5,
                   children: [
-                    Text('Don\'t receive OTP code?'),
-                    InkWell(
-                      onTap: () async {
-                        await registrationController.resendOtp(context);
-                      },
-                      child: Text('Resend',style: TextStyle(color: ColorUtils.baseColor))
+                    Text('Don\'t receive OTP code?',
+                      style: TextStyle(color: ColorUtils.grey,fontSize: TextSize.font14(context),fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      spacing: 10,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        countdown(),
+                        Buttons(
+                          style: ButtonsStyle.blueButton,
+                          title: 'Resend',
+                          titleSize: TextSize.font12(context),
+                          horizontalPadding: 10,
+                          verticalPadding: 5,
+                          borderRadius: 5,
+                          onTap: () async {
+                            await registrationController.resendOtp(context);
+                            countdownController.startCountdown();
+                          },
+                        ),
+
+                      ],
                     )
                   ],
                 )
@@ -108,12 +130,28 @@ class _OtpViewState extends State<OtpView> {
         Obx(() {
           return registrationController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
               ? LoadingViewTransparent(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: ColorUtils.baseColor,
-          ): SizedBox();
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: ColorUtils.baseColor,
+              )
+              : SizedBox();
         })
       ],
     );
+  }
+
+  Widget countdown() {
+    countdownController.startCountdown(); // Start when widget is built
+
+    return Obx(() {
+      final minutes = countdownController.secondsLeft.value ~/ 60;
+      final seconds = countdownController.secondsLeft.value % 60;
+      final time = '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+      return Text(
+        time,
+        style: TextStyle(fontSize: TextSize.font16(context), fontWeight: FontWeight.w600),
+      );
+    });
   }
 }

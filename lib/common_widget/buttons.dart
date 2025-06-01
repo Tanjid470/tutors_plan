@@ -11,6 +11,9 @@ class Buttons extends StatelessWidget {
   final Widget? icon;
   final BuildContext? context;
   final double? titleSize;
+  final double? horizontalPadding;
+  final double? verticalPadding;
+  final double? borderRadius;
   final Color? bgColor;
   final Color? shadowColor;
   final Color? textColor;
@@ -26,6 +29,9 @@ class Buttons extends StatelessWidget {
         this.icon,
         this.context,
         this.titleSize,
+        this.horizontalPadding,
+        this.verticalPadding,
+        this.borderRadius,
         this.bgColor,
         this.shadowColor,
         this.textColor,
@@ -45,12 +51,12 @@ class Buttons extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,horizontal: 20
+        padding: EdgeInsets.symmetric(
+          vertical: verticalPadding ?? 10,horizontal: horizontalPadding ?? 20
         ),
         decoration: BoxDecoration(
           color: ColorUtils.baseColor,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(borderRadius ?? 15),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -62,7 +68,7 @@ class Buttons extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: TextSize.font16(context),
+                fontSize: titleSize ?? TextSize.font16(context),
                 fontWeight: FontWeight.w500,
               ),
             ),

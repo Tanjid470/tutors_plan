@@ -23,7 +23,7 @@ class KField extends StatefulWidget {
   final bool? datePicker;
   final TextInputType? keyboardType;
   final bool? obscureText;
-  final VoidCallback? forgotPassOntap;
+  final VoidCallback? forgotPassOnTap;
   final bool? noPrefix;
   final bool? forgotPass;
   final void Function(String)? onChanged;
@@ -59,7 +59,7 @@ class KField extends StatefulWidget {
     this.validator,
     this.showPassIcon,
     this.forgotPass,
-    this.forgotPassOntap,
+    this.forgotPassOnTap,
     this.datePicker,
     this.noPrefix,
     this.contentPadding,
@@ -212,7 +212,7 @@ class _KFieldState extends State<KField> {
           Row(
             children: [
               GestureDetector(
-                onTap: widget.forgotPassOntap,
+                onTap: widget.forgotPassOnTap,
                 child: Container(
                   color: Colors.transparent,
                   child: Row(

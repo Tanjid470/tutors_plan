@@ -133,12 +133,12 @@ class _LoginViewState extends State<LoginView> {
           }, title: 'Login'),
 
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
-          BaseButton(onClick: (){
-            preferences.setInt('initScreen', 1);
-            preferences.setBool('guest', true);
-            ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login as guest',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor),);
-            Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
-          }, title: 'Login as guest'),
+          // BaseButton(onClick: (){
+          //   preferences.setInt('initScreen', 1);
+          //   preferences.setBool('guest', true);
+          //   ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login as guest',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor),);
+          //   Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
+          // }, title: 'Login as guest'),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
