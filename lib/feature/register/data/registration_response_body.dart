@@ -8,7 +8,7 @@ class RegistrationResponseBody {
 
   RegistrationResponseBody.fromJson(Map<String, dynamic> json) {
     ok = json['ok'];
-    status = json['status'];
+    status = json['status'] ?? json['statusCode'];
     message = json['message'];
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }

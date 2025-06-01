@@ -24,7 +24,7 @@ class RegistrationRepository {
           validateStatus: (status) => status != null && status < 500,
         ),
       );
-      if (response.statusCode == 200 || response.statusCode == 201 && response.data is Map<String, dynamic>) {
+      if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 208 && response.data is Map<String, dynamic>) {
         var registrationResponse = RegistrationResponseBody.fromJson(response.data);
         var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
         return ApiSuccess(registrationResponse, headers: headers);

@@ -51,14 +51,6 @@ class RegistrationController extends GetxController{
   RegistrationPostBody registrationPostBody = RegistrationPostBody();
   OTPBody otpBody = OTPBody();
 
-  @override
-  void onClose() {
-    super.onClose();
-    if (kDebugMode) {
-      print("Controller disposed");
-    }
-  }
-
   List<AppRoles>? appRoles = [];
 
   final RxList<UserRole> userRoleTypeList = <UserRole>[].obs;
@@ -116,8 +108,10 @@ class RegistrationController extends GetxController{
     final response = await registrationRepository.fetchRegistrationResponse(registrationPostBody);
     if (response is ApiSuccess<RegistrationResponseBody>) {
       final loginResponse = response.data;
-      if (loginResponse.status == 201 || loginResponse.status == 204) {
+      if (loginResponse.status == 201 || loginResponse.status == 208) {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTP sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
+        preferences.setString('email', emailController.text.trim());
+        updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
         Navigator.pushNamed(context, RouteNames.otpView);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTO status : ${loginResponse.status}',context,subtitle: loginResponse.message,color: ColorUtils.errorSnackBarColor));
@@ -128,6 +122,7 @@ class RegistrationController extends GetxController{
       ScaffoldMessenger.of(context).showSnackBar(
           customSnackBar('Login failed...!',context,subtitle: apiError.message,color: ColorUtils.errorSnackBarColor)
       );
+      updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
