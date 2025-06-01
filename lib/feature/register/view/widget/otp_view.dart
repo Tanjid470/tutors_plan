@@ -12,6 +12,7 @@ import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/countdown_controller.dart';
 import 'package:tutors_plan/feature/register/controller/registration_controller.dart';
 import 'package:tutors_plan/main.dart';
+import 'package:tutors_plan/route/app_pages.dart';
 
 class OtpView extends StatefulWidget {
   const OtpView({super.key});
@@ -21,22 +22,37 @@ class OtpView extends StatefulWidget {
 }
 
 class _OtpViewState extends State<OtpView> {
-  final RegistrationController registrationController = Get.find();
+  final RegistrationController registrationController = Get.put(RegistrationController());
   final CountdownController countdownController = Get.put(CountdownController());
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      countdownController.startCountdown();
+    });
+  }
+
+  @override
+  void dispose() {
+    countdownController.dispose();
+    registrationController.otpController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(""),
-        leading: InkWell(
-          onTap: () => Navigator.pop(context),
-          child: const Icon(Icons.arrow_back_ios_new),
-        ),
-      ),
-      body: Stack(
-        children: [
-          Padding(
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: const Text(""),
+            leading: InkWell(
+              onTap: () =>  Navigator.pushNamed(context, RouteNames.registerView),
+              child: const Icon(Icons.arrow_back_ios_new),
+            ),
+          ),
+          body: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -67,24 +83,25 @@ class _OtpViewState extends State<OtpView> {
                     ),
                   ),
 
-                  // PinCodeTextField(
-                  //   appContext: context,
-                  //   controller: registrationController.otpController,
-                  //   length: 6,
-                  //   obscuringCharacter: '*',
-                  //   keyboardType: TextInputType.number,
-                  //   animationType: AnimationType.fade,
-                  //   pinTheme: PinTheme(
-                  //     shape: PinCodeFieldShape.box,
-                  //     borderRadius: BorderRadius.circular(10),
-                  //     fieldHeight: 50,
-                  //     fieldWidth: 40,
-                  //     activeColor: ColorUtils.baseColor,
-                  //     selectedColor: ColorUtils.baseColor,
-                  //     inactiveColor: Colors.grey,
-                  //   ),
-                  //   onChanged: (value) {},
-                  // ),
+                  SizedBox(height: ResponsiveScale.of(context).hp(2)),
+                  PinCodeTextField(
+                    appContext: context,
+                    controller: registrationController.otpController,
+                    length: 6,
+                    obscuringCharacter: '*',
+                    keyboardType: TextInputType.number,
+                    animationType: AnimationType.fade,
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(10),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      activeColor: ColorUtils.baseColor,
+                      selectedColor: ColorUtils.baseColor,
+                      inactiveColor: Colors.grey,
+                    ),
+                    onChanged: (value) {},
+                  ),
                   const SizedBox(height: 30),
                   BaseButton(
                       onClick: () async{
@@ -128,23 +145,21 @@ class _OtpViewState extends State<OtpView> {
                 ],
               ),
           ),
-          Obx(() {
-            return registrationController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
-                ? LoadingViewTransparent(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: ColorUtils.baseColor,
-                )
-                : SizedBox();
-          })
-        ],
-      ),
+        ),
+        Obx(() {
+          return registrationController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
+              ? LoadingViewTransparent(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            color: ColorUtils.baseColor,
+          )
+              : SizedBox();
+        })
+      ],
     );
   }
 
   Widget countdown() {
-    countdownController.startCountdown(); // Start when widget is built
-
     return Obx(() {
       final minutes = countdownController.secondsLeft.value ~/ 60;
       final seconds = countdownController.secondsLeft.value % 60;

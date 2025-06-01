@@ -145,10 +145,7 @@ class _LoginViewState extends State<LoginView> {
             children: [
               Text('Don\'t have an account?'),
               TextButton(onPressed: (){
-                Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context) => const RegisterView()),
-                );
+                Navigator.pushNamed(context, RouteNames.registerView);
               }, child: Text('Sign Up',style: TextStyle(color: ColorUtils.baseColor)))
             ],
           )
