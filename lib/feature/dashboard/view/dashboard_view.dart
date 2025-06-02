@@ -427,7 +427,7 @@ class _DashboardViewState extends State<DashboardView> {
                           description: courses.shortDescription ?? 'shortDescription of the course',
                           imageUrl: courses.thumbnailImage ??'',
                           author: '',
-                          originalPrice: courses.discountedAmount ?? 0,
+                          originalPrice: courses.regularPrice ?? 0,
                           discountedPrice: courses.discountedPrice ?? 0,
                           hasScholarship: false,
                           duration: courses.courseDuration ?? '',
@@ -435,6 +435,7 @@ class _DashboardViewState extends State<DashboardView> {
                           students: courses.studentCount ?? 0,
                           modules: courses.moduleCount ?? 0,
                           courseId: courses.id ?? '',
+                           categoryName: courses.courseCategory?.name ?? '',
                       );
                     }).toList() ??
                         [],

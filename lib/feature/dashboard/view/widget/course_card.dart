@@ -23,6 +23,7 @@ class CourseCard extends StatelessWidget {
   final int modules;
   final bool hasScholarship;
   final bool? isFavorite;
+  final String? categoryName;
 
   const CourseCard({
     super.key,
@@ -40,6 +41,7 @@ class CourseCard extends StatelessWidget {
     required this.discountedPrice,
     required this.hasScholarship,
     this.isFavorite,
+    this.categoryName,
   });
   @override
   Widget build(BuildContext context) {
@@ -150,14 +152,36 @@ class CourseCard extends StatelessWidget {
                 Column(
                   spacing: 5,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CourseSubplotCard(
+                          context: context,
+                          title: '$credits Credits',
+                          icon: Icons.credit_score_sharp,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorUtils.baseColor,
+                          ),
+                          child: Text(
+                            categoryName ?? '',
+                            style: customTextStyle(context,
+                                fontSize: TextSize.font12(context),
+                                fontWeight: FontWeight.bold,
+                                color: ColorUtils.white),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                     CourseSubplotCard(
                         context: context,
                         title: duration,
-                        icon: Icons.date_range),
-                    CourseSubplotCard(
-                      context: context,
-                      title: '$credits Credits',
-                      icon: Icons.credit_score_sharp,
+                        icon: Icons.date_range
                     ),
                     CourseSubplotCard(
                       context: context,

@@ -65,6 +65,7 @@ class CourseModel {
   String? createdAt;
   String? name;
   String? shortDescription;
+  int? regularPrice;
   int? discountedPrice;
   int? discountedPercentage;
   int? discountedAmount;
@@ -82,6 +83,7 @@ class CourseModel {
         this.createdAt,
         this.name,
         this.shortDescription,
+        this.regularPrice,
         this.discountedPrice,
         this.discountedPercentage,
         this.discountedAmount,
@@ -99,6 +101,7 @@ class CourseModel {
     createdAt = json['created_at'];
     name = json['name'];
     shortDescription = json['short_description'];
+    regularPrice = json['regular_price'];
     discountedPrice = json['discounted_price'];
     discountedPercentage = json['discounted_percentage'];
     discountedAmount = json['discounted_amount'];
@@ -120,6 +123,7 @@ class CourseModel {
     data['created_at'] = createdAt;
     data['name'] = name;
     data['short_description'] = shortDescription;
+    data['regular_price'] = regularPrice;
     data['discounted_price'] = discountedPrice;
     data['discounted_percentage'] = discountedPercentage;
     data['discounted_amount'] = discountedAmount;
