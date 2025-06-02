@@ -56,14 +56,14 @@ class ProfileController extends GetxController {
   }
 
   void setProfileData() {
-    final data = profileGetResponseBody.data;
+    final data = profileGetResponseBody.results;
     if (data != null) {
       firstNameController.text = data.firstName ?? '';
       lastNameController.text = data.lastName ?? '';
       usernameController.text = data.username ?? '';
       emailController.text = data.email ?? '';
       phoneController.text = data.phoneNumber ?? '';
-      profilePicture.value = data.profilePictureUrl ?? '';
+      profilePicture.value = data.profilePicture ?? '';
       update();
     }
   }
