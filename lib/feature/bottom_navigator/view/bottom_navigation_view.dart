@@ -4,7 +4,7 @@ import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/feature/exam/view/exam_view.dart';
 import 'package:tutors_plan/feature/learning/view/library_view.dart';
-import 'package:tutors_plan/feature/my_course/view/MyCourse.dart';
+import 'package:tutors_plan/feature/my_course/view/my_course_view.dart';
 import 'package:tutors_plan/feature/profile/view/profile_view.dart';
 import 'package:tutors_plan/feature/webview/view/in_app_web_view.dart';
 
