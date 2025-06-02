@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/common_widget/buttons.dart';
 import 'package:tutors_plan/common_widget/custom_simmer.dart';
+import 'package:tutors_plan/common_widget/video_player_widget.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
@@ -609,7 +610,44 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Icon(Icons.play_circle, size: 20, color: ColorUtils.baseColor),
+                          InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (_) => Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    spacing: 15,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Icon(Icons.cancel_outlined, size: TextSize.font24(context), color: ColorUtils.black)),
+                                        ],
+                                      ),
+                                      AspectRatio(
+                                        aspectRatio: 16 / 9,
+                                        child: CustomVideoPlayer(videoUrl: lesson.lessonVideo ?? ''),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Icon(Icons.play_circle, size: 20, color: ColorUtils.baseColor),
+                          )
+
 
                         ],
                       ),
