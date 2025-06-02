@@ -1,7 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tutors_plan/common_widget/buttons.dart';
+import 'package:tutors_plan/common_widget/custom_simmer.dart';
+import 'package:tutors_plan/config/font_constants.dart';
+import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/course_details/controller/course_details_controller.dart';
@@ -34,146 +38,160 @@ class _MyCourseViewState extends State<MyCourseView> {
         leading: const SizedBox(),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: [
             Obx(() {
               return myCourseController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
                   ? shimmerCourseDetailsView(context)
-                  : Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 6,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Course Title
-                        Text(
-                          myCourseController.myCourseList?[0].name ?? 'Course Title',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
+                  : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: myCourseController.myCourseList?.asMap().entries.map((entry) {
+                        final myCourse = entry.value;
+                        return Container(
+                          width: MediaQuery.of(context).size.width - 20,
+                          margin: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(height: 6),
-
-                        // Description
-                        Text(
-                          myCourseController.myCourseList?[0].shortDescription ?? 'Course description goes here.',
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Column(
-                          spacing: 5,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.timelapse,color: ColorUtils.baseColor,size: 16),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      myCourseController.myCourseList?[0].courseDuration ?? 'O days',
-                                      maxLines: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                spacing: ResponsiveScale.of(context).wp(2),
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                    child: myCourse.thumbnailImage?.isNotEmpty == true
+                                        ? CachedNetworkImage (
+                                          imageUrl: myCourse.thumbnailImage!,
+                                          height: 80,
+                                          width: MediaQuery.of(context).size.width * 0.3,
+                                          fit: BoxFit.fill,
+                                          placeholder: (context, url) =>
+                                              Center(
+                                                  child: CustomShimmer(
+                                                    height: 80,
+                                                    width: MediaQuery.of(context).size.width * 0.3,
+                                                  )
+                                              ),
+                                          errorWidget: (context, url, error) => Image.asset(
+                                            'assets/images/dummy_image.jpg',
+                                            height: 80,
+                                            width: MediaQuery.of(context).size.width * 0.3,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        )
+                                        : Image.asset (
+                                          'assets/images/dummy_image.jpg',
+                                          height: 80,
+                                          width: MediaQuery.of(context).size.width * 0.3,
+                                          fit: BoxFit.fill,
+                                        ),
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      spacing: 5,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(myCourse.name ?? 'Course Title',
+                                          style: TextStyle(
+                                            fontSize: TextSize.font18(context),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(myCourse.shortDescription ?? 'Course description goes here.',
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: TextSize.font14(context),
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: ResponsiveScale.of(context).wp(2),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: ColorUtils.grey300,
+                                    ),
+                                    child: Text(myCourse.categoryName.toString(),
+                                      maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        fontSize: 15,
-                                        color: ColorUtils.baseColor,
+                                        fontSize: TextSize.font16(context),
+                                        color: ColorUtils.black,
                                       ),
                                     ),
-                                  ],
-                                ),
-                                Text(
-                                  'modules',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:  TextStyle(
-                                    fontSize: 15,
-                                    color: ColorUtils.baseColor,
                                   ),
-                                ),
-                                Text(
-                                  'lessons',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: ColorUtils.baseColor,
+                                  Row(
+                                    children: [
+                                      Icon(Icons.timelapse,color: ColorUtils.baseColor,size: 16),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        myCourse.courseDuration ?? 'O days',
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: ColorUtils.baseColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  ' videos',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:  TextStyle(
-                                    fontSize: 15,
-                                    color: ColorUtils.baseColor,
+                                  Row(
+                                    children: [
+                                      Icon(Icons.credit_score,color: ColorUtils.baseColor,size: 16),
+                                      const SizedBox(width: 6),
+                                      Text('${myCourse.credits.toString()} credits',
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: ColorUtils.baseColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  ' books',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style:  TextStyle(
-                                    fontSize: 15,
-                                    color: ColorUtils.baseColor,
-                                  ),
-                                ),
-                                Text(
-                                  '0 quizzes',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: ColorUtils.baseColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
 
-                        const SizedBox(height: 6),
-                        // Divider
-                        Divider(color: Colors.grey[300], thickness: 1),
-                        // Action Button Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Buttons(
-                              style: ButtonsStyle.blueButton,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => MyCourseInfoView()),
-                                );
-                              },
-                              title: 'Continue',
-                            ),
-                          ],
-                        ),
-                      ],
+                                ],
+                              ),
+                              Divider(color: Colors.grey[300], thickness: 1),
+                              Buttons(
+                                style: ButtonsStyle.dynamicButton,
+                                isExpended : true,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => MyCourseInfoView()),
+                                  );
+                                },
+                                title: 'Continue',
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList() ?? [],
                     ),
                   );
             }),
