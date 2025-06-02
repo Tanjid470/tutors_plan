@@ -17,6 +17,7 @@ class Buttons extends StatelessWidget {
   final Color? bgColor;
   final Color? shadowColor;
   final Color? textColor;
+  final bool? isExpended;
 
   const Buttons(
       {super.key,
@@ -35,6 +36,7 @@ class Buttons extends StatelessWidget {
         this.bgColor,
         this.shadowColor,
         this.textColor,
+        this.isExpended = false
       });
 
   @override
@@ -91,7 +93,7 @@ class Buttons extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: isExpended == true ? MainAxisSize.max : MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

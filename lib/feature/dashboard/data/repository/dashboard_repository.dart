@@ -59,7 +59,7 @@ class DashboardRepository {
      );
      ProfileGetResponseBody data = ProfileGetResponseBody.fromJson(response.data);
 
-     if (data.status == 'SUCCESS') {
+     if (data.status == 200) {
        return data;
      }
      else {

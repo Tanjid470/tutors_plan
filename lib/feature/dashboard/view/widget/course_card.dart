@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/common_widget/base_button.dart';
+import 'package:tutors_plan/common_widget/custom_simmer.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
@@ -48,16 +49,17 @@ class CourseCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade300,
-              blurStyle: BlurStyle.outer,
-              offset: Offset(0, 0),
-              blurRadius: 10,
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.shade300,
+          //     blurStyle: BlurStyle.outer,
+          //     offset: Offset(0, 0),
+          //     blurRadius: 10,
+          //   ),
+          // ],
           border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
+          borderRadius: BorderRadius.all(Radius.circular(10))
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +78,7 @@ class CourseCard extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.5,
                         fit: BoxFit.fill,
                         placeholder: (context, url) =>
-                            Center(child: const CircularProgressIndicator()),
+                            Center(child: CustomShimmer(height: 120, width: MediaQuery.of(context).size.width * 0.5)),
                         errorWidget: (context, url, error) => Image.asset(
                           'assets/images/dummy_image.jpg',
                           height: 100,

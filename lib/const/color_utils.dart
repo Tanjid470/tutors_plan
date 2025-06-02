@@ -4,9 +4,10 @@ class ColorUtils{
   ColorUtils._();
   // Blue Shades
   static Color baseColor = Color(0xff4f46e5); // Base color
+  static Color shimmerColor = Color(0xff726af0).withOpacity(0.1); // Base color
 
 // Lighter shade with opacity (used for backgrounds, light UI)
-  static Color baseBlueColorLight = baseColor.withOpacity(0.1);
+  static Color baseBlueColorLight = baseColor.withOpacity(0.5);
 
 // Custom shades based on baseBlueColor — darker as the shade number increases
   static Color baseBlueColorShade100 = Color(0xff726af0); // Lighter tone

@@ -52,9 +52,9 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                 color: Colors.transparent,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.shade400,
-                    spreadRadius: 20,
-                    blurRadius: 100,
+                    color: Colors.grey.shade200,
+                    spreadRadius: 10,
+                    blurRadius: 30,
                     offset: Offset(0, -5),
                   ),
                 ],

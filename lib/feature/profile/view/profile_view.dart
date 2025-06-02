@@ -55,17 +55,21 @@ class _ProfileViewState extends State<ProfileView> {
                     child: Column(
                       children: [
                         Container(
+                          clipBehavior: Clip.hardEdge, // Border thickness
                           padding: EdgeInsets.all(3), // Border thickness
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: ColorUtils.baseColor, width: 2), // Border color and width
+                            border: Border.all(color: ColorUtils.baseColor, width: 1), // Border color and width
                           ),
-                          child: CircleAvatar(
-                            radius: ResponsiveScale.of(context).hp(6),
-                            backgroundColor: Colors.white,
-                            child: Image.asset(
-                              'assets/images/profile.png',
-                              fit: BoxFit.fill,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: CircleAvatar(
+                              radius: ResponsiveScale.of(context).hp(6),
+                              backgroundColor: Colors.white,
+                              child: Image.asset(
+                                'assets/images/no_profile.jpg',
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
@@ -246,10 +250,22 @@ class _ProfileViewState extends State<ProfileView> {
                       ],
                     )
                   ),
-
-
-
-
+                  // onTap: () async {
+                  //   await preferences.clear();
+                  //   Navigator.pushReplacementNamed(
+                  //       context, RouteNames.loginView);
+                  // },
+                  Buttons(
+                    style: ButtonsStyle.dynamicButton,
+                    bgColor: Colors.red.shade300,
+                    isExpended: true,
+                    title: 'Logout',
+                    onTap: () async {
+                      await preferences.clear();
+                      Navigator.pushReplacementNamed(
+                          context, RouteNames.loginView);
+                    },
+                  )
                 ],
               ),
             ),

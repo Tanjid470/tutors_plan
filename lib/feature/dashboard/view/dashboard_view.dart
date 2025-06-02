@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:tutors_plan/common_widget/custom_simmer.dart';
 import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
@@ -16,7 +18,6 @@ import 'package:tutors_plan/feature/dashboard/view/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/scholar_pass_view.dart';
 import 'package:tutors_plan/feature/learning/view/widget/more_info_tutorsplan_view.dart';
 import 'package:tutors_plan/main.dart';
-import 'package:tutors_plan/route/app_pages.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -32,58 +33,47 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     // dashboardController.getCourseCategory(categoryPage: dashboardController.categoryPage);
     dashboardController.getCourse(coursePage: dashboardController.coursePage);
-    //dashboardController.getUserProfile();
+    dashboardController.getUserProfile();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          body: Column(
-            children: [
-              appBar(),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Column(
-                      spacing: ResponsiveScale.of(context).hp(1),
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        verticalGap(context, 1),
-                        sliderView(),
-                        ScholarPassBundle(),
-                        //statView(),
-                        courseCardView(),
-                       // categoryView(),
-                        programCardView(),
-                        verticalGap(context, 2),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        Obx(() {
-          return dashboardController.loaderState.value ==
-                  ScreenStates.TRANSPARENT_LOADING_START
-              ? LoadingViewTransparent(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  color: ColorUtils.baseColor,
-                )
-              : SizedBox(); // or any other widget when the state doesn't match
-        })
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          appBar(),
+          body(),
+        ],
+      ),
     );
   }
 
+  Widget body(){
+    return Expanded(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              spacing: ResponsiveScale.of(context).hp(1),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                verticalGap(context, 1),
+                sliderView(),
+                //statView(),
+                courseCardView(),
+                ScholarPassBundle(),
+                // categoryView(),
+                programCardView(),
+                verticalGap(context, 2),
+              ],
+            ),
+          ),
+        ),
+      );
+  }
+
   Widget appBar() {
-    bool isGuest = preferences.getBool('guest') ?? false;
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -106,51 +96,7 @@ class _DashboardViewState extends State<DashboardView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 10,
               children: [
-                isGuest
-                    ? Expanded(
-                      child: Row(
-                        spacing: 10,
-                        children: [
-                          Container(
-                            clipBehavior:
-                            Clip.hardEdge, // Border thickness
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  color: ColorUtils.baseColor,
-                                  width: 2), // Change color & width
-                            ),
-                            child: CircleAvatar(
-                              radius:
-                              ResponsiveScale.of(context).hp(3),
-                              backgroundColor: Colors.white,
-                              child: Image.asset(
-                                  'assets/images/profile.png',
-                                  fit: BoxFit.fill),
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Guest user',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                    customTextStyle(context,
-                                        fontSize: TextSize.font16(
-                                            context),
-                                        fontWeight:
-                                        FontWeight.bold,
-                                        color: ColorUtils.white)),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                    : Obx(() {
+                Obx(() {
                         return dashboardController.isProfileLoading.value
                             ? Expanded(
                               child: Row(
@@ -170,33 +116,23 @@ class _DashboardViewState extends State<DashboardView> {
                                       ResponsiveScale.of(context).hp(3),
                                       backgroundColor: Colors.white,
                                       child: Image.asset(
-                                          'assets/images/profile.png',
+                                          'assets/images/no_profile.jpg',
                                           fit: BoxFit.fill),
                                     ),
                                   ),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      spacing: 5,
                                       children: [
-                                        Text('',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style:
-                                            customTextStyle(context,
-                                                fontSize: TextSize.font16(
-                                                    context),
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                color: ColorUtils.white)),
-                                        Text( '',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: customTextStyle(context,
-                                                fontSize:
-                                                TextSize.font12(context),
-                                                fontWeight: FontWeight.w600,
-                                                color: ColorUtils.white))
+                                        CustomShimmer(
+                                          height: 16,
+                                          width: 120,
+                                        ),
+                                        CustomShimmer(
+                                          height: 14,
+                                          width: 80,
+                                        )
                                       ],
                                     ),
                                   )
@@ -208,19 +144,16 @@ class _DashboardViewState extends State<DashboardView> {
                                   spacing: 10,
                                   children: [
                                     Container(
-                                      clipBehavior:
-                                          Clip.hardEdge, // Border thickness
+                                      clipBehavior: Clip.hardEdge, // Border thickness
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: ColorUtils.baseColor,
-                                            width: 2), // Change color & width
+                                        color: Colors.white// Change color & width
                                       ),
                                       child: CircleAvatar(
                                         radius: ResponsiveScale.of(context).hp(3),
                                         backgroundColor: Colors.white,
-                                        child: Image.asset('assets/images/profile.png',
-                                            fit: BoxFit.fill),
+                                        child: Image.asset('assets/images/no_profile.jpg',
+                                            fit: BoxFit.cover),
                                       ),
                                     ),
                                     Expanded(
@@ -232,22 +165,21 @@ class _DashboardViewState extends State<DashboardView> {
                                               '${dashboardController.profileGetResponseBody.results?.firstName} ${dashboardController.profileGetResponseBody.results?.lastName}' ?? '',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                              style:
-                                                  customTextStyle(context,
-                                                      fontSize: TextSize.font16(
-                                                          context),
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: ColorUtils.white)),
+                                              style: customTextStyle(
+                                                context,
+                                                fontSize: TextSize.font16(context),
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorUtils.white)
+                                          ),
                                           Text(
                                               dashboardController.profileGetResponseBody.results?.email ?? '',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: customTextStyle(context,
-                                                  fontSize:
-                                                      TextSize.font12(context),
+                                                  fontSize: TextSize.font12(context),
                                                   fontWeight: FontWeight.w600,
-                                                  color: ColorUtils.white))
+                                                  color: ColorUtils.white)
+                                          )
                                         ],
                                       ),
                                     )
@@ -255,102 +187,86 @@ class _DashboardViewState extends State<DashboardView> {
                                 ),
                               );
                       }),
-                Row(
-                  spacing: 10,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
-                            backgroundColor: Colors.transparent,
-                            insetPadding: EdgeInsets.only(
-                              right: 16,
-                              top: kToolbarHeight + 10,
-                            ),
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.32,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                children: [
-                                  // Grid icons
-                                  Expanded(
-                                    child: GridView.count(
-                                      crossAxisCount: 3,
-                                      mainAxisSpacing: 5,
-                                      crossAxisSpacing: 5,
-                                      padding: EdgeInsets.zero,
-                                      children: [
-                                        _menuItem(
-                                            Icons.videogame_asset_outlined,
-                                            "Games"),
-                                        _menuItem(
-                                            Icons.handshake_outlined, "CRM"),
-                                        _menuItem(Icons.school_outlined, "LMS"),
-                                        _menuItem(Icons.work_outline, "Jobs"),
-                                        _menuItem(
-                                            Icons.groups_2_outlined, "Team"),
-                                        _menuItem(Icons.edit_note, "Blog"),
-                                        _menuItem(Icons.school_outlined,
-                                            "ScholarPass"),
-                                        _menuItem(Icons.stars_outlined,
-                                            "TutorsPlan"), // Replace with asset if needed
-                                      ],
-                                    ),
-                                  ),
-                                  Divider(),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      Get.to(() => MoreInfoTutorsPlanView());
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          "More from TutorsPlan",
-                                          style: TextStyle(
-                                              color: ColorUtils.baseColor,
-                                              fontSize:
-                                                  TextSize.font14(context)),
-                                        ),
-                                        SizedBox(width: 5),
-                                        Icon(Icons.keyboard_arrow_down,
-                                            size: TextSize.font20(context),
-                                            color: ColorUtils.baseColor),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                InkWell(
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        insetPadding: EdgeInsets.only(
+                          right: 16,
+                          top: kToolbarHeight + 10,
+                        ),
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.32,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        );
-                      },
-                      child: Icon(
-                        Icons.grid_view,
-                        color: Colors.white,
-                        size: ResponsiveScale.of(context).hp(3),
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              // Grid icons
+                              Expanded(
+                                child: GridView.count(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 5,
+                                  crossAxisSpacing: 5,
+                                  padding: EdgeInsets.zero,
+                                  children: [
+                                    _menuItem(
+                                        Icons.videogame_asset_outlined,
+                                        "Games"),
+                                    _menuItem(
+                                        Icons.handshake_outlined, "CRM"),
+                                    _menuItem(Icons.school_outlined, "LMS"),
+                                    _menuItem(Icons.work_outline, "Jobs"),
+                                    _menuItem(
+                                        Icons.groups_2_outlined, "Team"),
+                                    _menuItem(Icons.edit_note, "Blog"),
+                                    _menuItem(Icons.school_outlined,
+                                        "ScholarPass"),
+                                    _menuItem(Icons.stars_outlined,
+                                        "TutorsPlan"), // Replace with asset if needed
+                                  ],
+                                ),
+                              ),
+                              Divider(),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Get.to(() => MoreInfoTutorsPlanView());
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "More from TutorsPlan",
+                                      style: TextStyle(
+                                          color: ColorUtils.baseColor,
+                                          fontSize:
+                                              TextSize.font14(context)),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Icon(Icons.keyboard_arrow_down,
+                                        size: TextSize.font20(context),
+                                        color: ColorUtils.baseColor),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await preferences.clear();
-                        Navigator.pushReplacementNamed(
-                            context, RouteNames.loginView);
-                      },
-                      child: CircleAvatar(
-                          radius: ResponsiveScale.of(context).hp(2),
-                          backgroundColor: Colors.white,
-                          child: Icon(Icons.logout, color: Colors.red)),
-                    ),
-                  ],
+                    );
+                  },
+                  child: Icon(
+                    Icons.grid_view,
+                    color: Colors.white,
+                    size: ResponsiveScale.of(context).hp(3),
+                  ),
                 )
               ],
             ),
@@ -537,45 +453,25 @@ class _DashboardViewState extends State<DashboardView> {
               ],
             )
           : Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Trending courses',
-                  style: customTextStyle(context,
-                      fontSize: TextSize.font20(context),
-                      fontWeight: FontWeight.bold),
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 5,
+            children: [
+              Text(
+                'Trending courses',
+                style: customTextStyle(context,
+                    fontSize: TextSize.font20(context),
+                    fontWeight: FontWeight.bold),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(2, (index) => shimmerCourseCard(context)),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 2,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return CourseCard(
-                        title: 'title of the course',
-                        itemNo: index,
-                        description: 'shortDescription of the course',
-                        imageUrl: '',
-                        author: '',
-                        originalPrice: 0,
-                        discountedPrice: 0,
-                        hasScholarship: false,
-                        duration: "0",
-                        credits: 0,
-                        students: 0,
-                        modules: 0,
-                        courseId: '',
-                      );
-                    },
-                  ),
-                ),
-
-              ],
-            );
+              ),
+            ],
+          );
     });
   }
 
@@ -790,4 +686,35 @@ class _DashboardViewState extends State<DashboardView> {
       ],
     );
   }
+
+  Widget shimmerCourseCard(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      margin: const EdgeInsets.only(right: 5),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.all(Radius.circular(10))
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10,
+        children: [
+          CustomShimmer(height: 120, width: MediaQuery.of(context).size.width * 0.5),
+          CustomShimmer(height: 20, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
+          CustomShimmer(height: 12, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
+          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          CustomShimmer(height: 18, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
+          CustomShimmer(height: 35, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10,radius: 10),
+          SizedBox(height: 5),
+        ],
+      ),
+    );
+  }
+
 }
+
