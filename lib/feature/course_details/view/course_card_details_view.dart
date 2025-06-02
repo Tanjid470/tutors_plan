@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tutors_plan/common_widget/buttons.dart';
+import 'package:tutors_plan/common_widget/custom_simmer.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
@@ -231,62 +232,69 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         backgroundColor: ColorUtils.white,
         appBar: AppBar(
           leading: Icon(Icons.arrow_back_ios, color: ColorUtils.black),
-          title: Container(height: 20, width: 150, color: Colors.grey[300]),
+          title: CustomShimmer(height: 25, width: double.infinity),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16),
-          child: Container(
+          child: CustomShimmer(
+            child: Container(
               height: 48,
               decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(12))),
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(12)
+              )
+            ),
+          ),
         ),
-        body: Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              children: [
-                Container(
-                    height: 180, width: double.infinity, color: Colors.white),
-                const SizedBox(height: 16),
-                Container(height: 20, width: 250, color: Colors.white),
-                const SizedBox(height: 8),
-                Row(
-                  children: List.generate(
-                      5,
-                      (_) => Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child:
-                                Icon(Icons.star, color: Colors.white, size: 18),
-                          )),
-                ),
-                const SizedBox(height: 8),
-                Row(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 10,
+            children: [
+              CustomShimmer(height: 180, width: double.infinity),
+              CustomShimmer(height: 25, width: double.infinity,horizontalMargin: 10,),
+              CustomShimmer(height: 20, width: double.infinity,horizontalMargin: 10,),
+              CustomShimmer(height: 20, width: double.infinity,horizontalMargin: 10,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
                   children: [
-                    Container(height: 16, width: 60, color: Colors.white),
-                    const SizedBox(width: 8),
-                    Container(height: 20, width: 80, color: Colors.white),
+                    CustomShimmer(
+                      child: Row(
+                      children: List.generate(
+                        5,(_) => Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Icon(Icons.star, color: Colors.white, size: 18),
+                          )
+                        ),
+                      )
+                    ),
+                    CustomShimmer(height: 20, width: 100),
                   ],
                 ),
-                const SizedBox(height: 16),
-                Container(
-                    height: 40,
-                    width: double.infinity,
-                    color: Colors.white), // Tab bar placeholder
-                const SizedBox(height: 16),
-                Expanded(
+              ),
+              CustomShimmer(height: 20, width: 100,horizontalMargin: 10),
+              SizedBox(height: 10),
+              CustomShimmer(height: 25, width: double.infinity,horizontalMargin: 10,),
+              Expanded(
+                child: CustomShimmer(
                   child: ListView.builder(
                     itemCount: 6,
                     itemBuilder: (_, __) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Container(height: 80, color: Colors.white),
+                      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                      child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                     ),
                   ),
+                  ),
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

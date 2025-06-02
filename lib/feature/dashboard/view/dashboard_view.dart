@@ -1,13 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:tutors_plan/common_widget/custom_simmer.dart';
-import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
-import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/controller/dashboard_controller.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/stat_card.dart';
@@ -17,7 +14,6 @@ import 'package:tutors_plan/feature/dashboard/view/widget/learning_art_view.dart
 import 'package:tutors_plan/feature/dashboard/view/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/scholar_pass_view.dart';
 import 'package:tutors_plan/feature/learning/view/widget/more_info_tutorsplan_view.dart';
-import 'package:tutors_plan/main.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -97,8 +93,8 @@ class _DashboardViewState extends State<DashboardView> {
               spacing: 10,
               children: [
                 Obx(() {
-                        return dashboardController.isProfileLoading.value
-                            ? Expanded(
+                  return dashboardController.isProfileLoading.value
+                    ? Expanded(
                               child: Row(
                                 spacing: 10,
                                 children: [
@@ -139,8 +135,8 @@ class _DashboardViewState extends State<DashboardView> {
                                 ],
                               ),
                             )
-                            : Expanded(
-                                child: Row(
+                    : Expanded(
+                      child: Row(
                                   spacing: 10,
                                   children: [
                                     Container(
@@ -185,8 +181,8 @@ class _DashboardViewState extends State<DashboardView> {
                                     )
                                   ],
                                 ),
-                              );
-                      }),
+                    );
+                }),
                 InkWell(
                   onTap: () async {
                     await showDialog(
@@ -216,20 +212,14 @@ class _DashboardViewState extends State<DashboardView> {
                                   crossAxisSpacing: 5,
                                   padding: EdgeInsets.zero,
                                   children: [
-                                    _menuItem(
-                                        Icons.videogame_asset_outlined,
-                                        "Games"),
-                                    _menuItem(
-                                        Icons.handshake_outlined, "CRM"),
+                                    _menuItem(Icons.videogame_asset_outlined, "Games"),
+                                    _menuItem(Icons.handshake_outlined, "CRM"),
                                     _menuItem(Icons.school_outlined, "LMS"),
                                     _menuItem(Icons.work_outline, "Jobs"),
-                                    _menuItem(
-                                        Icons.groups_2_outlined, "Team"),
+                                    _menuItem(Icons.groups_2_outlined, "Team"),
                                     _menuItem(Icons.edit_note, "Blog"),
-                                    _menuItem(Icons.school_outlined,
-                                        "ScholarPass"),
-                                    _menuItem(Icons.stars_outlined,
-                                        "TutorsPlan"), // Replace with asset if needed
+                                    _menuItem(Icons.school_outlined, "ScholarPass"),
+                                    _menuItem(Icons.stars_outlined, "TutorsPlan"), // Replace with asset if needed
                                   ],
                                 ),
                               ),

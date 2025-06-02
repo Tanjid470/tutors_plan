@@ -9,6 +9,7 @@ class CustomShimmer extends StatelessWidget {
   final double? horizontalPadding;
   final double? horizontalMargin;
   final double? radius;
+  final Widget? child;
   const CustomShimmer({
     super.key,
     this.height,
@@ -16,6 +17,7 @@ class CustomShimmer extends StatelessWidget {
     this.horizontalPadding,
     this.horizontalMargin,
     this.radius,
+    this.child,
   });
 
   @override
@@ -23,7 +25,7 @@ class CustomShimmer extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: ColorUtils.shimmerColor,
       highlightColor: Colors.grey.shade100,
-      child: Container(
+      child: child ?? Container(
         height: height ?? 15,
         width: width ?? 60,
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 0),

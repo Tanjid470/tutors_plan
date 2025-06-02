@@ -64,7 +64,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           BottomNavigationBar(
             items:  <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_rounded,size: TextSize.font26(context)),
+                  icon: Icon(Icons.home_filled,size: TextSize.font26(context)),
                   label: 'Home'),
               BottomNavigationBarItem(icon: Icon(Icons.school_outlined,size: TextSize.font26(context)),label: 'Learning'),
               BottomNavigationBarItem(icon: Icon(Icons.gamepad_outlined,size: TextSize.font26(context)),label: 'Games'),

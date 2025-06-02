@@ -105,6 +105,7 @@ class DashboardController extends GetxController {
   // }
 
   Future<void> getCourse({int? coursePage}) async {
+    isLoadingCourseList.value = false;
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     final result = await dashboardRepository.getCourse(
       page: coursePage,
