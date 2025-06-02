@@ -175,7 +175,7 @@ class CourseCard extends StatelessWidget {
                           icon: Icons.credit_score_sharp,
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: ColorUtils.baseColor,
@@ -183,7 +183,7 @@ class CourseCard extends StatelessWidget {
                           child: Text(
                             categoryName ?? '',
                             style: customTextStyle(context,
-                                fontSize: TextSize.font12(context),
+                                fontSize: TextSize.font10(context),
                                 fontWeight: FontWeight.bold,
                                 color: ColorUtils.white),
                             maxLines: 2,
