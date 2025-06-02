@@ -21,7 +21,7 @@ class CourseCard extends StatelessWidget {
   final int students;
   final int modules;
   final bool hasScholarship;
-  final List<String> features;
+  final bool? isFavorite;
 
   const CourseCard({
     super.key,
@@ -38,13 +38,14 @@ class CourseCard extends StatelessWidget {
     required this.originalPrice,
     required this.discountedPrice,
     required this.hasScholarship,
-    required this.features,
+    this.isFavorite,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
-      margin: EdgeInsets.only(right: 10),
+      margin: EdgeInsets.only(right: 5),
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -55,61 +56,69 @@ class CourseCard extends StatelessWidget {
               blurRadius: 10,
             ),
           ],
-          border: Border.all(color: Colors.grey.shade400),
+          border: Border.all(color: Colors.grey.shade300),
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              imageUrl.isNotEmpty
-                  ? CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) =>
-                          Center(child: const CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => Image.asset(
-                        'assets/images/dummy_image.jpg',
-                        height: 100,
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            child: Stack(
+              children: [
+                imageUrl.isNotEmpty
+                    ? CachedNetworkImage (
+                        imageUrl: imageUrl,
+                        height: 120,
                         width: MediaQuery.of(context).size.width * 0.5,
                         fit: BoxFit.fill,
-                      ),
+                        placeholder: (context, url) =>
+                            Center(child: const CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'assets/images/dummy_image.jpg',
+                          height: 100,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          fit: BoxFit.fill,
+                        ),
                     )
-                  : Image.asset(
-                      'assets/images/dummy_image.jpg',
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      fit: BoxFit.fill,
+                    : Image.asset (
+                        'assets/images/dummy_image.jpg',
+                        height: 120,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        fit: BoxFit.fill,
                     ),
-              Positioned(
-                  bottom: 5,
-                  left: 5,
-                  child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          gradient: LinearGradient(colors: [
-                            ColorUtils.baseBlueColorShade100,
-                            ColorUtils.baseBlueColorShade300,
-                          ]),
-                          border: Border.all(color: Colors.grey, width: 1)),
-                      child: Text('Scholarship available',
-                          style: whiteText(
-                              fontWeight: FontWeight.w400,
-                              TextSize.font8(context))))),
-              Positioned(
-                  top: 7,
-                  right: 7,
-                  child: CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.favorite_border,
-                          color: Colors.red, size: TextSize.font14(context)))),
-            ],
+                if(hasScholarship == true)
+                Positioned(
+                    bottom: 5,
+                    left: 5,
+                    child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            gradient: LinearGradient(colors: [
+                              ColorUtils.baseBlueColorShade100,
+                              ColorUtils.baseBlueColorShade300,
+                            ]),
+                            border: Border.all(color: Colors.grey, width: 1)),
+                        child: Text('Scholarship available',
+                            style: whiteText(
+                                fontWeight: FontWeight.w400,
+                                TextSize.font8(context))))),
+                if(isFavorite == true)
+                Positioned(
+                    top: 7,
+                    right: 7,
+                    child: CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.favorite_border,
+                            color: Colors.red, size: TextSize.font14(context)))),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),

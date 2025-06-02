@@ -50,6 +50,7 @@ class _DashboardViewState extends State<DashboardView> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(
                       spacing: ResponsiveScale.of(context).hp(1),
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         verticalGap(context, 1),
                         sliderView(),
@@ -216,11 +217,9 @@ class _DashboardViewState extends State<DashboardView> {
                                             width: 2), // Change color & width
                                       ),
                                       child: CircleAvatar(
-                                        radius:
-                                            ResponsiveScale.of(context).hp(3),
+                                        radius: ResponsiveScale.of(context).hp(3),
                                         backgroundColor: Colors.white,
-                                        child: Image.asset(
-                                            'assets/images/profile.png',
+                                        child: Image.asset('assets/images/profile.png',
                                             fit: BoxFit.fill),
                                       ),
                                     ),
@@ -230,8 +229,7 @@ class _DashboardViewState extends State<DashboardView> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              '${dashboardController.profileGetResponseBody.data?.firstName} ${dashboardController.profileGetResponseBody.data?.lastName}' ??
-                                                  '',
+                                              '${dashboardController.profileGetResponseBody.results?.firstName} ${dashboardController.profileGetResponseBody.results?.lastName}' ?? '',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style:
@@ -242,11 +240,7 @@ class _DashboardViewState extends State<DashboardView> {
                                                           FontWeight.bold,
                                                       color: ColorUtils.white)),
                                           Text(
-                                              dashboardController
-                                                      .profileGetResponseBody
-                                                      .data
-                                                      ?.email ??
-                                                  '',
+                                              dashboardController.profileGetResponseBody.results?.email ?? '',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: customTextStyle(context,
@@ -507,6 +501,7 @@ class _DashboardViewState extends State<DashboardView> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 5,
               children: [
                 Text(
                   'Trending courses',
@@ -514,32 +509,29 @@ class _DashboardViewState extends State<DashboardView> {
                       fontSize: TextSize.font20(context),
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: dashboardController.courseList?.length,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var courses = dashboardController.courseList?[index];
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: dashboardController.courseList?.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final courses = entry.value;
                       return CourseCard(
-                        title: courses?.name ?? 'title of the course',
-                        itemNo: index,
-                        description: courses?.shortDescription ?? 'shortDescription of the course',
-                        imageUrl: courses?.thumbnailImage ??'',
-                        author: '',
-                        originalPrice: courses?.discountedAmount ?? 0,
-                        discountedPrice: courses?.discountedPrice ?? 0,
-                        hasScholarship: false,
-                        features: [],
-                        duration: courses?.courseDuration ?? '',
-                        credits: courses?.credits ?? 0,
-                        students: courses?.studentCount ?? 0,
-                        modules: courses?.moduleCount ?? 0,
-                        courseId: courses?.id ?? '',
+                          title: courses.name ?? 'title of the course',
+                          itemNo: index,
+                          description: courses.shortDescription ?? 'shortDescription of the course',
+                          imageUrl: courses.thumbnailImage ??'',
+                          author: '',
+                          originalPrice: courses.discountedAmount ?? 0,
+                          discountedPrice: courses.discountedPrice ?? 0,
+                          hasScholarship: false,
+                          duration: courses.courseDuration ?? '',
+                          credits: courses.credits ?? 0,
+                          students: courses.studentCount ?? 0,
+                          modules: courses.moduleCount ?? 0,
+                          courseId: courses.id ?? '',
                       );
-                    },
+                    }).toList() ??
+                        [],
                   ),
                 ),
               ],
@@ -572,7 +564,6 @@ class _DashboardViewState extends State<DashboardView> {
                         originalPrice: 0,
                         discountedPrice: 0,
                         hasScholarship: false,
-                        features: [],
                         duration: "0",
                         credits: 0,
                         students: 0,
@@ -582,6 +573,7 @@ class _DashboardViewState extends State<DashboardView> {
                     },
                   ),
                 ),
+
               ],
             );
     });
@@ -664,7 +656,7 @@ class _DashboardViewState extends State<DashboardView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          height: Get.height / 6,
+          height: Get.height / 5.75,
           child: CarouselSlider.builder(
             itemCount: dashboardController.splashList.length,
             itemBuilder: (BuildContext context, int index, int realIndex) {
