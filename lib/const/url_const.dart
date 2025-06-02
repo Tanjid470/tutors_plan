@@ -15,7 +15,7 @@ class UrlConst {
   static final String resendOtpEndpoint = '$baseUrl/auth/resend-otp';
   static final String appRolesEndpoint = '$baseUrl/roles';
   static final String getCourseCategoryEndpoint = '$baseUrl/course-categories';
-  static final String getProfileEndpoint = '$baseUrl/me';
+  static final String getProfileEndpoint = '$baseUrl/user-profile';
   static final String courseEnrollmentEndpoint = '$baseUrl/stripe/course-enrollment';
   static final String getCoursesEndpoint = '$baseUrl/courses/published';
   static final String getCourseDetailsEndpoint = '$baseUrl/courses';
