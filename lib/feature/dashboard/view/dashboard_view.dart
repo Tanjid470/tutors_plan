@@ -435,7 +435,8 @@ class _DashboardViewState extends State<DashboardView> {
                           students: courses.studentCount ?? 0,
                           modules: courses.moduleCount ?? 0,
                           courseId: courses.id ?? '',
-                           categoryName: courses.courseCategory?.name ?? '',
+                          categoryName: courses.courseCategory?.name ?? '',
+                          isFree: courses.isFreeCourse ?? false,
                       );
                     }).toList() ??
                         [],

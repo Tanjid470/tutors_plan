@@ -22,6 +22,7 @@ class CourseCard extends StatelessWidget {
   final int students;
   final int modules;
   final bool hasScholarship;
+  final bool? isFree;
   final bool? isFavorite;
   final String? categoryName;
 
@@ -40,6 +41,7 @@ class CourseCard extends StatelessWidget {
     required this.originalPrice,
     required this.discountedPrice,
     required this.hasScholarship,
+    this.isFree,
     this.isFavorite,
     this.categoryName,
   });
@@ -47,7 +49,7 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
-      margin: EdgeInsets.only(right: 5),
+      margin: const EdgeInsets.only(right: 5),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -60,14 +62,14 @@ class CourseCard extends StatelessWidget {
           //   ),
           // ],
           border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.all(Radius.circular(10))
+          borderRadius: const BorderRadius.all(Radius.circular(10))
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
@@ -112,15 +114,27 @@ class CourseCard extends StatelessWidget {
                             style: whiteText(
                                 fontWeight: FontWeight.w400,
                                 TextSize.font8(context))))),
-                if(isFavorite == true)
+                if(isFree == true)
                 Positioned(
                     top: 7,
                     right: 7,
-                    child: CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.white,
-                        child: Icon(Icons.favorite_border,
-                            color: Colors.red, size: TextSize.font14(context)))),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green,
+                      ),
+                      child: Text(
+                        'Free',
+                        style: customTextStyle(context,
+                            fontSize: TextSize.font10(context),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                ),
               ],
             ),
           ),
