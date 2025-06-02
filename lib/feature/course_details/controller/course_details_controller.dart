@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/course_details/data/course_details_response_body.dart';
 import 'package:tutors_plan/feature/course_details/data/repository/course_details_repository.dart';
+import 'package:tutors_plan/feature/course_details/data/repository/course_module_response.dart';
 
 
 class CourseDetailsController extends GetxController {
@@ -10,6 +11,7 @@ class CourseDetailsController extends GetxController {
 
   CourseDetailsRepository courseDetailsRepository = CourseDetailsRepository();
   final Rx<CourseDetails> courseDetails = CourseDetails().obs;
+  final Rx<Modules> courseModules = Modules().obs;
 
 
   Future<void> getCourseDetails(String courseId) async {
@@ -17,6 +19,16 @@ class CourseDetailsController extends GetxController {
     final result = await courseDetailsRepository.getCourseDetailsResponse(courseId);
     if (result != null) {
       courseDetails.value = result;
+      updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+    }
+    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+  }
+
+  Future<void> getCourseModules(String courseId) async {
+    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
+    final result = await courseDetailsRepository.getCourseModulesResponse(courseId);
+    if (result != null) {
+      courseModules.value = result;
       updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
