@@ -415,33 +415,7 @@ class _DashboardViewState extends State<DashboardView> {
                       fontSize: TextSize.font20(context),
                       fontWeight: FontWeight.bold),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: dashboardController.courseList?.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final courses = entry.value;
-                      return CourseCard(
-                          title: courses.name ?? 'title of the course',
-                          itemNo: index,
-                          description: courses.shortDescription ?? 'shortDescription of the course',
-                          imageUrl: courses.thumbnailImage ??'',
-                          author: '',
-                          originalPrice: courses.regularPrice ?? 0,
-                          discountedPrice: courses.discountedPrice ?? 0,
-                          hasScholarship: false,
-                          duration: courses.courseDuration ?? '',
-                          credits: courses.credits ?? 0,
-                          students: courses.studentCount ?? 0,
-                          modules: courses.moduleCount ?? 0,
-                          courseId: courses.id ?? '',
-                          categoryName: courses.courseCategory?.name ?? '',
-                          isFree: courses.isFreeCourse ?? false,
-                      );
-                    }).toList() ??
-                        [],
-                  ),
-                ),
+                publishedCourseListView()
               ],
             )
           : Column(
@@ -704,6 +678,36 @@ class _DashboardViewState extends State<DashboardView> {
           CustomShimmer(height: 35, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10,radius: 10),
           SizedBox(height: 5),
         ],
+      ),
+    );
+  }
+
+  Widget publishedCourseListView(){
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: dashboardController.courseList?.asMap().entries.map((entry) {
+          final index = entry.key;
+          final courses = entry.value;
+          return CourseCard(
+            title: courses.name ?? 'title of the course',
+            itemNo: index,
+            description: courses.shortDescription ?? 'shortDescription of the course',
+            imageUrl: courses.thumbnailImage ??'',
+            author: '',
+            originalPrice: courses.regularPrice ?? 0,
+            discountedPrice: courses.discountedPrice ?? 0,
+            hasScholarship: false,
+            duration: courses.courseDuration ?? '',
+            credits: courses.credits ?? 0,
+            students: courses.studentCount ?? 0,
+            modules: courses.moduleCount ?? 0,
+            courseId: courses.id ?? '',
+            categoryName: courses.courseCategory?.name ?? '',
+            isFree: courses.isFreeCourse ?? false,
+          );
+        }).toList() ??
+            [],
       ),
     );
   }

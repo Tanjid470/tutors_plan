@@ -460,7 +460,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     child: ListView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
-      physics: ScrollPhysics(),
+      physics: const ScrollPhysics(),
       itemCount: courseDetailsController.courseModules.value.module?.length ?? 0,
       itemBuilder: (context, index) {
         final module = courseDetailsController.courseModules.value.module![index];

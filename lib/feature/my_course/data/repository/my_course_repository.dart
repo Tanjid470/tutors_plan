@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
+import 'package:tutors_plan/feature/course_details/data/repository/course_module_response.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/my_course/data/my_course_response.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
@@ -43,7 +44,28 @@ class MyCourseRepository {
    return null;
  }
 
+ Future<Modules?> getMyCourseModulesResponse(String courseId) async {
+   try {
+     dio = await ApiClient.dioClient(true);
 
-
+     final queryParameters = {
+       "courseId": courseId,
+     };
+     Response response = await dio.get(
+         UrlConst.getCourseModulesEndpoint,
+         queryParameters: queryParameters
+     );
+     CourseModulesResponse data = CourseModulesResponse.fromJson(response.data);
+     if (data.status == 200) {
+       return data.results;
+     }
+     else {
+       return null;
+     }
+   } catch (e) {
+     debugPrint(e.toString());
+   }
+   return null;
+ }
 
 }

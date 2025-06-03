@@ -12,6 +12,7 @@ class MyCourseController extends GetxController {
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
   RxBool isLoadingMyCourseList = false.obs;
+  RxBool isLoadingMyCourseModuleList = false.obs;
   List<MyCourse>? myCourseList = [];
 
   MyCourseRepository myCourseRepository = MyCourseRepository();
@@ -19,7 +20,6 @@ class MyCourseController extends GetxController {
 
   Future<void> getMyCourse({int? coursePage}) async {
     isLoadingMyCourseList.value = false;
-    updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     final result = await myCourseRepository.getMyCourse(
       page: coursePage,
       limit: 10,
@@ -28,18 +28,18 @@ class MyCourseController extends GetxController {
       isLoadingMyCourseList.value = true;
       myCourseList = result;
     }
-    updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+    isLoadingMyCourseList.value = true;
   }
 
-  // Future<void> getCourseModules(String courseId) async {
-  //   updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
-  //   final result = await courseDetailsRepository.getCourseModulesResponse(courseId);
-  //   if (result != null) {
-  //     courseModules.value = result;
-  //     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  //   }
-  //   updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  // }
+  Future<void> getMyCourseModules(String courseId) async {
+    isLoadingMyCourseModuleList.value = false;
+    final result = await myCourseRepository.getMyCourseModulesResponse(courseId);
+    if (result != null) {
+      isLoadingMyCourseModuleList.value = false;
+      courseModules.value = result;
+    }
+    isLoadingMyCourseModuleList.value = false;
+  }
 
 
   void updateViewState(
