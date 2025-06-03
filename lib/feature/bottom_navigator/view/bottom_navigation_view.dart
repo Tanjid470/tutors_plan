@@ -32,7 +32,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children:  [
+        children: const [
           DashboardView(),
           MyCourseView(),
           InAppWebView(),
@@ -52,10 +52,10 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                 color: Colors.transparent,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.shade200,
-                    spreadRadius: 10,
+                    color: Colors.grey.shade400,
+                    spreadRadius: 20,
                     blurRadius: 30,
-                    offset: Offset(0, -5),
+                    offset: const Offset(0, -5),
                   ),
                 ],
               ),
