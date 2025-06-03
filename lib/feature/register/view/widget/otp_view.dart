@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:tutors_plan/common_widget/base_button.dart';
-import 'package:tutors_plan/common_widget/buttons.dart';
-import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
+import 'package:tutors_plan/global_widget/base_button.dart';
+import 'package:tutors_plan/global_widget/buttons.dart';
+import 'package:tutors_plan/global_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';

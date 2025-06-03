@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
-import 'package:tutors_plan/common_widget/k_field.dart';
-import 'package:tutors_plan/common_widget/loading_view_transparent.dart';
+import 'package:tutors_plan/global_widget/k_field.dart';
+import 'package:tutors_plan/global_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/controller/login_controller.dart';
-import 'package:tutors_plan/feature/register/view/registration_view.dart';
-import 'package:tutors_plan/common_widget/base_button.dart';
-import 'package:tutors_plan/main.dart';
+import 'package:tutors_plan/global_widget/base_button.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/extention/validator.dart';
 

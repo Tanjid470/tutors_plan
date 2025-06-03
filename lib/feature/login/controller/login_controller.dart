@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
+import 'package:tutors_plan/global_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/login/data/login_response_body.dart';

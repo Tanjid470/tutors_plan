@@ -1,16 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tutors_plan/common_widget/buttons.dart';
-import 'package:tutors_plan/common_widget/custom_simmer.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/my_course/controller/my_course_controller.dart';
 import 'package:tutors_plan/feature/my_course/view/my_course_details_view.dart';
+import 'package:tutors_plan/global_widget/buttons.dart';
+import 'package:tutors_plan/global_widget/custom_simmer.dart';
 
 class MyCourseView extends StatefulWidget {
   const MyCourseView({super.key});

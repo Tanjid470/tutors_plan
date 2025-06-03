@@ -1,9 +1,5 @@
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tutors_plan/common_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
 import 'package:tutors_plan/feature/register/data/otp_response_body.dart';
@@ -13,6 +9,7 @@ import 'package:tutors_plan/feature/register/data/repository/registration_reposi
 import 'package:tutors_plan/feature/register/domain/otp_body.dart';
 import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
 import 'package:tutors_plan/feature/register/domain/user_role.dart';
+import 'package:tutors_plan/global_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
