@@ -5,7 +5,6 @@ import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/learning/view/widget/live_classes.dart';
 import 'package:tutors_plan/feature/learning/view/widget/self_learning_view.dart';
-import 'package:tutors_plan/feature/learning/view/widget/video_conference_view.dart';
 
 class LibraryView extends StatefulWidget {
   const LibraryView({super.key});
@@ -99,91 +98,6 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
     return LiveClassesPage();
   }
 
-  // Widget _liveTutoring() {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-  //     child: Column(
-  //       children: [
-  //         Image.asset('assets/images/zoom_logo.png',
-  //           width: MediaQuery.of(context).size.width * 0.6,
-  //           height: MediaQuery.of(context).size.height * 0.25,
-  //         ),
-  //         Text('Your userId : $userId',
-  //           style: customTextStyle(
-  //             context,
-  //             fontSize: TextSize.font16(context),
-  //             fontWeight: FontWeight.w500,
-  //             color: Colors.black87
-  //           ),
-  //         ),
-  //         verticalGap(context, 1),
-  //         Text('Conference Id : $randomConferenceId',
-  //           style: customTextStyle(
-  //               context,
-  //               fontSize: TextSize.font16(context),
-  //               fontWeight: FontWeight.w500,
-  //               color: Colors.black87
-  //           ),
-  //         ),
-  //         verticalGap(context, 2),
-  //         TextFormField(
-  //           maxLength: 10,
-  //           keyboardType: TextInputType.number,
-  //           controller: meetsTabController,
-  //           decoration: const InputDecoration(
-  //             hintText: 'Enter conference Id to join',
-  //             hintStyle: TextStyle(color: Colors.grey),
-  //             border: OutlineInputBorder(
-  //               borderRadius: BorderRadius.all(Radius.circular(10)),
-  //             ),
-  //             focusedBorder: OutlineInputBorder(
-  //               borderRadius: BorderRadius.all(Radius.circular(10)),
-  //               borderSide: BorderSide(color: Colors.blueAccent, width: 2),
-  //             ),
-  //           ),
-  //         ),
-  //         Buttons(
-  //           onTap: () {
-  //             if (meetsTabController.text.length == 10) {
-  //               jumpToMeetPage(context, conferenceId: meetsTabController.text);
-  //             } else {
-  //               ScaffoldMessenger.of(context).showSnackBar(
-  //                 SnackBar(
-  //                   content: Text('Conference ID must be 10 digits',
-  //                     style: customTextStyle(
-  //                       context,
-  //                       color: Colors.black,
-  //                       fontWeight: FontWeight.w500,
-  //                       fontSize: TextSize.font16(context)
-  //                     )
-  //                   ),
-  //                   behavior: SnackBarBehavior.floating,
-  //                   duration: Duration(seconds: 2),
-  //                   backgroundColor: ColorUtils.errorSnackBarColor,
-  //                 ),
-  //               );
-  //             }
-  //           },
-  //           title: 'Join a meeting',
-  //           style: ButtonsStyle.blueButton,
-  //         ),
-  //         SizedBox(height: 10,),
-  //         Buttons(
-  //           onTap: () {
-  //             jumpToMeetPage(context, conferenceId : randomConferenceId);
-  //           },
-  //           title: 'Start a meeting',
-  //           style: ButtonsStyle.blueButton,
-  //         )
-  //
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // Widget _stats() {
-  //   return GoogleMeetCreator();
-  // }
   Widget _stats() {
     final List<Map<String, String>> tutors = [
       {
@@ -254,9 +168,9 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
                   children: [
                     Text(
                       tutor['name']!,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text(
                       'Email: ${tutor['email']}',
                       style: TextStyle(color: Colors.grey[700]),
@@ -280,11 +194,5 @@ class _LibraryViewState extends State<LibraryView> with SingleTickerProviderStat
 
   }
 
-
-  void jumpToMeetPage(BuildContext context, {required String conferenceId}) {
-    Navigator.push(context,
-      MaterialPageRoute(builder: (context)=> VideoConferenceView(conferenceId :conferenceId))
-    );
-  }
 }
 
