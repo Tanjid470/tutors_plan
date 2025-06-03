@@ -10,6 +10,7 @@ import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/register/controller/registration_controller.dart';
 import 'package:tutors_plan/feature/register/view/widget/user_role_card.dart';
 import 'package:tutors_plan/global_widget/base_button.dart';
+import 'package:tutors_plan/global_widget/custom_simmer.dart';
 import 'package:tutors_plan/global_widget/k_field.dart';
 import 'package:tutors_plan/global_widget/loading_view_transparent.dart';
 import 'package:tutors_plan/global_widget/toggle_switch_tile.dart';
@@ -115,7 +116,7 @@ class _RegisterViewState extends State<RegisterView> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             color: ColorUtils.baseColor,
-          ): SizedBox();
+          ): const SizedBox();
         })
       ],
     );
@@ -208,39 +209,46 @@ class _RegisterViewState extends State<RegisterView> {
               ],
             ),
             Obx((){
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: registrationController.userRoleTypeList.map((role) {
-                  final isSelected = selectedMethod == role.title;
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            selectedMethod = role.title;
-                            registrationController.roleSelect.value = '';
-                            registrationController.appRoleId = role.id ?? '';
-                            log(registrationController.appRoleId.toString());
-                          });
-                        },
-                        child: UserRoleCard(
-                          context: context,
-                          title: role.title,
-                          imageUrl: role.imageUrl,
-                          color: role.selectedColor,
-                          bgColor: role.bgColor,
-                          isSelected: isSelected,
+              return registrationController.userRoleTypeList.isNotEmpty
+                  ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: registrationController.userRoleTypeList.map((role) {
+                      final isSelected = selectedMethod == role.title;
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedMethod = role.title;
+                                registrationController.roleSelect.value = '';
+                                registrationController.appRoleId = role.id ?? '';
+                                log(registrationController.appRoleId.toString());
+                              });
+                            },
+                            child: UserRoleCard(
+                              context: context,
+                              title: role.title,
+                              imageUrl: role.imageUrl,
+                              color: role.selectedColor,
+                              bgColor: role.bgColor,
+                              isSelected: isSelected,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }).toList(),
+                  )
+                  : Row(
+                    children: List.generate(3, (index) => Expanded(child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: shimmerCourseCard(context),
+                    ))),
                   );
-                }).toList(),
-              );
             }),
             Obx((){
               return registrationController.roleSelect.value.isEmpty ?
-                  Text('') : Text(registrationController.roleSelect.value,style: customTextStyle(context,color: Colors.redAccent),);
+                  const Text('') : Text(registrationController.roleSelect.value,style: customTextStyle(context,color: Colors.redAccent),);
             }),
             termsAndCondition(
               registrationController.isChecked.value,
@@ -355,6 +363,25 @@ class _RegisterViewState extends State<RegisterView> {
           }, title: 'Register',),
         ),
       ],
+    );
+  }
+
+  Widget shimmerCourseCard(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      decoration:  BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: Colors.grey.shade100,
+      ),
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 10,
+        children: [
+          CustomShimmer(height: 35, width: 35,horizontalMargin: 10),
+          CustomShimmer(height: 15, width: 80,horizontalMargin: 10),
+        ],
+      ),
     );
   }
 

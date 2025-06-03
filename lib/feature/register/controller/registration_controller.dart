@@ -56,7 +56,6 @@ class RegistrationController extends GetxController{
     final result = await registrationRepository.getAppRole();
     if (result != null) {
       appRoles = result;
-
       final filteredRoles = appRoles!.where((role) {
         final roleName = role.name?.toLowerCase();
         return roleName == 'tutor' || roleName == 'student' || roleName == 'guardian';
