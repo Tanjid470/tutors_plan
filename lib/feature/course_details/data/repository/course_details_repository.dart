@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
 import 'package:tutors_plan/feature/course_details/data/course_details_response_body.dart';
+import 'package:tutors_plan/feature/course_details/data/payment_response.dart';
 import 'package:tutors_plan/feature/course_details/data/repository/course_module_response.dart';
 import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
 import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
@@ -52,5 +53,33 @@ class CourseDetailsRepository {
     }
     return null;
   }
+
+
+  Future<PaymentStripe?> courseEnrollPayment(String courseID) async {
+    try {
+      dio = await ApiClient.dioClient(true);
+      var accessToken = preferences.getString('accessToken');
+      Response response = await dio.post(
+        UrlConst.courseEnrollmentEndpoint,
+        data: {"productId": courseID},
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $accessToken',
+          },
+        ),
+      );
+      PaymentResponse data = PaymentResponse.fromJson(response.data);
+      if (data.status == 200) {
+        return data.paymentStripe;
+      }
+      else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
+  }
+
 
 }

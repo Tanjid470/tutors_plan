@@ -54,6 +54,7 @@ dependencies:
   chewie: ^1.11.3
   skeletonizer: ^1.4.3
   dotted_border: ^2.1.0
+  webview_flutter_wkwebview: ^3.22.0
 
 
 dev_dependencies:

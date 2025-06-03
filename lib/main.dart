@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -6,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/services/stripe_service.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'config/font_constants.dart';
 import 'feature/bottom_navigator/view/bottom_navigation_view.dart';
 import 'feature/login/view/login_view.dart';
@@ -21,6 +24,7 @@ void main() async {
   isInitScreen = preferences.getInt('initScreen');
   await dotenv.load(fileName: '.env');
   await StripeService.initialize();
+
   runApp(const MyApp());
 }
 

@@ -15,6 +15,7 @@ import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/services/stripe_service.dart';
 import 'package:intl/intl.dart';
+import 'package:tutors_plan/utils/network/payment_web_view.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
   const CourseDetailsScreen({super.key, required this.courseId});
@@ -180,7 +181,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     bottomNavigationBar: Padding(
                       padding: const EdgeInsets.all(16),
                       child: BaseButton(
-                        onClick: () {
+                        onClick: () async {
                           String? accessToken =
                               preferences.getString('accessToken');
 
@@ -188,8 +189,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: Center(child: Text("Login Required")),
-                                content: Text(
+                                title: const Center(child: Text("Login Required")),
+                                content: const Text(
                                     "You are sign-in as guest user.For enroll course you need to sign-in."),
                                 actionsAlignment: MainAxisAlignment.center,
                                 actions: [
@@ -214,9 +215,18 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                 ],
                               ),
                             );
-                          } else {
-                            _handlePayment(context,
-                                courseID: courseDetailsController.courseDetails.value.id ?? '', studentId: 0);
+                          }
+                          else {
+                            await courseDetailsController.enrollPayment(context, courseID: courseDetailsController.courseDetails.value.id ?? '');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentWebView(
+                                  name: courseDetailsController.courseDetails.value.name ?? '',
+                                  url: courseDetailsController.paymentStripe.value.url ?? '',
+                                ),
+                              ),
+                            );
                           }
                         },
                         title: "Buy Now for \$${courseDetailsController.courseDetails.value.discountedPrice}",

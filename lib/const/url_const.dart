@@ -16,9 +16,11 @@ class UrlConst {
   static final String appRolesEndpoint = '$baseUrl/roles';
   static final String getCourseCategoryEndpoint = '$baseUrl/course-categories';
   static final String getProfileEndpoint = '$baseUrl/user-profile';
-  static final String courseEnrollmentEndpoint = '$baseUrl/stripe/course-enrollment';
+  static final String courseEnrollmentEndpoint = '$baseUrl/stripe/checkout-session';
   static final String getCoursesEndpoint = '$baseUrl/courses/published';
   static final String getMyCoursesEndpoint = '$baseUrl/students-course-enrollments/my-courses';
   static final String getCourseDetailsEndpoint = '$baseUrl/courses';
   static final String getCourseModulesEndpoint = '$baseUrl/course-modules';
+  static final String sEndpoint = '$baseUrl/stripe/success';
+  static final String eEndpoint = '$baseUrl/stripe/cancel';
 }
