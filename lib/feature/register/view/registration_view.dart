@@ -29,7 +29,6 @@ class _RegisterViewState extends State<RegisterView> {
 
   String? selectedMethod;
 
-
   @override
   void initState() {
     registrationController.getAppRoles();
@@ -43,71 +42,8 @@ class _RegisterViewState extends State<RegisterView> {
         Scaffold(
           resizeToAvoidBottomInset: false,
           extendBody: true,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              children: [
-                SizedBox(height: ResponsiveScale.of(context).hp(5)),
-                Row(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(Icons.arrow_back_ios_new)),
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Welcome to',
-                                  style: TextStyle(
-                                      fontSize: TextSize.font24(context),
-                                      fontFamily: 'HindSiliguri',
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  ' TutorsPlan',
-                                  style: TextStyle(
-                                      fontSize: TextSize.font24(context),
-                                      color: ColorUtils.baseColor,
-                                      fontFamily: 'HindSiliguri',
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                verticalGap(context, 2),
-                allDataInputField(),
-              ],
-            ),
-          ),
-          bottomNavigationBar: Container(
-            padding: EdgeInsets.only(top: TextSize.dynamicGap2(context)),
-            height: TextSize.dynamicGap10(context),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(0, -3),
-                    blurRadius: 30,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: registerButton()
-          ),
-        //  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          body: body(),
+          bottomNavigationBar: bottomAction()
 
         ),
         Obx(() {
@@ -119,6 +55,57 @@ class _RegisterViewState extends State<RegisterView> {
           ): const SizedBox();
         })
       ],
+    );
+  }
+
+  Widget body(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          SizedBox(height: ResponsiveScale.of(context).hp(5)),
+          Row(
+            children: [
+              InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(Icons.arrow_back_ios_new)),
+              Expanded(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Welcome to',
+                            style: TextStyle(
+                                fontSize: TextSize.font24(context),
+                                fontFamily: 'HindSiliguri',
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            ' TutorsPlan',
+                            style: TextStyle(
+                                fontSize: TextSize.font24(context),
+                                color: ColorUtils.baseColor,
+                                fontFamily: 'HindSiliguri',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          verticalGap(context, 2),
+          allDataInputField(),
+        ],
+      ),
     );
   }
 
@@ -174,7 +161,6 @@ class _RegisterViewState extends State<RegisterView> {
               errorText: registrationController.lastNameError.value,
               onChanged: (_) => registrationController.lastNameError.value = Validators.lastNameValidation(registrationController.lastNameController.text),
             )),
-
             Obx(() => KField(
               headLine: 'Phone Number',
               hintText: 'Enter your phone number',
@@ -186,7 +172,6 @@ class _RegisterViewState extends State<RegisterView> {
               errorText: registrationController.phoneError.value,
               //onChanged: (_) => registerController.phoneError.value = Validators.validatePhone(registerController.phoneController.text) ?? '',
             )),
-
             Row(
               spacing: 5,
               children: [
@@ -366,6 +351,25 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
+  Widget bottomAction(){
+    return Container(
+        padding: EdgeInsets.only(top: TextSize.dynamicGap2(context)),
+        height: TextSize.dynamicGap10(context),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade200,
+              offset: const Offset(0, -3),
+              blurRadius: 30,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: registerButton()
+    );
+  }
+
   Widget shimmerCourseCard(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.1,
@@ -384,6 +388,5 @@ class _RegisterViewState extends State<RegisterView> {
       ),
     );
   }
-
 
 }

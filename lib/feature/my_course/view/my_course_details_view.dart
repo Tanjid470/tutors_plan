@@ -261,4 +261,5 @@ class _MyCourseDetailsViewState extends State<MyCourseDetailsView> {
       },
     );
   }
+
 }

@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:tutors_plan/global_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/login/data/login_response_body.dart';
+import 'package:tutors_plan/feature/login/data/login_response.dart';
 import 'package:tutors_plan/feature/login/data/repository/login_repository.dart';
-import 'package:tutors_plan/feature/login/domain/login_body.dart';
+import 'package:tutors_plan/feature/login/domain/login_model.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
@@ -14,12 +14,13 @@ class LoginController extends GetxController{
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
+  LoginRepository loginRepository = LoginRepository();
+  LoginModel loginBody = LoginModel();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   RxString emailError = ''.obs;
   RxString passwordError = ''.obs;
-  LoginRepository loginRepository = LoginRepository();
-  LoginBody loginBody = LoginBody();
 
   Future<void> login(BuildContext context) async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
@@ -27,7 +28,7 @@ class LoginController extends GetxController{
     await insertLoginBody();
     final result = await loginRepository.fetchLoginResponse(loginBody);
 
-    if (result is ApiSuccess<LoginResponseBody>) {
+    if (result is ApiSuccess<LoginResponse>) {
       final loginResponse = result.data;
       if (loginResponse.status == 200) {
         String? accessToken =  loginResponse.results?.token;
@@ -57,7 +58,7 @@ class LoginController extends GetxController{
   }
 
   insertLoginBody() {
-   loginBody = LoginBody(
+   loginBody = LoginModel(
      email: emailController.text.trim(),
      password: passwordController.text.trim(),
    );

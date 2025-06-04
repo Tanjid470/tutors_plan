@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
+import 'package:tutors_plan/feature/profile/data/profile_get_response.dart';
 import 'package:tutors_plan/feature/profile/data/repository/profile_repository.dart';
 
 class ProfileController extends GetxController {
@@ -27,12 +27,8 @@ class ProfileController extends GetxController {
   RxBool isProfileVisible = true.obs;
 
   ProfileRepository profileRepository = ProfileRepository();
-  ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
+  ProfileGetResponse profileGetResponseBody = ProfileGetResponse();
 
-
-  void pickImage() {
-    Get.snackbar("Change Avatar", "Feature not implemented yet.");
-  }
   Future<void> getUserProfile() async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
 

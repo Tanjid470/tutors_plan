@@ -58,60 +58,12 @@ class _OtpViewState extends State<OtpView> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("We just sent an email",
-                    style: customTextStyle(
-                      context,
-                      fontSize: TextSize.font18(context),
-                      color: ColorUtils.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text("Enter the security code we sent to ",
-                    style: customTextStyle(
-                      context,
-                      fontSize: TextSize.font16(context),
-                      color: ColorUtils.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(preferences.getString('email') ?? '',
-                    style: TextStyle(
-                      fontSize: TextSize.font16(context),
-                      color: ColorUtils.black,
-                      fontWeight: FontWeight.w500,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-
+                  otpHeader(),
                   SizedBox(height: ResponsiveScale.of(context).hp(2)),
-                  PinCodeTextField(
-                    appContext: context,
-                    controller: registrationController.otpController,
-                    length: 6,
-                    obscuringCharacter: '*',
-                    keyboardType: TextInputType.number,
-                    animationType: AnimationType.fade,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(10),
-                      fieldHeight: 50,
-                      fieldWidth: 40,
-                      activeColor: ColorUtils.baseColor,
-                      selectedColor: ColorUtils.baseColor,
-                      inactiveColor: Colors.grey,
-                    ),
-                    onChanged: (value) {},
-                  ),
+                  otpInputField(),
                   const SizedBox(height: 30),
-                  BaseButton(
-                      onClick: () async{
-                        await registrationController.otpVerify(context);
-                      },
-                      borderRadius: 10,
-                      title: 'Verify'
-                  ),
+                  verifyButton(),
                   SizedBox(height: ResponsiveScale.of(context).hp(2)),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +89,6 @@ class _OtpViewState extends State<OtpView> {
                              // countdownController.startCountdown();
                             },
                           ),
-
                         ],
                       )
                     ],
@@ -155,6 +106,68 @@ class _OtpViewState extends State<OtpView> {
           )
               : SizedBox();
         })
+      ],
+    );
+  }
+
+  Widget otpInputField(){
+    return PinCodeTextField(
+      appContext: context,
+      controller: registrationController.otpController,
+      length: 6,
+      obscuringCharacter: '*',
+      keyboardType: TextInputType.number,
+      animationType: AnimationType.fade,
+      pinTheme: PinTheme(
+        shape: PinCodeFieldShape.box,
+        borderRadius: BorderRadius.circular(10),
+        fieldHeight: 50,
+        fieldWidth: 40,
+        activeColor: ColorUtils.baseColor,
+        selectedColor: ColorUtils.baseColor,
+        inactiveColor: Colors.grey,
+      ),
+      onChanged: (value) {},
+    );
+  }
+
+  Widget verifyButton(){
+    return  BaseButton(
+        onClick: () async{
+          await registrationController.otpVerify(context);
+        },
+        borderRadius: 10,
+        title: 'Verify'
+    );
+  }
+
+  Widget otpHeader(){
+    return Column(
+      children: [
+        Text("We just sent an email",
+          style: customTextStyle(
+            context,
+            fontSize: TextSize.font18(context),
+            color: ColorUtils.black,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text("Enter the security code we sent to ",
+          style: customTextStyle(
+            context,
+            fontSize: TextSize.font16(context),
+            color: ColorUtils.black,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text(preferences.getString('email') ?? '',
+          style: TextStyle(
+            fontSize: TextSize.font16(context),
+            color: ColorUtils.black,
+            fontWeight: FontWeight.w500,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
       ],
     );
   }

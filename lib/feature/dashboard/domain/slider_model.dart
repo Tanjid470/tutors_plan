@@ -1,13 +1,13 @@
 import 'dart:ui';
 
-class Slider {
+class SliderModel {
   final String title;
   final String description;
   final String iconText;
   final Color color;
   final VoidCallback onTap;
 
-  Slider({
+  SliderModel({
     required this.title,
     required this.description,
     required this.iconText,

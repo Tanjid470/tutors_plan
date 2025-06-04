@@ -1,14 +1,14 @@
-class LoginResponseBody {
+class ProfileGetResponse {
   bool? ok;
   int? status;
   String? message;
   Results? results;
   Meta? meta;
 
-  LoginResponseBody(
+  ProfileGetResponse(
       {this.ok, this.status, this.message, this.results, this.meta});
 
-  LoginResponseBody.fromJson(Map<String, dynamic> json) {
+  ProfileGetResponse.fromJson(Map<String, dynamic> json) {
     ok = json['ok'];
     status = json['status'];
     message = json['message'];
@@ -33,59 +33,42 @@ class LoginResponseBody {
 }
 
 class Results {
-  User? user;
-  String? token;
-
-  Results({this.user, this.token});
-
-  Results.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    token = json['token'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (user != null) {
-      data['user'] = user!.toJson();
-    }
-    data['token'] = token;
-    return data;
-  }
-}
-
-class User {
   String? id;
-  String? email;
+  String? username;
   String? firstName;
   String? lastName;
-  String? phone;
+  String? email;
+  String? phoneNumber;
   String? profilePicture;
 
-  User(
+  Results(
       {this.id,
-        this.email,
+        this.username,
         this.firstName,
         this.lastName,
-        this.phone,
+        this.email,
+        this.phoneNumber,
         this.profilePicture});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Results.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    username = json['username'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
     email = json['email'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    phone = json['phone'];
-    profilePicture = json['profilePicture'];
+    phoneNumber = json['phone_number'];
+    profilePicture = json['profile_picture'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
+    data['username'] = username;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
     data['email'] = email;
-    data['firstName'] = firstName;
-    data['lastName'] = lastName;
-    data['phone'] = phone;
-    data['profilePicture'] = profilePicture;
+    data['phone_number'] = phoneNumber;
+    data['profile_picture'] = profilePicture;
     return data;
   }
 }
@@ -102,7 +85,7 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['timestamp'] = timestamp;
     data['response_time'] = responseTime;
     return data;

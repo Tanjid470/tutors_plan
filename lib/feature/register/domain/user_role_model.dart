@@ -1,13 +1,13 @@
 import 'dart:ui';
 
-class UserRole {
+class UserRoleModel {
   final String title;
   final String imageUrl;
   final Color selectedColor;
   final Color bgColor;
   final String? id;
 
-  UserRole({
+  UserRoleModel({
     required this.title,
     required this.imageUrl,
     required this.selectedColor,
@@ -15,14 +15,14 @@ class UserRole {
     this.id,
   });
 
-  UserRole copyWith({
+  UserRoleModel copyWith({
     String? title,
     String? imageUrl,
     Color? selectedColor,
     Color? bgColor,
     String? id,
   }) {
-    return UserRole(
+    return UserRoleModel(
       title: title ?? this.title,
       imageUrl: imageUrl ?? this.imageUrl,
       selectedColor: selectedColor ?? this.selectedColor,

@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
             resizeToAvoidBottomInset: false,
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: _view(),
+              child: body(),
             )
         ),
         Obx(() {
@@ -46,18 +46,16 @@ class _LoginViewState extends State<LoginView> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               color: ColorUtils.baseColor,
-          ): SizedBox(); // or any other widget when the state doesn't match
+          ): const SizedBox(); // or any other widget when the state doesn't match
         })
-
       ],
     );
   }
 
-  Widget _view() {
+  Widget body() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        //appBar(),
         Expanded(child: _form()),
         //tosAndPp(),
       ],
@@ -65,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget appBar() {
-    return  Text(
+    return const Text(
       'Login',
       textAlign: TextAlign.center,
       style: TextStyle(
@@ -127,19 +125,12 @@ class _LoginViewState extends State<LoginView> {
             }
             loginController.login(context);
           }, title: 'Login'),
-
           SizedBox(height: ResponsiveScale.of(context).hp(2)),
-          // BaseButton(onClick: (){
-          //   preferences.setInt('initScreen', 1);
-          //   preferences.setBool('guest', true);
-          //   ScaffoldMessenger.of(context).showSnackBar(customSnackBar('Login as guest',context,subtitle: "Login shut down for server issue",color: ColorUtils.successSnackBarColor),);
-          //   Navigator.pushReplacementNamed(context, RouteNames.bottomNavigationWidget);
-          // }, title: 'Login as guest'),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Don\'t have an account?'),
+              const Text('Don\'t have an account?'),
               TextButton(onPressed: (){
                 Navigator.pushNamed(context, RouteNames.registerView);
               }, child: Text('Sign Up',style: TextStyle(color: ColorUtils.baseColor)))

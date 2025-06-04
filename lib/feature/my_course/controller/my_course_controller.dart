@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/course_details/data/course_details_response_body.dart';
+import 'package:tutors_plan/feature/course_details/data/course_details_response.dart';
 import 'package:tutors_plan/feature/course_details/data/repository/course_details_repository.dart';
-import 'package:tutors_plan/feature/course_details/data/repository/course_module_response.dart';
+import 'package:tutors_plan/feature/course_details/data/course_module_response.dart';
 import 'package:tutors_plan/feature/my_course/data/my_course_response.dart';
 import 'package:tutors_plan/feature/my_course/data/repository/my_course_repository.dart';
 
@@ -10,13 +10,13 @@ import 'package:tutors_plan/feature/my_course/data/repository/my_course_reposito
 class MyCourseController extends GetxController {
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
+  MyCourseRepository myCourseRepository = MyCourseRepository();
+
+  List<MyCourse>? myCourseList = [];
+  final Rx<Modules> courseModules = Modules().obs;
 
   RxBool isLoadingMyCourseList = false.obs;
   RxBool isLoadingMyCourseModuleList = false.obs;
-  List<MyCourse>? myCourseList = [];
-
-  MyCourseRepository myCourseRepository = MyCourseRepository();
-  final Rx<Modules> courseModules = Modules().obs;
 
   Future<void> getMyCourse({int? coursePage}) async {
     isLoadingMyCourseList.value = false;
@@ -40,7 +40,6 @@ class MyCourseController extends GetxController {
     }
     isLoadingMyCourseModuleList.value = false;
   }
-
 
   void updateViewState(
       {ScreenStates? screenStates, ScreenStates? loadingState}) {

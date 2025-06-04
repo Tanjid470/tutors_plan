@@ -10,7 +10,7 @@ class CountdownController extends GetxController {
   void startCountdown() {
     _timer?.cancel(); // clear previous timer
     secondsLeft.value = 180;
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (secondsLeft > 0) {
         secondsLeft--;
       } else {

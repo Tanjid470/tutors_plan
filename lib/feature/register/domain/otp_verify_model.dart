@@ -1,10 +1,10 @@
-class OTPBody {
+class OtpVerifyModel {
   String? email;
   String? otp;
 
-  OTPBody({this.email, this.otp});
+  OtpVerifyModel({this.email, this.otp});
 
-  OTPBody.fromJson(Map<String, dynamic> json) {
+  OtpVerifyModel.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     otp = json['otp'];
   }

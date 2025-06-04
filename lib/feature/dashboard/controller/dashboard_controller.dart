@@ -1,25 +1,25 @@
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/dashboard/data/course_get_response_body.dart';
-import 'package:tutors_plan/feature/profile/data/profile_get_response_body.dart';
+import 'package:tutors_plan/feature/dashboard/data/course_get_response.dart';
+import 'package:tutors_plan/feature/profile/data/profile_get_response.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
-import 'package:tutors_plan/feature/dashboard/view/widget/slider.dart';
+import 'package:tutors_plan/feature/dashboard/domain/slider_model.dart';
 
 class DashboardController extends GetxController {
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
 
   DashboardRepository dashboardRepository = DashboardRepository();
-  ProfileGetResponseBody profileGetResponseBody = ProfileGetResponseBody();
+  ProfileGetResponse profileGetResponseBody = ProfileGetResponse();
 
   RxBool isLoadingMore = false.obs;
   RxBool isLoadingCategoryList = false.obs;
   RxBool isLoadingCourseList = false.obs;
   RxBool isProfileLoading = false.obs;
 
-  List<Slider> splashList = [
-    Slider(
+  List<SliderModel> splashList = [
+    SliderModel(
       title: 'Live Tutoring',
       description:
       'Connect with certified tutors globally through our interactive platform, offering personalized 24/7 support across all subjects and educational levels.',
@@ -29,7 +29,7 @@ class DashboardController extends GetxController {
         // Navigate to tutoring section
       },
     ),
-    Slider(
+    SliderModel(
       title: 'ScholarPASS',
       description:
       'Access comprehensive scholarships that cover educational fees, making quality learning accessible to students regardless of financial background.',
@@ -39,7 +39,7 @@ class DashboardController extends GetxController {
         // Navigate to scholarships
       },
     ),
-    Slider(
+    SliderModel(
       title: 'LearningART AI',
       description:
       'Experience cutting-edge AI-powered personalized learning that adapts to your unique style, pace, and preferences for optimal educational outcomes.',
@@ -49,7 +49,7 @@ class DashboardController extends GetxController {
         // Navigate to AI learning
       },
     ),
-    Slider(
+    SliderModel(
       title: 'TutorsPlan Store',
       description:
       'Access premium educational supplies, cutting-edge robotic kits, and specialized learning materials for students of all ages and abilities.',
@@ -59,7 +59,7 @@ class DashboardController extends GetxController {
         // Navigate to store
       },
     ),
-    Slider(
+    SliderModel(
       title: 'LearningHub',
       description:
       'Discover and connect with local education providers through our community marketplace, creating a rich ecosystem of diverse learning opportunities.',
@@ -69,7 +69,7 @@ class DashboardController extends GetxController {
         // Navigate to learning hub
       },
     ),
-    Slider(
+    SliderModel(
       title: 'Become Hub Partner',
       description:
       'Join our network of educational partners and expand your reach. Collaborate with us to provide quality learning experiences and grow your educational business.',
@@ -83,26 +83,7 @@ class DashboardController extends GetxController {
 
   List<CourseModel>? courseList = [];
 
-  int categoryPage = 1;
   int coursePage = 1;
-
-  // Future<void> getCourseCategory({int? categoryPage}) async {
-  //   isLoadingMore.value = true;
-  //
-  //   final result = await dashboardRepository.getCourseCategory(
-  //     page: categoryPage,
-  //     limit: 10,
-  //   );
-  //   if (result != null) {
-  //     isLoadingCategoryList.value = true;
-  //     if (categoryList?.isEmpty == true) {
-  //       categoryList = result;
-  //     } else {
-  //       categoryList?.addAll(result);
-  //     }
-  //   }
-  //   isLoadingMore.value = false;
-  // }
 
   Future<void> getCourse({int? coursePage}) async {
     isLoadingCourseList.value = false;
@@ -136,9 +117,7 @@ class DashboardController extends GetxController {
     selectedPage.value = value;
   }
 
-
-  void updateViewState(
-      {ScreenStates? screenStates, ScreenStates? loadingState}) {
+  void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {
     if (screenStates != null) {
       this.screenStates.value = screenStates;
       loaderState.value = ScreenStates.LOADING_COMPLETE;
@@ -146,4 +125,5 @@ class DashboardController extends GetxController {
     if (loadingState != null) loaderState.value = loadingState;
     update();
   }
+
 }

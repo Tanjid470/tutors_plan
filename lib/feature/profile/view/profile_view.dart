@@ -38,251 +38,258 @@ class _ProfileViewState extends State<ProfileView> {
     return Stack(
       children: [
         accessToken != null
-        ? Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            leading: SizedBox(),
-            title: const Text('Profile'),
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Column(
-                      children: [
-                        Container(
-                          clipBehavior: Clip.hardEdge, // Border thickness
-                          padding: EdgeInsets.all(3), // Border thickness
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: ColorUtils.baseColor, width: 1), // Border color and width
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: CircleAvatar(
-                              radius: ResponsiveScale.of(context).hp(6),
-                              backgroundColor: Colors.white,
-                              child: Image.asset(
-                                'assets/images/no_profile.jpg',
-                                fit: BoxFit.fill,
+            ? Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              leading: const SizedBox(),
+              title: const Text('Profile'),
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          Container(
+                            clipBehavior: Clip.hardEdge, // Border thickness
+                            padding: EdgeInsets.all(3), // Border thickness
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: ColorUtils.baseColor, width: 1), // Border color and width
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: CircleAvatar(
+                                radius: ResponsiveScale.of(context).hp(6),
+                                backgroundColor: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/no_profile.jpg',
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        // Buttons(
-                        //   style: ButtonsStyle.blueButton,
-                        //   onTap: (){},
-                        //   title: 'Change Avatar',
-                        // )
+                          const SizedBox(height: 12),
+                          // Buttons(
+                          //   style: ButtonsStyle.blueButton,
+                          //   onTap: (){},
+                          //   title: 'Change Avatar',
+                          // )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      spacing: 10,
+                      children: [
+                        Obx(() => KField(
+                          headLine: 'First Name',
+                          hintText: 'Enter your first name',
+                          controller: profileController.firstNameController,
+                          errorText: profileController.firstNameError.value,
+                          onChanged: (_) => profileController.firstNameError.value =
+                              Validators.validateName(profileController.firstNameController.text) ?? '',
+                          onTap: null,
+                          icon: Icons.person_outline,
+                          readOnly: true,
+                        )),
+
+                        Obx(() => KField(
+                          headLine: 'Last Name',
+                          hintText: 'Enter your last name',
+                          controller: profileController.lastNameController,
+                          errorText: profileController.lastNameError.value,
+                          onChanged: (_) => profileController.lastNameError.value =
+                              Validators.validateName(profileController.lastNameController.text) ?? '',
+                          onTap: null,
+                          icon: Icons.person_outline,
+                          readOnly: true,
+                        )),
+
+                        Obx(() => KField(
+                          headLine: 'Username',
+                          hintText: 'Choose a username',
+                          controller: profileController.usernameController,
+                          errorText: profileController.usernameError.value,
+                          onChanged: (_) => profileController.usernameError.value =
+                              Validators.validateName(profileController.usernameController.text) ?? '',
+                          onTap: null,
+                          icon: Icons.account_circle_outlined,
+                          readOnly: true,
+                        )),
+
+                        Obx(() => KField(
+                          headLine: 'Email Address',
+                          hintText: 'Your email address',
+                          controller: profileController.emailController,
+                          errorText: profileController.emailError.value,
+                          onChanged: (_) => profileController.emailError.value =
+                              Validators.validateEmail(profileController.emailController.text) ?? '',
+                          onTap: null,
+                          icon: Icons.email_outlined,
+                          keyboardType: TextInputType.emailAddress,
+                          readOnly: true,
+                        )),
+
+                        Obx(() => KField(
+                          headLine: 'Phone Number',
+                          hintText: 'Enter your phone number',
+                          controller: profileController.phoneController,
+                          errorText: profileController.phoneError.value,
+                          onChanged: (_) => profileController.phoneError.value =
+                              Validators.validatePhone(profileController.phoneController.text) ?? '',
+                          onTap: null,
+                          icon: Icons.phone_outlined,
+                          keyboardType: TextInputType.phone,
+                          readOnly: true,
+                        )),
                       ],
                     ),
-                  ),
-                  Column(
-                    spacing: 10,
-                    children: [
-                      Obx(() => KField(
-                        headLine: 'First Name',
-                        hintText: 'Enter your first name',
-                        controller: profileController.firstNameController,
-                        errorText: profileController.firstNameError.value,
-                        onChanged: (_) => profileController.firstNameError.value =
-                            Validators.validateName(profileController.firstNameController.text) ?? '',
-                        onTap: null,
-                        icon: Icons.person_outline,
-                        readOnly: true,
-                      )),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey.shade300), // subtle border
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6,
+                            offset: Offset(0, 2), // slight shadow below the container
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: Column(
+                        spacing: 15,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            spacing: 5,
+                            children: [
+                              Icon(Icons.notifications_outlined,color: ColorUtils.black87,size: TextSize.font20(context),),
+                              Text(
+                                'Notifications',
+                                style: TextStyle(
+                                  color: const Color(0xFF3A3946),
+                                  fontSize: TextSize.font18(context),
+                                  fontFamily: 'Rubik',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          ToggleSwitchTile(
+                            title: 'Email Notifications',
+                            subtitle: 'Receive email about your course updates',
+                            disableSwitch: true,
+                            switchValue: profileController.isEmailNotifications,
+                          ),
+                          ToggleSwitchTile(
+                            title: 'Assignment Reminders',
+                            subtitle: 'Get notified about upcoming assignments',
+                            disableSwitch: true,
+                            switchValue: profileController.isAssignmentReminders,
+                          ),
+                          ToggleSwitchTile(
+                            title: 'Live Class Alerts',
+                            subtitle: 'Receive notifications before live classes',
+                            disableSwitch: true,
+                            switchValue: profileController.isLiveClassAlerts,
+                          ),
 
-                      Obx(() => KField(
-                        headLine: 'Last Name',
-                        hintText: 'Enter your last name',
-                        controller: profileController.lastNameController,
-                        errorText: profileController.lastNameError.value,
-                        onChanged: (_) => profileController.lastNameError.value =
-                            Validators.validateName(profileController.lastNameController.text) ?? '',
-                        onTap: null,
-                        icon: Icons.person_outline,
-                        readOnly: true,
-                      )),
-
-                      Obx(() => KField(
-                        headLine: 'Username',
-                        hintText: 'Choose a username',
-                        controller: profileController.usernameController,
-                        errorText: profileController.usernameError.value,
-                        onChanged: (_) => profileController.usernameError.value =
-                            Validators.validateName(profileController.usernameController.text) ?? '',
-                        onTap: null,
-                        icon: Icons.account_circle_outlined,
-                        readOnly: true,
-                      )),
-
-                      Obx(() => KField(
-                        headLine: 'Email Address',
-                        hintText: 'Your email address',
-                        controller: profileController.emailController,
-                        errorText: profileController.emailError.value,
-                        onChanged: (_) => profileController.emailError.value =
-                            Validators.validateEmail(profileController.emailController.text) ?? '',
-                        onTap: null,
-                        icon: Icons.email_outlined,
-                        keyboardType: TextInputType.emailAddress,
-                        readOnly: true,
-                      )),
-
-                      Obx(() => KField(
-                        headLine: 'Phone Number',
-                        hintText: 'Enter your phone number',
-                        controller: profileController.phoneController,
-                        errorText: profileController.phoneError.value,
-                        onChanged: (_) => profileController.phoneError.value =
-                            Validators.validatePhone(profileController.phoneController.text) ?? '',
-                        onTap: null,
-                        icon: Icons.phone_outlined,
-                        keyboardType: TextInputType.phone,
-                        readOnly: true,
-                      )),
+                        ],
+                      )
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey.shade300), // subtle border
+                        boxShadow: const[
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6,
+                            offset: Offset(0, 2), // slight shadow below the container
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      child: Column(
+                        spacing: 15,
+                        children: [
+                          Row(
+                            spacing: 5,
+                            children: [
+                              Icon(Icons.privacy_tip_outlined,color: ColorUtils.black87,size: TextSize.font20(context),),
+                              Text(
+                                'Privacy & Security',
+                                style: TextStyle(
+                                  color: const Color(0xFF3A3946),
+                                  fontSize: TextSize.font18(context),
+                                  fontFamily: 'Rubik',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          ToggleSwitchTile(
+                            title: 'Two-Factor Authentication',
+                            subtitle: 'Add an extra layer of security to your account',
+                            disableSwitch: true,
+                            switchValue: profileController.isTwoFactorAuth,
+                          ),
+                          ToggleSwitchTile(
+                            title: 'Profile Visibility',
+                            subtitle: 'Make your profile visible to other students',
+                            disableSwitch: true,
+                            switchValue: profileController.isProfileVisible,
+                          ),
+                        ],
+                      )
+                    ),
+                    logoutButton()
                     ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade300), // subtle border
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 6,
-                          offset: Offset(0, 2), // slight shadow below the container
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    child: Column(
-                      spacing: 15,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          spacing: 5,
-                          children: [
-                            Icon(Icons.notifications_outlined,color: ColorUtils.black87,size: TextSize.font20(context),),
-                            Text(
-                              'Notifications',
-                              style: TextStyle(
-                                color: const Color(0xFF3A3946),
-                                fontSize: TextSize.font18(context),
-                                fontFamily: 'Rubik',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        ToggleSwitchTile(
-                          title: 'Email Notifications',
-                          subtitle: 'Receive email about your course updates',
-                          disableSwitch: true,
-                          switchValue: profileController.isEmailNotifications,
-                        ),
-                        ToggleSwitchTile(
-                          title: 'Assignment Reminders',
-                          subtitle: 'Get notified about upcoming assignments',
-                          disableSwitch: true,
-                          switchValue: profileController.isAssignmentReminders,
-                        ),
-                        ToggleSwitchTile(
-                          title: 'Live Class Alerts',
-                          subtitle: 'Receive notifications before live classes',
-                          disableSwitch: true,
-                          switchValue: profileController.isLiveClassAlerts,
-                        ),
-
-                      ],
-                    )
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade300), // subtle border
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 6,
-                          offset: Offset(0, 2), // slight shadow below the container
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    child: Column(
-                      spacing: 15,
-                      children: [
-                        Row(
-                          spacing: 5,
-                          children: [
-                            Icon(Icons.privacy_tip_outlined,color: ColorUtils.black87,size: TextSize.font20(context),),
-                            Text(
-                              'Privacy & Security',
-                              style: TextStyle(
-                                color: const Color(0xFF3A3946),
-                                fontSize: TextSize.font18(context),
-                                fontFamily: 'Rubik',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                        ToggleSwitchTile(
-                          title: 'Two-Factor Authentication',
-                          subtitle: 'Add an extra layer of security to your account',
-                          disableSwitch: true,
-                          switchValue: profileController.isTwoFactorAuth,
-                        ),
-                        ToggleSwitchTile(
-                          title: 'Profile Visibility',
-                          subtitle: 'Make your profile visible to other students',
-                          disableSwitch: true,
-                          switchValue: profileController.isProfileVisible,
-                        ),
-                      ],
-                    )
-                  ),
-                  // onTap: () async {
-                  //   await preferences.clear();
-                  //   Navigator.pushReplacementNamed(
-                  //       context, RouteNames.loginView);
-                  // },
-                  Buttons(
-                    style: ButtonsStyle.dynamicButton,
-                    bgColor: Colors.red.shade300,
-                    isExpended: true,
-                    title: 'Logout',
-                    onTap: () async {
-                      await preferences.clear();
-                      Navigator.pushReplacementNamed(
-                          context, RouteNames.loginView);
-                    },
-                  )
-                ],
-              ),
+                ),
+              )
+            )
+            : Expanded(
+              child: Center(
+                child: Buttons(style: ButtonsStyle.blueButton,
+                  onTap: () async {
+                    await preferences.clear();
+                    Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                  },
+                  title: 'Sign in'
+                )
+              )
             ),
-          ),
-        ) : Expanded(child: Center(child: Buttons(style: ButtonsStyle.blueButton, onTap: () async{
-          await preferences.clear();
-          Navigator.pushReplacementNamed(context, RouteNames.loginView);
-        },title: 'Sign in',))),
         Obx(() {
           return profileController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
               ? LoadingViewTransparent(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 color: ColorUtils.baseColor,
-              ): SizedBox(); // or any other widget when the state doesn't match
+              ): const SizedBox(); // or any other widget when the state doesn't match
         })
       ],
     );
+  }
+
+  Widget logoutButton(){
+    return Buttons(
+        style: ButtonsStyle.dynamicButton,
+        bgColor: Colors.red.shade300,
+        isExpended: true,
+        title: 'Logout',
+        onTap: () async {
+          await preferences.clear();
+          Navigator.pushReplacementNamed(
+              context, RouteNames.loginView);
+        },
+      );
   }
 }

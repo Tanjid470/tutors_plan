@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
-import 'package:tutors_plan/feature/exam/view/exam_view.dart';
-import 'package:tutors_plan/feature/learning/view/library_view.dart';
 import 'package:tutors_plan/feature/my_course/view/my_course_view.dart';
 import 'package:tutors_plan/feature/profile/view/profile_view.dart';
-import 'package:tutors_plan/feature/webview/view/in_app_web_view.dart';
+import 'package:tutors_plan/global_widget/in_app_web_view.dart';
+import 'package:tutors_plan/main.dart';
 
 
 class BottomNavigationWidget extends StatefulWidget {
@@ -28,15 +27,16 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String accessToken = preferences.getString('accessToken') ?? '';
     return Scaffold(
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          DashboardView(),
-          MyCourseView(),
-          InAppWebView(),
-          ProfileView(),
+        children:  [
+          const DashboardView(),
+          const MyCourseView(),
+          InAppWebView(url: 'https://games.tutorsplan.com?token=$accessToken'),
+          const ProfileView(),
         ],
       ),
       bottomNavigationBar: Stack(

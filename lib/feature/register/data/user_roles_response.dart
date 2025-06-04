@@ -1,14 +1,14 @@
-class AppRolesGetBody {
+class UserRolesResponse {
   bool? ok;
   int? status;
   String? message;
   Results? results;
   Meta? meta;
 
-  AppRolesGetBody(
+  UserRolesResponse(
       {this.ok, this.status, this.message, this.results, this.meta});
 
-  AppRolesGetBody.fromJson(Map<String, dynamic> json) {
+  UserRolesResponse.fromJson(Map<String, dynamic> json) {
     ok = json['ok'];
     status = json['status'];
     message = json['message'];
@@ -18,7 +18,7 @@ class AppRolesGetBody {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['ok'] = ok;
     data['status'] = status;
     data['message'] = message;

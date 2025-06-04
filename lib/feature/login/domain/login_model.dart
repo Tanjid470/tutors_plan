@@ -1,8 +1,8 @@
 import 'dart:convert';
-String loginBodyToJson(LoginBody data) => json.encode(data.toJson());
+String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
-class LoginBody {
-  LoginBody({
+class LoginModel {
+  LoginModel({
     this.email,
     this.password,
   });

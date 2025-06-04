@@ -1,14 +1,15 @@
 
 import 'package:dio/dio.dart';
 import 'package:tutors_plan/const/url_const.dart';
-import 'package:tutors_plan/feature/login/data/login_response_body.dart';
-import 'package:tutors_plan/feature/login/domain/login_body.dart';
+import 'package:tutors_plan/feature/login/data/login_response.dart';
+import 'package:tutors_plan/feature/login/domain/login_model.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
 
 class LoginRepository {
   Dio _dio = Dio();
-  Future<ApiResult<LoginResponseBody>> fetchLoginResponse(LoginBody loginBody) async {
+
+  Future<ApiResult<LoginResponse>> fetchLoginResponse(LoginModel loginBody) async {
     try {
       _dio = await ApiClient.dioClient(false);
       final response = await _dio.post(
@@ -19,7 +20,7 @@ class LoginRepository {
         ),
       );
       if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
-        var loginResponse = LoginResponseBody.fromJson(response.data);
+        var loginResponse = LoginResponse.fromJson(response.data);
         var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
         return ApiSuccess(loginResponse, headers: headers);
       }

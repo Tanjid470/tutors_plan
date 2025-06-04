@@ -39,8 +39,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       children: [
         Obx(() {
           return courseDetailsController.loaderState.value == ScreenStates.TRANSPARENT_LOADING_START
-              ? shimmerCourseDetailsView(context)
-              : DefaultTabController(
+            ? shimmerCourseDetailsView(context)
+            : DefaultTabController(
                   length: 2,
                   child: Scaffold(
                     backgroundColor: ColorUtils.white,
@@ -54,7 +54,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     body: body(),
                     bottomNavigationBar: navigatorButton(),
                   ),
-                ); // or any other widget when the state doesn't match
+                );
         })
       ],
     );

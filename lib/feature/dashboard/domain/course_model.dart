@@ -1,4 +1,4 @@
-class Course {
+class CourseModel {
   final String title;
   final String description;
   final String imageUrl;
@@ -8,7 +8,7 @@ class Course {
   final bool hasScholarship;
   final List<String> features;
 
-  Course({
+  CourseModel({
     required this.title,
     required this.description,
     required this.imageUrl,

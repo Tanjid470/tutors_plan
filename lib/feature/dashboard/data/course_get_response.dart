@@ -1,14 +1,14 @@
-class CoursesResponseBody {
+class CoursesResponse {
   bool? ok;
   int? status;
   String? message;
   Results? results;
   Pagination? meta;
 
-  CoursesResponseBody(
+  CoursesResponse(
       {this.ok, this.status, this.message, this.results, this.meta});
 
-  CoursesResponseBody.fromJson(Map<String, dynamic> json) {
+  CoursesResponse.fromJson(Map<String, dynamic> json) {
     ok = json['ok'];
     status = json['status'];
     message = json['message'];

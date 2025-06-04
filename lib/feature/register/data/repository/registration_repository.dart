@@ -1,20 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tutors_plan/const/url_const.dart';
-import 'package:tutors_plan/feature/register/data/otp_response_body.dart';
-import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
+import 'package:tutors_plan/feature/register/data/otp_verify_response.dart';
+import 'package:tutors_plan/feature/register/data/registration_response.dart';
 import 'package:tutors_plan/feature/register/data/resend_otp_response.dart';
-import 'package:tutors_plan/feature/register/domain/otp_body.dart';
-import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
+import 'package:tutors_plan/feature/register/domain/otp_verify_model.dart';
+import 'package:tutors_plan/feature/register/domain/register_post_model.dart';
 import 'package:tutors_plan/utils/network/api_client.dart';
 import 'package:tutors_plan/utils/network/api_result.dart';
 
-import '../app_roles_get_body.dart';
+import '../user_roles_response.dart';
 
 class RegistrationRepository {
   Dio dio = Dio();
 
-  Future<ApiResult<RegistrationResponseBody>> fetchRegistrationResponse(RegistrationPostBody registrationPostBody) async {
+  Future<ApiResult<RegistrationResponse>> fetchRegistrationResponse(RegistrationPostModel registrationPostBody) async {
     try {
       dio = await ApiClient.dioClient(false);
       final response = await dio.post(
@@ -25,7 +25,7 @@ class RegistrationRepository {
         ),
       );
       if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 208 && response.data is Map<String, dynamic>) {
-        var registrationResponse = RegistrationResponseBody.fromJson(response.data);
+        var registrationResponse = RegistrationResponse.fromJson(response.data);
         var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
         return ApiSuccess(registrationResponse, headers: headers);
       }
@@ -62,7 +62,7 @@ class RegistrationRepository {
     }
   }
 
-  Future<ApiResult<OtpResponseBody>> fetchOTPResponse(OTPBody otpBody) async {
+  Future<ApiResult<OtpVerifyResponse>> fetchOTPResponse(OtpVerifyModel otpBody) async {
     try {
       dio = await ApiClient.dioClient(false);
       final response = await dio.post(
@@ -73,7 +73,7 @@ class RegistrationRepository {
         ),
       );
       if (response.statusCode == 200 || response.statusCode == 201 && response.data is Map<String, dynamic>) {
-        var otpResponse = OtpResponseBody.fromJson(response.data);
+        var otpResponse = OtpVerifyResponse.fromJson(response.data);
         var headers = response.headers.map.map((key, value) => MapEntry(key, value.join(',')));
         return ApiSuccess(otpResponse, headers: headers);
       }
@@ -141,7 +141,7 @@ class RegistrationRepository {
       Response response = await dio.get(
         UrlConst.appRolesEndpoint,
       );
-      AppRolesGetBody data = AppRolesGetBody.fromJson(response.data);
+      UserRolesResponse data = UserRolesResponse.fromJson(response.data);
 
       if (data.status == 200) {
         return data.results?.data;

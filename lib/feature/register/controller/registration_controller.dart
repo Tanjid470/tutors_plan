@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/enums.dart';
-import 'package:tutors_plan/feature/register/data/otp_response_body.dart';
-import 'package:tutors_plan/feature/register/data/registration_response_body.dart';
-import 'package:tutors_plan/feature/register/data/app_roles_get_body.dart';
+import 'package:tutors_plan/feature/register/data/otp_verify_response.dart';
+import 'package:tutors_plan/feature/register/data/registration_response.dart';
+import 'package:tutors_plan/feature/register/data/user_roles_response.dart';
 import 'package:tutors_plan/feature/register/data/repository/registration_repository.dart';
-import 'package:tutors_plan/feature/register/domain/otp_body.dart';
-import 'package:tutors_plan/feature/register/domain/register_post_body.dart';
-import 'package:tutors_plan/feature/register/domain/user_role.dart';
+import 'package:tutors_plan/feature/register/domain/otp_verify_model.dart';
+import 'package:tutors_plan/feature/register/domain/register_post_model.dart';
+import 'package:tutors_plan/feature/register/domain/user_role_model.dart';
 import 'package:tutors_plan/global_widget/custom_snack_bar.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
@@ -45,12 +45,12 @@ class RegistrationController extends GetxController{
   RxString selectedUserRole = ''.obs;
 
   RegistrationRepository registrationRepository = RegistrationRepository();
-  RegistrationPostBody registrationPostBody = RegistrationPostBody();
-  OTPBody otpBody = OTPBody();
+  RegistrationPostModel registrationPostBody = RegistrationPostModel();
+  OtpVerifyModel otpBody = OtpVerifyModel();
 
   List<AppRoles>? appRoles = [];
 
-  final RxList<UserRole> userRoleTypeList = <UserRole>[].obs;
+  final RxList<UserRoleModel> userRoleTypeList = <UserRoleModel>[].obs;
 
   Future<void> getAppRoles() async {
     final result = await registrationRepository.getAppRole();
@@ -59,7 +59,7 @@ class RegistrationController extends GetxController{
       final filteredRoles = appRoles!.where((role) {
         final roleName = role.name?.toLowerCase();
         return roleName == 'tutor' || roleName == 'student' || roleName == 'guardian';
-      }).map((role) => UserRole(
+      }).map((role) => UserRoleModel(
         title: role.name ?? '',
         imageUrl: 'assets/svg/graduation_cap.svg',
         id: role.id,
@@ -102,7 +102,7 @@ class RegistrationController extends GetxController{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     await insertRegistrationBody();
     final response = await registrationRepository.fetchRegistrationResponse(registrationPostBody);
-    if (response is ApiSuccess<RegistrationResponseBody>) {
+    if (response is ApiSuccess<RegistrationResponse>) {
       final loginResponse = response.data;
       if (loginResponse.status == 201 || loginResponse.status == 208) {
         ScaffoldMessenger.of(context).showSnackBar(customSnackBar('OTP sent successfully',context,subtitle: "Verify your email address",color: ColorUtils.successSnackBarColor));
@@ -126,7 +126,7 @@ class RegistrationController extends GetxController{
   }
 
   insertRegistrationBody() {
-    registrationPostBody = RegistrationPostBody(
+    registrationPostBody = RegistrationPostModel(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
       firstName: firstNameController.text.trim(),
@@ -141,7 +141,7 @@ class RegistrationController extends GetxController{
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     await insertOTPBody();
     final response = await registrationRepository.fetchOTPResponse(otpBody);
-    if (response is ApiSuccess<OtpResponseBody>) {
+    if (response is ApiSuccess<OtpVerifyResponse>) {
       final otpResponse = response.data;
       final headers = response.headers;
       if (otpResponse.status == 201) {
@@ -165,10 +165,17 @@ class RegistrationController extends GetxController{
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
   }
 
+  insertOTPBody() {
+    otpBody = OtpVerifyModel(
+      email: emailController.text.trim(),
+      otp: otpController.text.trim(),
+    );
+  }
+
   Future<void> resendOtp(BuildContext context) async {
     updateViewState(loadingState: ScreenStates.TRANSPARENT_LOADING_START);
     final response = await registrationRepository.resendOTPResponse(emailController.text.trim());
-    if (response is OtpResponseBody) {
+    if (response is OtpVerifyResponse) {
       final otpResponse = response;
       if (otpResponse?.status == 201) {
         preferences.setInt('initScreen', 1);
@@ -179,13 +186,6 @@ class RegistrationController extends GetxController{
       }
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
-  }
-
-  insertOTPBody() {
-    otpBody = OTPBody(
-      email: emailController.text.trim(),
-      otp: otpController.text.trim(),
-    );
   }
 
   void updateViewState({ScreenStates? screenStates, ScreenStates? loadingState}) {

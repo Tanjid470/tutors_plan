@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class InAppWebView extends StatefulWidget {
-  const InAppWebView({super.key});
+  const InAppWebView({super.key, required this.url});
+  final String url;
 
   @override
   State<InAppWebView> createState() => _InAppWebViewState();
@@ -17,7 +18,7 @@ class _InAppWebViewState extends State<InAppWebView> {
   void initState() {
     super.initState();
 
-    final url = Uri.parse('https://games.tutorsplan.com?token=$accessToken');
+    final url = Uri.parse(widget.url);
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)

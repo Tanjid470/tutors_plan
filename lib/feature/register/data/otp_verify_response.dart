@@ -1,19 +1,17 @@
-class ProfileGetResponseBody {
+class OtpVerifyResponse {
   bool? ok;
   int? status;
   String? message;
   Results? results;
   Meta? meta;
 
-  ProfileGetResponseBody(
-      {this.ok, this.status, this.message, this.results, this.meta});
+  OtpVerifyResponse({this.ok, this.status, this.message, this.results, this.meta});
 
-  ProfileGetResponseBody.fromJson(Map<String, dynamic> json) {
+  OtpVerifyResponse.fromJson(Map<String, dynamic> json) {
     ok = json['ok'];
     status = json['status'];
     message = json['message'];
-    results =
-    json['results'] != null ? Results.fromJson(json['results']) : null;
+    results = json['results'] != null ? Results.fromJson(json['results']) : null;
     meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
@@ -33,42 +31,17 @@ class ProfileGetResponseBody {
 }
 
 class Results {
-  String? id;
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phoneNumber;
-  String? profilePicture;
+  String? token;
 
-  Results(
-      {this.id,
-        this.username,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.phoneNumber,
-        this.profilePicture});
+  Results({this.token});
 
   Results.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    username = json['username'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    email = json['email'];
-    phoneNumber = json['phone_number'];
-    profilePicture = json['profile_picture'];
+    token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['username'] = username;
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['email'] = email;
-    data['phone_number'] = phoneNumber;
-    data['profile_picture'] = profilePicture;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['token'] = token;
     return data;
   }
 }

@@ -10,7 +10,7 @@ import 'package:tutors_plan/feature/my_course/controller/my_course_controller.da
 import 'package:tutors_plan/feature/my_course/view/my_course_details_view.dart';
 import 'package:tutors_plan/global_widget/buttons.dart';
 import 'package:tutors_plan/global_widget/custom_simmer.dart';
-import 'package:tutors_plan/global_widget/no_itemfound.dart';
+import 'package:tutors_plan/global_widget/no_item_found.dart';
 
 class MyCourseView extends StatefulWidget {
   const MyCourseView({super.key});
@@ -30,7 +30,6 @@ class _MyCourseViewState extends State<MyCourseView> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Courses'),
@@ -211,4 +210,5 @@ class _MyCourseViewState extends State<MyCourseView> {
           child: NoItemFound(context: context, title: 'No course enroll yet', subTitle: 'You haven\'t enrolled in any courses. Start exploring and enroll today!',),
         );
   }
+
 }

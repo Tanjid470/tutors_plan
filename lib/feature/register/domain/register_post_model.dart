@@ -1,8 +1,8 @@
 
 import 'dart:convert';
-String registrationDataBodyToJson(RegistrationPostBody data) => json.encode(data.toJson());
+String registrationDataBodyToJson(RegistrationPostModel data) => json.encode(data.toJson());
 
-class RegistrationPostBody {
+class RegistrationPostModel {
   String? email;
   String? password;
   String? firstName;
@@ -11,7 +11,7 @@ class RegistrationPostBody {
   String? profilePicture;
   List<String>? roles;
 
-  RegistrationPostBody(
+  RegistrationPostModel(
       {
         this.email,
         this.password,
@@ -22,7 +22,7 @@ class RegistrationPostBody {
         this.roles
       });
 
-  RegistrationPostBody.fromJson(Map<String, dynamic> json) {
+  RegistrationPostModel.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     password = json['password'];
     firstName = json['firstName'];

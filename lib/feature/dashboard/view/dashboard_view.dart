@@ -7,14 +7,13 @@ import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/const/text_style.dart';
 import 'package:tutors_plan/feature/dashboard/controller/dashboard_controller.dart';
-import 'package:tutors_plan/feature/dashboard/view/widget/stat_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/course_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/k12_bundle_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/learning_art_view.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/scholar_pass_view.dart';
 import 'package:tutors_plan/feature/learning/view/widget/more_info_tutorsplan_view.dart';
-import 'package:tutors_plan/global_widget/no_itemfound.dart';
+import 'package:tutors_plan/global_widget/no_item_found.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -28,7 +27,6 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   void initState() {
-    // dashboardController.getCourseCategory(categoryPage: dashboardController.categoryPage);
     dashboardController.getCourse(coursePage: dashboardController.coursePage);
     dashboardController.getUserProfile();
     super.initState();
@@ -46,28 +44,26 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget body(){
+  Widget body() {
     return Expanded(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              spacing: ResponsiveScale.of(context).hp(1),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                verticalGap(context, 1),
-                sliderView(),
-                //statView(),
-                courseCardView(),
-                ScholarPassBundle(),
-                // categoryView(),
-                programCardView(),
-                verticalGap(context, 2),
-              ],
-            ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            spacing: ResponsiveScale.of(context).hp(1),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              verticalGap(context, 1),
+              sliderView(),
+              courseCardView(),
+              const ScholarPassBundle(),
+              programCardView(),
+              verticalGap(context, 2),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 
   Widget appBar() {
@@ -81,7 +77,7 @@ class _DashboardViewState extends State<DashboardView> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
       ),
       child: Padding(
@@ -95,94 +91,93 @@ class _DashboardViewState extends State<DashboardView> {
               children: [
                 Obx(() {
                   return dashboardController.isProfileLoading.value
-                    ? Expanded(
-                              child: Row(
-                                spacing: 10,
-                                children: [
-                                  Container(
-                                    clipBehavior:
-                                    Clip.hardEdge, // Border thickness
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: ColorUtils.baseColor,
-                                          width: 2), // Change color & width
-                                    ),
-                                    child: CircleAvatar(
-                                      radius:
-                                      ResponsiveScale.of(context).hp(3),
-                                      backgroundColor: Colors.white,
-                                      child: Image.asset(
-                                          'assets/images/no_profile.jpg',
-                                          fit: BoxFit.fill),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      spacing: 5,
-                                      children: [
-                                        CustomShimmer(
-                                          height: 16,
-                                          width: 120,
-                                        ),
-                                        CustomShimmer(
-                                          height: 14,
-                                          width: 80,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                      ? Expanded(
+                          child: Row(
+                            spacing: 10,
+                            children: [
+                              Container(
+                                clipBehavior: Clip.hardEdge, // Border thickness
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: ColorUtils.baseColor,
+                                      width: 2), // Change color & width
+                                ),
+                                child: CircleAvatar(
+                                  radius: ResponsiveScale.of(context).hp(3),
+                                  backgroundColor: Colors.white,
+                                  child: Image.asset(
+                                      'assets/images/no_profile.jpg',
+                                      fit: BoxFit.fill),
+                                ),
                               ),
-                            )
-                    : Expanded(
-                      child: Row(
-                                  spacing: 10,
+                              const Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  spacing: 5,
                                   children: [
-                                    Container(
-                                      clipBehavior: Clip.hardEdge, // Border thickness
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white// Change color & width
-                                      ),
-                                      child: CircleAvatar(
-                                        radius: ResponsiveScale.of(context).hp(3),
-                                        backgroundColor: Colors.white,
-                                        child: Image.asset('assets/images/no_profile.jpg',
-                                            fit: BoxFit.cover),
-                                      ),
+                                    CustomShimmer(
+                                      height: 16,
+                                      width: 120,
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                              '${dashboardController.profileGetResponseBody.results?.firstName} ${dashboardController.profileGetResponseBody.results?.lastName}' ?? '',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: customTextStyle(
-                                                context,
-                                                fontSize: TextSize.font16(context),
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorUtils.white)
-                                          ),
-                                          Text(
-                                              dashboardController.profileGetResponseBody.results?.email ?? '',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: customTextStyle(context,
-                                                  fontSize: TextSize.font12(context),
-                                                  fontWeight: FontWeight.w600,
-                                                  color: ColorUtils.white)
-                                          )
-                                        ],
-                                      ),
+                                    CustomShimmer(
+                                      height: 14,
+                                      width: 80,
                                     )
                                   ],
                                 ),
-                    );
+                              )
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          child: Row(
+                            spacing: 10,
+                            children: [
+                              Container(
+                                clipBehavior: Clip.hardEdge, // Border thickness
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white // Change color & width
+                                    ),
+                                child: CircleAvatar(
+                                  radius: ResponsiveScale.of(context).hp(3),
+                                  backgroundColor: Colors.white,
+                                  child: Image.asset(
+                                      'assets/images/no_profile.jpg',
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        '${dashboardController.profileGetResponseBody.results?.firstName} ${dashboardController.profileGetResponseBody.results?.lastName}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: customTextStyle(context,
+                                            fontSize: TextSize.font16(context),
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorUtils.white)),
+                                    Text(
+                                        dashboardController
+                                                .profileGetResponseBody
+                                                .results
+                                                ?.email ??
+                                            '',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: customTextStyle(context,
+                                            fontSize: TextSize.font12(context),
+                                            fontWeight: FontWeight.w600,
+                                            color: ColorUtils.white))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        );
                 }),
                 InkWell(
                   onTap: () async {
@@ -190,7 +185,7 @@ class _DashboardViewState extends State<DashboardView> {
                       context: context,
                       builder: (context) => Dialog(
                         backgroundColor: Colors.transparent,
-                        insetPadding: EdgeInsets.only(
+                        insetPadding: const EdgeInsets.only(
                           right: 16,
                           top: kToolbarHeight + 10,
                         ),
@@ -202,7 +197,7 @@ class _DashboardViewState extends State<DashboardView> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             children: [
                               // Grid icons
@@ -213,18 +208,21 @@ class _DashboardViewState extends State<DashboardView> {
                                   crossAxisSpacing: 5,
                                   padding: EdgeInsets.zero,
                                   children: [
-                                    _menuItem(Icons.videogame_asset_outlined, "Games"),
-                                    _menuItem(Icons.handshake_outlined, "CRM"),
-                                    _menuItem(Icons.school_outlined, "LMS"),
-                                    _menuItem(Icons.work_outline, "Jobs"),
-                                    _menuItem(Icons.groups_2_outlined, "Team"),
-                                    _menuItem(Icons.edit_note, "Blog"),
-                                    _menuItem(Icons.school_outlined, "ScholarPass"),
-                                    _menuItem(Icons.stars_outlined, "TutorsPlan"), // Replace with asset if needed
+                                    menuItem(Icons.videogame_asset_outlined,
+                                        "Games"),
+                                    menuItem(Icons.handshake_outlined, "CRM"),
+                                    menuItem(Icons.school_outlined, "LMS"),
+                                    menuItem(Icons.work_outline, "Jobs"),
+                                    menuItem(Icons.groups_2_outlined, "Team"),
+                                    menuItem(Icons.edit_note, "Blog"),
+                                    menuItem(
+                                        Icons.school_outlined, "ScholarPass"),
+                                    menuItem(Icons.stars_outlined,
+                                        "TutorsPlan"), // Replace with asset if needed
                                   ],
                                 ),
                               ),
-                              Divider(),
+                              const Divider(),
                               InkWell(
                                 onTap: () {
                                   Navigator.pop(context);
@@ -237,8 +235,7 @@ class _DashboardViewState extends State<DashboardView> {
                                       "More from TutorsPlan",
                                       style: TextStyle(
                                           color: ColorUtils.baseColor,
-                                          fontSize:
-                                              TextSize.font14(context)),
+                                          fontSize: TextSize.font14(context)),
                                     ),
                                     SizedBox(width: 5),
                                     Icon(Icons.keyboard_arrow_down,
@@ -268,138 +265,17 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget _menuItem(IconData icon, String label) {
+  Widget menuItem(IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(icon, size: 30, color: Colors.black),
-        SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 12)),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(fontSize: 12)),
       ],
     );
   }
-
-  // Widget categoryView() {
-  //   return Column(children: [
-  //     Row(
-  //       children: [
-  //         Text(
-  //           'Categories',
-  //           style: customTextStyle(context,
-  //               fontSize: TextSize.font20(context),
-  //               fontWeight: FontWeight.bold),
-  //         ),
-  //         const Spacer(),
-  //         InkWell(
-  //           onTap: () {
-  //             Navigator.pushNamed(context, RouteNames.categoryView);
-  //           },
-  //           child: Text('See all',
-  //               style: customTextStyle(
-  //                 context,
-  //                 fontSize: TextSize.font14(context),
-  //               )),
-  //         ),
-  //       ],
-  //     ),
-  //     Obx(() {
-  //       return dashboardController.isLoadingCategoryList.value
-  //           ? SizedBox(
-  //               height: MediaQuery.of(context).size.height * 0.175,
-  //               child: ListView.builder(
-  //                 shrinkWrap: true,
-  //                 scrollDirection: Axis.horizontal,
-  //                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-  //                 itemCount: dashboardController.categoryList?.length,
-  //                 itemBuilder: (context, index) {
-  //                   final categoryItem =
-  //                       dashboardController.categoryList?[index];
-  //                   return Container(
-  //                     height: MediaQuery.of(context).size.height * 0.15,
-  //                     width: MediaQuery.of(context).size.width * 0.75,
-  //                     padding: const EdgeInsets.symmetric(
-  //                         horizontal: 10, vertical: 5),
-  //                     margin: const EdgeInsets.only(right: 10),
-  //                     decoration: BoxDecoration(
-  //                         color: Colors.white,
-  //                         boxShadow: [
-  //                           BoxShadow(
-  //                             color: Colors.grey.shade200,
-  //                             blurStyle: BlurStyle.outer,
-  //                             offset: Offset(0, 0),
-  //                             blurRadius: 5,
-  //                           ),
-  //                         ],
-  //                         border: Border(
-  //                           left: BorderSide(
-  //                               color: ColorUtils.baseColor, width: 4),
-  //                         ),
-  //                         borderRadius: BorderRadius.all(Radius.circular(10))),
-  //                     child: Padding(
-  //                       padding: const EdgeInsets.all(12),
-  //                       child: Row(
-  //                         children: [
-  //                           categoryItem?.image != null
-  //                               ? Image.network(
-  //                                   categoryItem?.image ?? '',
-  //                                   width: 70,
-  //                                   height: 70,
-  //                                   fit: BoxFit.cover,
-  //                                 )
-  //                               : Image.asset(
-  //                                   'assets/images/dummy_image.jpg',
-  //                                   width: 70,
-  //                                   height: 70,
-  //                                   fit: BoxFit.cover,
-  //                                 ),
-  //                           SizedBox(width: ResponsiveScale.of(context).wp(2)),
-  //                           Expanded(
-  //                             child: Column(
-  //                               crossAxisAlignment: CrossAxisAlignment.start,
-  //                               children: [
-  //                                 Text(categoryItem?.name ?? '',
-  //                                     maxLines: 1,
-  //                                     overflow: TextOverflow.ellipsis,
-  //                                     style: TextStyle(
-  //                                         fontWeight: FontWeight.bold,
-  //                                         fontSize: TextSize.font16(context))),
-  //                                 Text(
-  //                                   "${categoryItem?.seoKeywords.toString() ?? ''} courses",
-  //                                   maxLines: 2,
-  //                                   overflow: TextOverflow.ellipsis,
-  //                                 ),
-  //                                 const Spacer(),
-  //                                 Row(
-  //                                   mainAxisAlignment:
-  //                                       MainAxisAlignment.spaceBetween,
-  //                                   children: [
-  //                                     Text(
-  //                                       "${categoryItem?.totalCourse.toString() ?? ''} courses",
-  //                                       maxLines: 2,
-  //                                       overflow: TextOverflow.ellipsis,
-  //                                     ),
-  //                                     Text(
-  //                                       "${categoryItem?.enrolledStudents.toString() ?? ''} students",
-  //                                       maxLines: 2,
-  //                                       overflow: TextOverflow.ellipsis,
-  //                                     ),
-  //                                   ],
-  //                                 ),
-  //                               ],
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   );
-  //                 },
-  //               ),
-  //             )
-  //           : SizedBox();
-  //     })
-  //   ]);
-  // }
 
   Widget courseCardView() {
     return Obx(() {
@@ -417,30 +293,34 @@ class _DashboardViewState extends State<DashboardView> {
                       fontWeight: FontWeight.bold),
                 ),
                 dashboardController.courseList?.isEmpty == true
-                    ? NoItemFound(context: context, title: 'No course available', subTitle: 'Please check back later or try again.')
+                    ? NoItemFound(
+                        context: context,
+                        title: 'No course available',
+                        subTitle: 'Please check back later or try again.')
                     : publishedCourseListView()
               ],
             )
           : Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 5,
-            children: [
-              Text(
-                'Trending courses',
-                style: customTextStyle(context,
-                    fontSize: TextSize.font20(context),
-                    fontWeight: FontWeight.bold),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(2, (index) => shimmerCourseCard(context)),
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 5,
+              children: [
+                Text(
+                  'Trending courses',
+                  style: customTextStyle(context,
+                      fontSize: TextSize.font20(context),
+                      fontWeight: FontWeight.bold),
                 ),
-              ),
-            ],
-          );
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children:
+                        List.generate(2, (index) => shimmerCourseCard(context)),
+                  ),
+                ),
+              ],
+            );
     });
   }
 
@@ -478,42 +358,6 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
-  Widget statView() {
-    return Column(
-      spacing: 10,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          spacing: 10,
-          children: [
-            Expanded(
-              child: StatCard(
-                title: 'Lessons This Week',
-                value: '12',
-                subtitle: '+3 from last week',
-                icon: Icons.menu_book_outlined,
-              ),
-            ),
-            Expanded(
-              child: StatCard(
-                title: 'Average Duration',
-                value: '60 min',
-                subtitle: '+5 min from last month',
-                icon: Icons.access_time,
-              ),
-            ),
-          ],
-        ),
-        StatCard(
-          title: 'Student Progress',
-          value: '+12%',
-          subtitle: '+2% from last month',
-          icon: Icons.trending_up,
-        ),
-      ],
-    );
-  }
-
   Widget sliderView() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -530,12 +374,12 @@ class _DashboardViewState extends State<DashboardView> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Color(0xFFD6E4FF)),
+                  border: Border.all(color: const Color(0xFFD6E4FF)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.blue.withOpacity(0.05),
                       blurRadius: 10,
-                      offset: Offset(0, 4),
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
@@ -558,7 +402,7 @@ class _DashboardViewState extends State<DashboardView> {
                                 ]),
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Icon(Icons.person, color: Colors.white),
+                          child: const Icon(Icons.person, color: Colors.white),
                         ),
                         const SizedBox(width: 12),
                         Text(
@@ -576,7 +420,7 @@ class _DashboardViewState extends State<DashboardView> {
                       dashboardController.splashList[index].description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black87,
                       ),
@@ -664,56 +508,68 @@ class _DashboardViewState extends State<DashboardView> {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey.shade300),
-          borderRadius: const BorderRadius.all(Radius.circular(10))
-      ),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 10,
         children: [
-          CustomShimmer(height: 120, width: MediaQuery.of(context).size.width * 0.5),
-          CustomShimmer(height: 20, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
-          CustomShimmer(height: 12, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
-          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          CustomShimmer(height: 18, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
-          CustomShimmer(height: 35, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10,radius: 10),
+          CustomShimmer(
+              height: 120, width: MediaQuery.of(context).size.width * 0.5),
+          CustomShimmer(
+              height: 20,
+              width: MediaQuery.of(context).size.width * 0.5,
+              horizontalMargin: 10),
+          CustomShimmer(
+              height: 12,
+              width: MediaQuery.of(context).size.width * 0.5,
+              horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100, horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100, horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100, horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100, horizontalMargin: 10),
+          CustomShimmer(
+              height: 18,
+              width: MediaQuery.of(context).size.width * 0.5,
+              horizontalMargin: 10),
+          CustomShimmer(
+              height: 35,
+              width: MediaQuery.of(context).size.width * 0.5,
+              horizontalMargin: 10,
+              radius: 10),
           const SizedBox(height: 5),
         ],
       ),
     );
   }
 
-  Widget publishedCourseListView(){
+  Widget publishedCourseListView() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: dashboardController.courseList?.asMap().entries.map((entry) {
-          final index = entry.key;
-          final courses = entry.value;
-          return CourseCard(
-            title: courses.name ?? 'title of the course',
-            itemNo: index,
-            description:courses.shortDescription ?? 'shortDescription of the course',
-            imageUrl: courses.thumbnailImage ??'',
-            author: '',
-            originalPrice: courses.regularPrice ?? 0,
-            discountedPrice: courses.discountedPrice ?? 0,
-            hasScholarship: false,
-            duration: courses.courseDuration ?? '',
-            credits: courses.credits ?? 0,
-            students: courses.studentCount ?? 0,
-            modules: courses.moduleCount ?? 0,
-            courseId: courses.id ?? '',
-            categoryName: courses.courseCategory?.name ?? '',
-            isFree: courses.isFreeCourse ?? false,
-          );
-        }).toList() ??
+              final index = entry.key;
+              final courses = entry.value;
+              return CourseCard(
+                title: courses.name ?? 'title of the course',
+                itemNo: index,
+                description: courses.shortDescription ??
+                    'shortDescription of the course',
+                imageUrl: courses.thumbnailImage ?? '',
+                author: '',
+                originalPrice: courses.regularPrice ?? 0,
+                discountedPrice: courses.discountedPrice ?? 0,
+                hasScholarship: false,
+                duration: courses.courseDuration ?? '',
+                credits: courses.credits ?? 0,
+                students: courses.studentCount ?? 0,
+                modules: courses.moduleCount ?? 0,
+                courseId: courses.id ?? '',
+                categoryName: courses.courseCategory?.name ?? '',
+                isFree: courses.isFreeCourse ?? false,
+              );
+            }).toList() ??
             [],
       ),
     );
   }
-
 }
-
