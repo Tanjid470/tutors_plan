@@ -48,7 +48,7 @@ class _OtpViewState extends State<OtpView> {
           appBar: AppBar(
             title: const Text(""),
             leading: InkWell(
-              onTap: () =>  Navigator.pushReplacementNamed(context, RouteNames.registerView),
+              onTap: () =>  Navigator.pushReplacementNamed(context, RouteNames.loginView),
               child: const Icon(Icons.arrow_back_ios_new),
             ),
           ),
