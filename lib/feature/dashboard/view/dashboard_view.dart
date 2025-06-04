@@ -558,6 +558,7 @@ class _DashboardViewState extends State<DashboardView> {
                 author: '',
                 originalPrice: courses.regularPrice ?? 0,
                 discountedPrice: courses.discountedPrice ?? 0,
+                discountedPercentage: courses.discountedPercentage ?? 0,
                 hasScholarship: false,
                 duration: courses.courseDuration ?? '',
                 credits: courses.credits ?? 0,

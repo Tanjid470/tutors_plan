@@ -17,6 +17,7 @@ class CourseCard extends StatelessWidget {
   final String author;
   final int originalPrice;
   final int discountedPrice;
+  final int? discountedPercentage;
   final String duration;
   final int credits;
   final int students;
@@ -44,6 +45,7 @@ class CourseCard extends StatelessWidget {
     this.isFree,
     this.isFavorite,
     this.categoryName,
+    this.discountedPercentage,
   });
   @override
   Widget build(BuildContext context) {
@@ -114,26 +116,53 @@ class CourseCard extends StatelessWidget {
                             style: whiteText(
                                 fontWeight: FontWeight.w400,
                                 TextSize.font8(context))))),
-                if(isFree == true)
                 Positioned(
-                    top: 7,
-                    right: 7,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.green,
-                      ),
-                      child: Text(
-                        'Free',
-                        style: customTextStyle(context,
-                            fontSize: TextSize.font10(context),
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                  top: 7,
+                  right: 7,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (isFree == true)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.green,
+                          ),
+                          child: Text(
+                            'Free',
+                            style: customTextStyle(
+                              context,
+                              fontSize: TextSize.font10(context),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      if (discountedPercentage != null)
+                        Container(
+                          margin: const EdgeInsets.only(top: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorUtils.baseColor,
+                          ),
+                          child: Text(
+                            '$discountedPercentage %',
+                            style: customTextStyle(
+                              context,
+                              fontSize: TextSize.font10(context),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -212,7 +241,6 @@ class CourseCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      flex: 7,
                       child: Row(
                         spacing: 3,
                         children: [
@@ -240,7 +268,6 @@ class CourseCard extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 3,
                       child: Row(
                         spacing: 3,
                         mainAxisAlignment: MainAxisAlignment.end,

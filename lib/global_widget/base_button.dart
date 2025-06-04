@@ -101,28 +101,28 @@ class BaseButton extends StatelessWidget {
                 scaleDown == true || leading != null
                     ? Padding(
                   // padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  padding: contentPadding ?? const EdgeInsets.only(left: 2, right: 12.0),
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSize ?? TextSize.font18(context),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                )
+                      padding: contentPadding ?? const EdgeInsets.only(left: 2, right: 12.0),
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: fontSize ?? TextSize.font18(context),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    )
                     : Expanded(
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSize ?? TextSize.font18(context),
-                      fontWeight: FontWeight.w500,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: fontSize ?? TextSize.font18(context),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
                 icon ?? const SizedBox()
               ],
             ),

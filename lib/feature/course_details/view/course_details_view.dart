@@ -253,65 +253,81 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     );
   }
 
-  Widget navigatorButton(){
+  Widget navigatorButton() {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: BaseButton(
-        onClick: () async {
-          String? accessToken =
-          preferences.getString('accessToken');
+      child: Obx(() {
+        return BaseButton(
+          onClick: () async {
+            String? accessToken = preferences.getString('accessToken');
 
-          if (accessToken == null) {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Center(child: Text("Login Required")),
-                content: const Text(
-                    "You are sign-in as guest user.For enroll course you need to sign-in."),
-                actionsAlignment: MainAxisAlignment.center,
-                actions: [
-                  Buttons(
-                    style: ButtonsStyle.dynamicButton,
-                    title: 'Cancel',
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    bgColor: Colors.grey.shade400,
-                    textColor: Colors.black87,
+            if (accessToken == null) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Center(child: Text("Login Required")),
+                  content: const Text(
+                    "You are sign-in as guest user. For enrolling in a course you need to sign-in.",
                   ),
-                  Buttons(
-                    style: ButtonsStyle.blueButton,
-                    title: 'Sign in',
-                    onTap: () async {
-                      await preferences.clear();
-                      Navigator.pushReplacementNamed(
-                          context, RouteNames.loginView);
-                    },
-                  ),
-                ],
-              ),
-            );
-          }
-          else {
-            await courseDetailsController.enrollPayment(context, courseID: courseDetailsController.courseDetails.value.id ?? '');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => PaymentWebView(
-                  name: courseDetailsController.courseDetails.value.name ?? '',
-                  url: courseDetailsController.paymentStripe.value.url ?? '',
+                  actionsAlignment: MainAxisAlignment.center,
+                  actions: [
+                    Buttons(
+                      style: ButtonsStyle.dynamicButton,
+                      title: 'Cancel',
+                      onTap: () => Navigator.pop(context),
+                      bgColor: Colors.grey.shade400,
+                      textColor: Colors.black87,
+                    ),
+                    Buttons(
+                      style: ButtonsStyle.blueButton,
+                      title: 'Sign in',
+                      onTap: () async {
+                        await preferences.clear();
+                        Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                      },
+                    ),
+                  ],
                 ),
-              ),
-            );
-          }
-        },
-        title: "Payment \$ ${courseDetailsController.courseDetails.value.discountedPrice}",
-        fontSize: TextSize.font14(context),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        borderRadius: 12,
-      ),
+              );
+            }
+            else {
+              courseDetailsController.isEnrollPaymentLoading.value = true;
+              await courseDetailsController.enrollPayment(
+                context,
+                courseID: courseDetailsController.courseDetails.value.id ?? '',
+              );
+              courseDetailsController.isEnrollPaymentLoading.value = false;
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentWebView(
+                    name: courseDetailsController.courseDetails.value.name ?? '',
+                    url: courseDetailsController.paymentStripe.value.url ?? '',
+                  ),
+                ),
+              );
+            }
+          },
+          title:courseDetailsController.isEnrollPaymentLoading.value? "":"Payment  \$${courseDetailsController.courseDetails.value.discountedPrice}",
+          leading:  courseDetailsController.isEnrollPaymentLoading.value
+              ? SizedBox(
+                width: ResponsiveScale.of(context).hp(2),
+                height: ResponsiveScale.of(context).hp(2),
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+              : null,
+          fontSize: TextSize.font14(context),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          borderRadius: 12,
+        );
+      }),
     );
   }
+
 
   Widget shimmerCourseDetailsView(BuildContext context) {
     return DefaultTabController(
@@ -559,7 +575,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                       width: 30,
                                       fit: BoxFit.fill,
                                       placeholder: (context, url) =>
-                                          Center(
+                                          const Center(
                                               child: CustomShimmer(height: 30, width: 30)),
                                       errorWidget: (context, url, error) => Image.asset(
                                         'assets/images/dummy_image.jpg',
@@ -574,26 +590,28 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                       width: 30,
                                       fit: BoxFit.fill,
                                     ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(lesson.name ?? 'Lesson Title',
-                                      style: customTextStyle(context,
-                                          fontSize: TextSize.font14(context),
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(lesson.description ?? 'Lesson Title',
-                                      style: customTextStyle(context,
-                                          fontSize: TextSize.font12(context),
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(lesson.name ?? 'Lesson Title',
+                                        style: customTextStyle(context,
+                                            fontSize: TextSize.font14(context),
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(lesson.description ?? 'Lesson Title',
+                                        style: customTextStyle(context,
+                                            fontSize: TextSize.font12(context),
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -636,8 +654,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             },
                             child: Icon(Icons.play_circle, size: 20, color: ColorUtils.baseColor),
                           )
-
-
                         ],
                       ),
                     ),

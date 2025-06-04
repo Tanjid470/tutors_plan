@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:tutors_plan/config/font_constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -67,18 +68,50 @@ class _PaymentWebViewState extends State<PaymentWebView> {
           },
           onNavigationRequest: (NavigationRequest action) async {
             if (action.url.endsWith('success')) {
-              SmartDialog.showToast('Payment Successfully');
-              Future.delayed(const Duration(seconds: 3)).then(
-                (value) {
-                  Navigator.pop(context);
-                },
+              Navigator.pop(context);
+              SmartDialog.showToast(
+                '',
+                alignment: Alignment.bottomCenter,
+                builder: (context) => Padding(
+                  padding: const EdgeInsets.only(bottom: 40), // bottom margin
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      'Payment Successfully',
+                      style: TextStyle(color: Colors.white, fontSize: TextSize.font16(context)),
+                    ),
+                  ),
+                ),
               );
-            } else if (action.url.endsWith('cancel')) {
-              SmartDialog.showToast('Payment Failed');
-              Future.delayed(const Duration(seconds: 2)).then(
-                (value) {
-                  Navigator.pop(context);
-                },
+            }
+            else if (action.url.endsWith('cancel')) {
+              // Future.delayed(const Duration(seconds: 1)).then(
+              //   (value) {
+              //     Navigator.pop(context);
+              //   },
+              // );
+              Navigator.pop(context);
+              SmartDialog.showToast(
+                '',
+                alignment: Alignment.bottomCenter,
+                builder: (context) => Padding(
+                  padding: const EdgeInsets.only(bottom: 40), // bottom margin
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      'Payment Failed',
+                      style: TextStyle(color: Colors.white, fontSize: TextSize.font16(context)),
+                    ),
+                  ),
+                ),
               );
             }
 
