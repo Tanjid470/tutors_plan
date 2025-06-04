@@ -13,8 +13,6 @@ import 'package:tutors_plan/global_widget/base_button.dart';
 import 'package:tutors_plan/feature/course_details/controller/course_details_controller.dart';
 import 'package:tutors_plan/main.dart';
 import 'package:tutors_plan/route/app_pages.dart';
-import 'package:tutors_plan/services/stripe_service.dart';
-import 'package:intl/intl.dart';
 import 'package:tutors_plan/utils/network/payment_web_view.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
@@ -24,21 +22,9 @@ class CourseDetailsScreen extends StatefulWidget {
   State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
 }
 
-
-
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   CourseDetailsController courseDetailsController = Get.put(CourseDetailsController());
-
-  String formatToMonthYear(String? dateString) {
-    if (dateString == null) return 'N/A';
-    try {
-      final date = DateTime.parse(dateString);
-      return DateFormat('MMMM yyyy').format(date); // e.g., May 2025
-    } catch (e) {
-      return 'Invalid date';
-    }
-  }
 
   @override
   void initState() {
@@ -46,7 +32,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     courseDetailsController.getCourseModules(widget.courseId);
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,179 +51,265 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       ),
                       title: Text('${courseDetailsController.courseDetails.value.name}'),
                     ),
-                    body: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
-                            children: [
-                              if (courseDetailsController.courseDetails.value.thumbnailImage != null)
-                                featuredImageWidget('${courseDetailsController.courseDetails.value.thumbnailImage}'),
-                              Positioned(
-                                bottom: 12,
-                                left: 12,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Text("${courseDetailsController.courseDetails.value.discountedPercentage}% OFF",
-                                    style: customTextStyle(context,
-                                        fontSize: TextSize.font14(context),
-                                        fontWeight: FontWeight.bold,
-                                        color: ColorUtils.white),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(courseDetailsController.courseDetails.value.name ?? " ",
-                                    style: customTextStyle(context,
-                                        fontSize: TextSize.font20(context),
-                                        fontWeight: FontWeight.bold,
-                                        color: ColorUtils.black)),
-                                Text(courseDetailsController.courseDetails.value.shortDescription ?? " ",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: customTextStyle(context,
-                                        fontSize: TextSize.font15(context),
-                                        fontWeight: FontWeight.w400,
-                                        color: ColorUtils.black)),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                                    Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                                    Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                                    Icon(Icons.star, color: Colors.orangeAccent, size: 18),
-                                    Icon(Icons.star_half, color: Colors.orangeAccent, size: 18),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                        "4.5 (${courseDetailsController.courseDetails.value.credits ?? 0} Credits)",
-                                        style: customTextStyle(context,
-                                            fontSize: TextSize.font12(context),
-                                            fontWeight: FontWeight.w500,
-                                            color: ColorUtils.black54)),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    Text(
-                                        "\$${courseDetailsController.courseDetails.value.regularPrice}",
-                                        style: customTextStyle(
-                                          context,
-                                          fontSize: TextSize.font14(context),
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.red,
-                                        )),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                        "\$${courseDetailsController.courseDetails.value.discountedPrice}",
-                                        style: customTextStyle(context,
-                                            fontSize: TextSize.font18(context),
-                                            fontWeight: FontWeight.bold,
-                                            color: ColorUtils.baseColor)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          TabBar(
-                            isScrollable: true,
-                            labelColor: ColorUtils.baseColor,
-                            unselectedLabelColor: Colors.grey,
-                            indicatorColor: ColorUtils.baseColor,
-                            tabAlignment: TabAlignment.center,
-                            labelStyle: customTextStyle(context,
-                                fontSize: TextSize.font16(context),
-                                fontWeight: FontWeight.bold,
-                                color: ColorUtils.black),
-                            tabs: const [
-                              Tab(text: "Overview"),
-                              Tab(text: "Curriculum"),
-                            ],
-                          ),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                _overviewTab(context),
-                                //_overviewTab(context),
-                                _curriculumTab(context),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    bottomNavigationBar: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: BaseButton(
-                        onClick: () async {
-                          String? accessToken =
-                              preferences.getString('accessToken');
-
-                          if (accessToken == null) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Center(child: Text("Login Required")),
-                                content: const Text(
-                                    "You are sign-in as guest user.For enroll course you need to sign-in."),
-                                actionsAlignment: MainAxisAlignment.center,
-                                actions: [
-                                  Buttons(
-                                    style: ButtonsStyle.dynamicButton,
-                                    title: 'Cancel',
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    bgColor: Colors.grey.shade400,
-                                    textColor: Colors.black87,
-                                  ),
-                                  Buttons(
-                                    style: ButtonsStyle.blueButton,
-                                    title: 'Sign in',
-                                    onTap: () async {
-                                      await preferences.clear();
-                                      Navigator.pushReplacementNamed(
-                                          context, RouteNames.loginView);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          else {
-                            await courseDetailsController.enrollPayment(context, courseID: courseDetailsController.courseDetails.value.id ?? '');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentWebView(
-                                  name: courseDetailsController.courseDetails.value.name ?? '',
-                                  url: courseDetailsController.paymentStripe.value.url ?? '',
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                        title: "Buy Now for \$${courseDetailsController.courseDetails.value.discountedPrice}",
-                        fontSize: TextSize.font14(context),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        borderRadius: 12,
-                      ),
-                    ),
+                    body: body(),
+                    bottomNavigationBar: navigatorButton(),
                   ),
                 ); // or any other widget when the state doesn't match
         })
       ],
+    );
+  }
+
+  Widget body(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          thumbImage(),
+          bodyDetails(),
+          TabBar(
+            isScrollable: true,
+            padding: EdgeInsets.zero,
+            labelColor: ColorUtils.baseColor,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: ColorUtils.baseColor,
+            tabAlignment: TabAlignment.center,
+            indicatorSize: TabBarIndicatorSize.tab,
+            labelStyle: customTextStyle(context,
+                fontSize: TextSize.font16(context),
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.black),
+            tabs: const [
+              Tab(text: "Overview"),
+              Tab(text: "Curriculum"),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                overviewTab(context),
+                curriculumTab(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bodyDetails() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8),
+          Text(courseDetailsController.courseDetails.value.name ?? " ",
+              style: customTextStyle(context,
+                  fontSize: TextSize.font20(context),
+                  fontWeight: FontWeight.bold,
+                  color: ColorUtils.black)),
+          Text(courseDetailsController.courseDetails.value.shortDescription ?? " ",
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: customTextStyle(context,
+                  fontSize: TextSize.font15(context),
+                  fontWeight: FontWeight.w400,
+                  color: ColorUtils.black)),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (courseDetailsController.courseDetails.value.seoKeywords != null)
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: List.generate(courseDetailsController.courseDetails.value.seoKeywords!.length,
+                            (index) => Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.shade300,
+                          ),
+                          child: Text(
+                              courseDetailsController.courseDetails.value.seoKeywords![index],
+                              style: customTextStyle(context,
+                                  fontSize: TextSize.font14(context),
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorUtils.black54)
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                  const Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                  const Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                  const Icon(Icons.star, color: Colors.orangeAccent, size: 18),
+                  const Icon(Icons.star_half, color: Colors.orangeAccent, size: 18),
+                  const SizedBox(width: 8),
+                  Text(
+                      "4.5 (${courseDetailsController.courseDetails.value.credits ?? 0} Credits)",
+                      style: customTextStyle(context,
+                          fontSize: TextSize.font12(context),
+                          fontWeight: FontWeight.w500,
+                          color: ColorUtils.black54)),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                margin: const EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorUtils.baseColor,
+                ),
+                child: Text(
+                    courseDetailsController.courseDetails.value.courseCategory?.name ?? '',
+                    style: customTextStyle(context,
+                        fontSize: TextSize.font14(context),
+                        fontWeight: FontWeight.w500,
+                        color: ColorUtils.white)
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  "Duration : ${courseDetailsController.courseDetails.value.courseDuration}",
+                  style: customTextStyle(
+                    context,
+                    fontSize: TextSize.font14(context),
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black87,
+                  )
+              ),
+              Row(
+                children: [
+                  Text(
+                      "\$${courseDetailsController.courseDetails.value.regularPrice}",
+                      style: customTextStyle(
+                        context,
+                        fontSize: TextSize.font14(context),
+                        fontWeight: FontWeight.w400,
+                        color: Colors.red,
+                      )
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                      "\$${courseDetailsController.courseDetails.value.discountedPrice}",
+                      style: customTextStyle(context,
+                          fontSize: TextSize.font18(context),
+                          fontWeight: FontWeight.bold,
+                          color: ColorUtils.baseColor)),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget thumbImage(){
+    return Stack(
+      children: [
+        if (courseDetailsController.courseDetails.value.thumbnailImage != null)
+          featuredImageWidget('${courseDetailsController.courseDetails.value.thumbnailImage}'),
+        Positioned(
+          bottom: 12,
+          left: 12,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: ColorUtils.baseColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text("${courseDetailsController.courseDetails.value.discountedPercentage}% OFF",
+              style: customTextStyle(context,
+                  fontSize: TextSize.font14(context),
+                  fontWeight: FontWeight.bold,
+                  color: ColorUtils.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget navigatorButton(){
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: BaseButton(
+        onClick: () async {
+          String? accessToken =
+          preferences.getString('accessToken');
+
+          if (accessToken == null) {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Center(child: Text("Login Required")),
+                content: const Text(
+                    "You are sign-in as guest user.For enroll course you need to sign-in."),
+                actionsAlignment: MainAxisAlignment.center,
+                actions: [
+                  Buttons(
+                    style: ButtonsStyle.dynamicButton,
+                    title: 'Cancel',
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    bgColor: Colors.grey.shade400,
+                    textColor: Colors.black87,
+                  ),
+                  Buttons(
+                    style: ButtonsStyle.blueButton,
+                    title: 'Sign in',
+                    onTap: () async {
+                      await preferences.clear();
+                      Navigator.pushReplacementNamed(
+                          context, RouteNames.loginView);
+                    },
+                  ),
+                ],
+              ),
+            );
+          }
+          else {
+            await courseDetailsController.enrollPayment(context, courseID: courseDetailsController.courseDetails.value.id ?? '');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PaymentWebView(
+                  name: courseDetailsController.courseDetails.value.name ?? '',
+                  url: courseDetailsController.paymentStripe.value.url ?? '',
+                ),
+              ),
+            );
+          }
+        },
+        title: "Payment \$ ${courseDetailsController.courseDetails.value.discountedPrice}",
+        fontSize: TextSize.font14(context),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        borderRadius: 12,
+      ),
     );
   }
 
@@ -249,7 +320,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         backgroundColor: ColorUtils.white,
         appBar: AppBar(
           leading: Icon(Icons.arrow_back_ios, color: ColorUtils.black),
-          title: CustomShimmer(height: 25, width: double.infinity),
+          title: const CustomShimmer(height: 25, width: double.infinity),
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16),
@@ -318,14 +389,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     );
   }
 
-  Widget _overviewTab(BuildContext context) => SingleChildScrollView(
+  Widget overviewTab(BuildContext context) => SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOverviewItem(context, Icons.description, "Course Description",
+            overviewItem(context, Icons.description, "Course Description",
                 '${courseDetailsController.courseDetails.value.description}'),
-            _buildOverviewItem(context, Icons.check_circle_outline, "Course Outcomes",
+            overviewItem(context, Icons.check_circle_outline, "Course Outcomes",
                 '${courseDetailsController.courseDetails.value.courseOutcome}'),
             Column(
               children: [
@@ -343,8 +414,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
         ),
       );
 
-  Widget _buildOverviewItem(
-      BuildContext context, IconData icon, String title, String content) {
+  Widget overviewItem(BuildContext context, IconData icon, String title, String content) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -373,99 +443,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       ),
     );
   }
-  //
-  // Widget _curriculumTab(BuildContext context) => Padding(
-  //   padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
-  //   child: ListView.builder(
-  //     padding: EdgeInsets.zero,
-  //     scrollDirection: Axis.vertical,
-  //     shrinkWrap: true,
-  //     itemCount: courseDetailsController.courseModules.value.module?.length ?? 0,
-  //     itemBuilder: (BuildContext context, int index) {
-  //       return Container(
-  //         margin: const EdgeInsets.only(bottom: 8),
-  //         decoration: BoxDecoration(
-  //           color: Colors.white,
-  //           borderRadius: BorderRadius.circular(12),
-  //           border: Border.all(color: Colors.grey.shade300), // subtle border
-  //         ),
-  //         child: Padding(
-  //           padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 5),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             children: [
-  //               Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Row(
-  //                     spacing: 5,
-  //                     children: [
-  //                       Container(
-  //                         height: ResponsiveScale.of(context).hp(2),
-  //                         width: ResponsiveScale.of(context).hp(2),
-  //                         decoration: BoxDecoration(
-  //                             color: ColorUtils.baseColor,
-  //                             shape: BoxShape.circle
-  //                         ),
-  //                         child: Center(
-  //                           child: Text('${index+1}',
-  //                             style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.white,fontWeight: FontWeight.w500),
-  //                           ),
-  //                         ),
-  //                       ),
-  //                       Text('${courseDetailsController.courseModules.value.module?[index].name}',
-  //                         maxLines: 1,
-  //                         overflow: TextOverflow.ellipsis,
-  //                         style: customTextStyle(context,fontSize: TextSize.font16(context),color: Colors.black,fontWeight: FontWeight.w500),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   Text('${courseDetailsController.courseModules.value.module?[index].description}',
-  //                     maxLines: 2,
-  //                     overflow: TextOverflow.ellipsis,
-  //                     style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-  //                   ),
-  //                   Row(
-  //                     spacing: 15,
-  //                     mainAxisAlignment: MainAxisAlignment.start,
-  //                     children: [
-  //                       Row(
-  //                         spacing: 3,
-  //                         children: [
-  //                           Icon(Icons.timelapse,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-  //                           Text('${courseDetailsController.courseModules.value.module?[index].duration}',
-  //                             maxLines: 2,
-  //                             overflow: TextOverflow.ellipsis,
-  //                             style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                       Row(
-  //                         spacing: 3,
-  //                         children: [
-  //                           Icon(Icons.play_lesson_outlined,color: ColorUtils.baseColor,size: TextSize.font14(context)),
-  //                           Text('${courseDetailsController.courseModules.value.module?[index].courseLessons?.length} Lessons',
-  //                             maxLines: 2,
-  //                             overflow: TextOverflow.ellipsis,
-  //                             style: customTextStyle(context,fontSize: TextSize.font14(context),color: Colors.black54,fontWeight: FontWeight.w500),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ],
-  //                   )
-  //                 ],
-  //               ),
-  //               Icon(Icons.arrow_drop_down_circle_outlined,color: ColorUtils.baseColor,size: TextSize.font22(context))
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //
-  //   ),
-  // );
 
-  Widget _curriculumTab(BuildContext context) => Padding(
+  Widget curriculumTab(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
     child: ListView.builder(
       padding: EdgeInsets.zero,
@@ -671,64 +650,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     ),
   );
 
-
-  Widget institutionSubsection(BuildContext context,String key,String value) {
-    return Row(
-      spacing: 5,
-      children: [
-        Text(key, style: customTextStyle(context, fontSize: TextSize.font14(context),color: Colors.black87,fontWeight: FontWeight.w500)),
-        Text(value, style: customTextStyle(context, fontSize: TextSize.font14(context),color: Colors.black,fontWeight: FontWeight.w500)),
-      ],
-    );
-  }
-
-
-
-  Future<void> _handlePayment(BuildContext context,
-      {required String courseID, required int studentId}) async {
-    try {
-      await StripeService.makePayment(
-        amount: double.tryParse('${courseDetailsController.courseDetails.value.discountedPrice}') ?? 0.0,
-        currency: 'usd',
-        courseID: courseID,
-        studentID: studentId,
-        onSuccess: (message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message),
-              backgroundColor: Colors.green,
-            ),
-          );
-          // TODO: Update backend about successful payment
-        },
-        onError: (error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error),
-              backgroundColor: Colors.red,
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Payment failed: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-
-  Widget overViewCard(
-      BuildContext context, IconData icon, String label, String value) {
+  Widget overViewCard(BuildContext context, IconData icon, String label, String value) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: ColorUtils.baseColor.withOpacity(0.1),
+          color: ColorUtils.shimmerColor,
         ),
         child: Center(
           child: Column(
@@ -783,4 +712,5 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       ),
     );
   }
+
 }
