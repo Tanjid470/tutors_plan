@@ -14,6 +14,7 @@ import 'package:tutors_plan/feature/dashboard/view/widget/learning_art_view.dart
 import 'package:tutors_plan/feature/dashboard/view/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/scholar_pass_view.dart';
 import 'package:tutors_plan/feature/learning/view/widget/more_info_tutorsplan_view.dart';
+import 'package:tutors_plan/global_widget/no_itemfound.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -415,7 +416,9 @@ class _DashboardViewState extends State<DashboardView> {
                       fontSize: TextSize.font20(context),
                       fontWeight: FontWeight.bold),
                 ),
-                publishedCourseListView()
+                dashboardController.courseList?.isEmpty == true
+                    ? NoItemFound(context: context, title: 'No course available', subTitle: 'Please check back later or try again.')
+                    : publishedCourseListView()
               ],
             )
           : Column(
