@@ -141,7 +141,7 @@ class CourseCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Column(
-              spacing: 10,
+              spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
@@ -151,8 +151,8 @@ class CourseCard extends StatelessWidget {
                         fontSize: TextSize.font16(context),
                         fontWeight: FontWeight.bold,
                         color: ColorUtils.black)),
-                Align(
-                  alignment: Alignment.center,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.035,
                   child: Text(
                     description,
                     style: customTextStyle(context,

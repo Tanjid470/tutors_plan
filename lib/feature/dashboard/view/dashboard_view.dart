@@ -661,7 +661,7 @@ class _DashboardViewState extends State<DashboardView> {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.all(Radius.circular(10))
+          borderRadius: const BorderRadius.all(Radius.circular(10))
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -670,13 +670,13 @@ class _DashboardViewState extends State<DashboardView> {
           CustomShimmer(height: 120, width: MediaQuery.of(context).size.width * 0.5),
           CustomShimmer(height: 20, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
           CustomShimmer(height: 12, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
-          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
-          CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
+          const CustomShimmer(height: 12, width: 100,horizontalMargin: 10),
           CustomShimmer(height: 18, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10),
           CustomShimmer(height: 35, width: MediaQuery.of(context).size.width * 0.5,horizontalMargin: 10,radius: 10),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
         ],
       ),
     );
@@ -692,7 +692,7 @@ class _DashboardViewState extends State<DashboardView> {
           return CourseCard(
             title: courses.name ?? 'title of the course',
             itemNo: index,
-            description: courses.shortDescription ?? 'shortDescription of the course',
+            description:courses.shortDescription ?? 'shortDescription of the course',
             imageUrl: courses.thumbnailImage ??'',
             author: '',
             originalPrice: courses.regularPrice ?? 0,
