@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tutors_plan/feature/dashboard/view/widget/category_card.dart';
 import 'package:tutors_plan/global_widget/custom_simmer.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
@@ -29,6 +30,7 @@ class _DashboardViewState extends State<DashboardView> {
   void initState() {
     dashboardController.getCourse(coursePage: dashboardController.coursePage);
     dashboardController.getUserProfile();
+    dashboardController.getCourseCategory();
     super.initState();
   }
 
@@ -56,6 +58,7 @@ class _DashboardViewState extends State<DashboardView> {
               verticalGap(context, 1),
               sliderView(),
               courseCardView(),
+              categoryCardView(),
               const ScholarPassBundle(),
               programCardView(),
               verticalGap(context, 2),
@@ -324,6 +327,54 @@ class _DashboardViewState extends State<DashboardView> {
     });
   }
 
+  Widget categoryCardView() {
+    return Obx(() {
+      return dashboardController.isLoadingCategoryList.value
+          ? Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 5,
+            children: [
+              Text(
+                'Categories',
+                style: customTextStyle(context,
+                    fontSize: TextSize.font20(context),
+                    fontWeight: FontWeight.bold),
+              ),
+              dashboardController.categoryList?.isEmpty == true
+                  ? NoItemFound(
+                      context: context,
+                      title: 'No categories available',
+                      subTitle: 'Please check back later or try again.'
+                  )
+                  : categoryListView()
+            ],
+          )
+          : Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 5,
+            children: [
+              Text(
+                'Categories',
+                style: customTextStyle(context,
+                    fontSize: TextSize.font20(context),
+                    fontWeight: FontWeight.bold),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children:
+                  List.generate(2, (index) => shimmerCourseCard(context)),
+                ),
+              ),
+            ],
+          );
+    });
+  }
+
   Widget programCardView() {
     return Row(
       spacing: 10,
@@ -567,6 +618,25 @@ class _DashboardViewState extends State<DashboardView> {
                 courseId: courses.id ?? '',
                 categoryName: courses.courseCategory?.name ?? '',
                 isFree: courses.isFreeCourse ?? false,
+              );
+            }).toList() ??
+            [],
+      ),
+    );
+  }
+
+  Widget categoryListView() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: dashboardController.categoryList?.asMap().entries.map((entry) {
+              final index = entry.key;
+              final categories = entry.value;
+              return CategoryCard(
+                title: categories.name ?? 'category name',
+                categoryId: categories.id ?? '',
+                description: categories.description ?? '',
+                imageUrl: categories.icon ?? '',
               );
             }).toList() ??
             [],
