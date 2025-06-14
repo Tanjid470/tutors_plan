@@ -6,6 +6,8 @@ import 'package:tutors_plan/feature/profile/data/profile_get_response.dart';
 import 'package:tutors_plan/feature/dashboard/data/repository/dashboard_repository.dart';
 import 'package:tutors_plan/feature/dashboard/domain/slider_model.dart';
 
+import '../../category/data/category_response.dart';
+
 class DashboardController extends GetxController {
   final Rx<ScreenStates> screenStates = Rx<ScreenStates>(ScreenStates.DEFAULT);
   final Rx<ScreenStates> loaderState = Rx<ScreenStates>(ScreenStates.DEFAULT);
@@ -82,6 +84,7 @@ class DashboardController extends GetxController {
   ];
 
   List<CourseModel>? courseList = [];
+  List<Category>? categoryList = [];
 
   int coursePage = 1;
 
@@ -101,6 +104,22 @@ class DashboardController extends GetxController {
       }
     }
     updateViewState(screenStates: ScreenStates.LOADING_COMPLETE);
+  }
+
+  Future<void> getCourseCategory({int? coursePage}) async {
+    isLoadingCategoryList.value = false;
+    final result = await dashboardRepository.getCategory(
+      page: coursePage,
+      limit: 10,
+    );
+    if (result != null) {
+      isLoadingCategoryList.value = true;
+      if (categoryList?.isEmpty == true) {
+        categoryList = result;
+      } else {
+        categoryList?.addAll(result);
+      }
+    }
   }
 
   Future<void> getUserProfile() async {
