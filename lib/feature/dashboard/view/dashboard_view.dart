@@ -367,7 +367,7 @@ class _DashboardViewState extends State<DashboardView> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children:
-                  List.generate(2, (index) => shimmerCourseCard(context)),
+                  List.generate(3, (index) => shimmerCategoryCard(context)),
                 ),
               ),
             ],
@@ -587,6 +587,27 @@ class _DashboardViewState extends State<DashboardView> {
               width: MediaQuery.of(context).size.width * 0.5,
               horizontalMargin: 10,
               radius: 10),
+          const SizedBox(height: 5),
+        ],
+      ),
+    );
+  }
+
+  Widget shimmerCategoryCard(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.3,
+      margin: const EdgeInsets.only(right: 5),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 10,
+        children: [
+          CustomShimmer(height: 60, width: MediaQuery.of(context).size.width * 0.3),
+          const CustomShimmer(height: 12, width: 100, horizontalMargin: 10),
           const SizedBox(height: 5),
         ],
       ),

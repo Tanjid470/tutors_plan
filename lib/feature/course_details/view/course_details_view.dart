@@ -230,8 +230,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget thumbImage(){
     return Stack(
       children: [
-        if (courseDetailsController.courseDetails.value.thumbnailImage != null)
-          featuredImageWidget('${courseDetailsController.courseDetails.value.thumbnailImage}'),
+        featuredImageWidget('${courseDetailsController.courseDetails.value.thumbnailImage}'),
         Positioned(
           bottom: 12,
           left: 12,
@@ -327,7 +326,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
       }),
     );
   }
-
 
   Widget shimmerCourseDetailsView(BuildContext context) {
     return DefaultTabController(

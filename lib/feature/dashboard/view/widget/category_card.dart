@@ -25,7 +25,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 5),
-      width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.3,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -48,22 +48,23 @@ class CategoryCard extends StatelessWidget {
             child: imageUrl.isNotEmpty
                 ? CachedNetworkImage (
                     imageUrl: imageUrl,
-                    height: 80,
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 60,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     fit: BoxFit.fill,
                     placeholder: (context, url) =>
-                        Center(child: CustomShimmer(height: 120, width: MediaQuery.of(context).size.width * 0.5)),
+                        Center(child: CustomShimmer( height: 60,
+                          width: MediaQuery.of(context).size.width * 0.3)),
                     errorWidget: (context, url, error) => Image.asset(
                       'assets/images/dummy_image.jpg',
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 60,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       fit: BoxFit.fill,
                     ),
                 )
                 : Image.asset (
                     'assets/images/dummy_image.jpg',
-                    height: 80,
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 60,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     fit: BoxFit.fill,
                 ),
           ),
@@ -83,18 +84,18 @@ class CategoryCard extends StatelessWidget {
                           color: ColorUtils.black)
                   ),
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                      description,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: customTextStyle(context,
-                          fontSize: TextSize.font14(context),
-                          fontWeight: FontWeight.w400,
-                          color: ColorUtils.black)
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.center,
+                //   child: Text(
+                //       description,
+                //       maxLines: 1,
+                //       overflow: TextOverflow.ellipsis,
+                //       style: customTextStyle(context,
+                //           fontSize: TextSize.font14(context),
+                //           fontWeight: FontWeight.w400,
+                //           color: ColorUtils.black)
+                //   ),
+                // ),
               ],
             ),
           ),
