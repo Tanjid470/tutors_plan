@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 String registrationDataBodyToJson(RegistrationPostModel data) => json.encode(data.toJson());
 
 class RegistrationPostModel {
@@ -8,7 +9,7 @@ class RegistrationPostModel {
   String? firstName;
   String? lastName;
   String? phone;
-  String? profilePicture;
+  File? profilePicture;
   List<String>? roles;
 
   RegistrationPostModel(

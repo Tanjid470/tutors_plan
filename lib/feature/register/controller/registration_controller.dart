@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutors_plan/const/color_utils.dart';
@@ -25,6 +27,7 @@ class RegistrationController extends GetxController{
   TextEditingController lastNameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   String? appRoleId;
+  File? selectedImage;
 
   RxBool isChecked = false.obs;
   RxString usernameError = ''.obs;
@@ -131,7 +134,7 @@ class RegistrationController extends GetxController{
       password: passwordController.text.trim(),
       firstName: firstNameController.text.trim(),
       lastName: lastNameController.text.trim(),
-      profilePicture: "",
+      profilePicture: selectedImage,
       phone: phoneController.text.trim(),
       roles: [appRoleId ?? ''],
     );

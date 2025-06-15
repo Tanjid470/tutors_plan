@@ -1,7 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/config/responsive_scale.dart';
 import 'package:tutors_plan/const/color_utils.dart';
@@ -117,6 +120,30 @@ class _RegisterViewState extends State<RegisterView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10,
           children: [
+            Center(
+              child: InkWell(
+                onTap: () async {
+                  final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  if (pickedFile != null) {
+                    setState(() {
+                      registrationController.selectedImage = File(pickedFile.path);
+                    });
+                    if (kDebugMode) {
+                      print('Picked image path: ${pickedFile.path}');
+                      print('Picked selectedImage path: ${registrationController.selectedImage}');
+                    }
+                  }
+                },
+                child: CircleAvatar(
+                  radius: MediaQuery.of(context).size.width * 0.15,
+                  backgroundColor: Colors.grey.shade300,
+                  backgroundImage: registrationController.selectedImage != null ? FileImage(registrationController.selectedImage!) : null,
+                  child: registrationController.selectedImage == null
+                      ? Icon(Icons.camera_alt, size: 30, color: Colors.grey[700])
+                      : null,
+                ),
+              ),
+            ),
             Obx(() => KField(
               headLine: 'Email',
               hintText: 'Enter your email',
@@ -272,14 +299,14 @@ class _RegisterViewState extends State<RegisterView> {
         Expanded(
           child: RichText(
             text: TextSpan(
-              style: TextStyle(fontSize: 14, color: Colors.black),
+              style: const TextStyle(fontSize: 14, color: Colors.black),
               children: [
-                TextSpan(text: 'I agree to the TutorsPlan '),
+                const TextSpan(text: 'I agree to the TutorsPlan '),
                 TextSpan(
                   text: 'Terms of Service',
                   style: TextStyle(color: ColorUtils.baseColor,fontWeight: FontWeight.w500),
                 ),
-                TextSpan(text: ' & '),
+                const TextSpan(text: ' & '),
                 TextSpan(
                   text: 'Privacy Policy.',
                   style: TextStyle(color: ColorUtils.baseColor,fontWeight: FontWeight.w500),

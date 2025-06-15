@@ -41,6 +41,7 @@ class _ProfileViewState extends State<ProfileView> {
             ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
+              surfaceTintColor: ColorUtils.baseColor,
               leading: InkWell(
                 onTap: (){
                   Navigator.pop(context);
