@@ -41,7 +41,12 @@ class _ProfileViewState extends State<ProfileView> {
             ? Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              leading: const SizedBox(),
+              leading: InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios,color: ColorUtils.black87,size: TextSize.font20(context),),
+              ),
               title: const Text('Profile'),
             ),
             body: SingleChildScrollView(
