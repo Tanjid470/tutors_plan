@@ -9,6 +9,7 @@ abstract class RouteNames {
   static const registerView = _Paths.registerView;
   static const otpView = _Paths.otpView;
   static const categoryView = _Paths.categoryView;
+  static const profileView = _Paths.profileView;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const otpView = '/otp_view';
   static const libraryView = '/library_view';
   static const categoryView = '/category_view';
+  static const profileView = '/profile_iew';
 }
