@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutors_plan/config/font_constants.dart';
 import 'package:tutors_plan/const/color_utils.dart';
 import 'package:tutors_plan/feature/dashboard/view/dashboard_view.dart';
+import 'package:tutors_plan/feature/exam/view/exam_view.dart';
 import 'package:tutors_plan/feature/my_course/view/my_course_view.dart';
 import 'package:tutors_plan/feature/profile/view/profile_view.dart';
 import 'package:tutors_plan/global_widget/in_app_web_view.dart';
@@ -36,7 +37,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           const DashboardView(),
           const MyCourseView(),
           InAppWebView(url: 'https://games.tutorsplan.com?token=$accessToken'),
-          const ProfileView(),
+          const ExamView(),
         ],
       ),
       bottomNavigationBar: Stack(
@@ -68,7 +69,7 @@ class BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                   label: 'Home'),
               BottomNavigationBarItem(icon: Icon(Icons.school_outlined,size: TextSize.font26(context)),label: 'Learning'),
               BottomNavigationBarItem(icon: Icon(Icons.gamepad_outlined,size: TextSize.font26(context)),label: 'Games'),
-              BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined,size: TextSize.font26(context)),label: 'Profile'),
+              BottomNavigationBarItem(icon: Icon(Icons.padding_outlined,size: TextSize.font26(context)),label: 'Exam'),
             ],
             currentIndex: selectedIndex,
             unselectedLabelStyle: TextStyle(fontSize: TextSize.font14(context),fontWeight: FontWeight.w400),
