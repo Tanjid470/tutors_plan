@@ -19,7 +19,7 @@ class UrlConst {
   static final String courseEnrollmentEndpoint = '$baseUrl/stripe/checkout-session';
   static final String getCoursesEndpoint = '$baseUrl/courses/published';
   static final String getMyCoursesEndpoint = '$baseUrl/students-course-enrollments/my-courses';
-  static final String getExamsEndpoint = '$baseUrl/course-exams';
+  static final String getExamsEndpoint = '$baseUrl/exams';
   static final String getCourseDetailsEndpoint = '$baseUrl/courses';
   static final String getCourseModulesEndpoint = '$baseUrl/course-modules';
   static final String sEndpoint = '$baseUrl/stripe/success';

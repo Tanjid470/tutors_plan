@@ -3,17 +3,16 @@ class ExamResponse {
   int? status;
   String? message;
   ExamData? examData;
-  Pagination? pagination;
+  Meta? meta;
 
-  ExamResponse({this.ok, this.status, this.message, this.examData, this.pagination});
+  ExamResponse({this.ok, this.status, this.message, this.examData, this.meta});
 
   ExamResponse.fromJson(Map<String, dynamic> json) {
     ok = json['ok'];
     status = json['status'];
     message = json['message'];
-    examData =
-    json['results'] != null ? ExamData.fromJson(json['results']) : null;
-    pagination = json['meta'] != null ? Pagination.fromJson(json['meta']) : null;
+    examData = json['results'] != null ? ExamData.fromJson(json['results']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,34 +23,6 @@ class ExamResponse {
     if (examData != null) {
       data['results'] = examData!.toJson();
     }
-    if (pagination != null) {
-      data['meta'] = pagination!.toJson();
-    }
-    return data;
-  }
-}
-
-class ExamData {
-  List<Exams>? exams;
-  Pagination? meta;
-
-  ExamData({this.exams, this.meta});
-
-  ExamData.fromJson(Map<String, dynamic> json) {
-    if (json['items'] != null) {
-      exams = <Exams>[];
-      json['items'].forEach((v) {
-        exams!.add(new Exams.fromJson(v));
-      });
-    }
-    meta = json['meta'] != null ? Pagination.fromJson(json['meta']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (exams != null) {
-      data['items'] = exams!.map((v) => v.toJson()).toList();
-    }
     if (meta != null) {
       data['meta'] = meta!.toJson();
     }
@@ -59,55 +30,155 @@ class ExamData {
   }
 }
 
-class Exams {
-  String? id;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  String? title;
-  String? description;
-  int? coursePoints;
-  String? guidelineForInstructor;
-  String? courseId;
-  String? examId;
+class ExamData {
+  List<Exams>? exams;
+  Pagination? pagination;
 
-  Exams(
-      {this.id,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt,
-        this.title,
-        this.description,
-        this.coursePoints,
-        this.guidelineForInstructor,
-        this.courseId,
-        this.examId});
+  ExamData({this.exams, this.pagination});
 
-  Exams.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    deletedAt = json['deleted_at'];
-    title = json['title'];
-    description = json['description'];
-    coursePoints = json['course_points'];
-    guidelineForInstructor = json['guideline_for_instructor'];
-    courseId = json['course_id'];
-    examId = json['exam_id'];
+  ExamData.fromJson(Map<String, dynamic> json) {
+    if (json['items'] != null) {
+      exams = <Exams>[];
+      json['items'].forEach((v) {
+        exams!.add(Exams.fromJson(v));
+      });
+    }
+    pagination = json['meta'] != null ? Pagination.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (exams != null) {
+      data['items'] = exams!.map((v) => v.toJson()).toList();
+    }
+    if (pagination != null) {
+      data['meta'] = pagination!.toJson();
+    }
+    return data;
+  }
+}
+
+class Exams {
+  String? id;
+  String? title;
+  String? description;
+  String? examAudiences;
+  String? examCode;
+  String? preRequisites;
+  int? totalQuestionsToAppear;
+  int? totalScore;
+  int? passingScore;
+  String? gradingPolicy;
+  int? scoreForEachQuestion;
+  int? examDurationMinutes;
+  String? examTags;
+  String? startDateTime;
+  String? endDateTime;
+  bool? isPracticeExam;
+  String? courseId;
+  String? masterExamDifficultyLevelTypeId;
+  MasterExamDifficultyLevelType? masterExamDifficultyLevelType;
+  MasterExamDifficultyLevelType? course;
+
+  Exams(
+      {this.id,
+        this.title,
+        this.description,
+        this.examAudiences,
+        this.examCode,
+        this.preRequisites,
+        this.totalQuestionsToAppear,
+        this.totalScore,
+        this.passingScore,
+        this.gradingPolicy,
+        this.scoreForEachQuestion,
+        this.examDurationMinutes,
+        this.examTags,
+        this.startDateTime,
+        this.endDateTime,
+        this.isPracticeExam,
+        this.courseId,
+        this.masterExamDifficultyLevelTypeId,
+        this.masterExamDifficultyLevelType,
+        this.course});
+
+  Exams.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    description = json['description'];
+    examAudiences = json['exam_audiences'];
+    examCode = json['exam_code'];
+    preRequisites = json['pre_requisites'];
+    totalQuestionsToAppear = json['total_questions_to_appear'];
+    totalScore = json['total_score'];
+    passingScore = json['passing_score'];
+    gradingPolicy = json['grading_policy'];
+    scoreForEachQuestion = json['score_for_each_question'];
+    examDurationMinutes = json['exam_duration_minutes'];
+    examTags = json['exam_tags'];
+    startDateTime = json['start_date_time'];
+    endDateTime = json['end_date_time'];
+    isPracticeExam = json['is_Practice_Exam'];
+    courseId = json['course_id'];
+    masterExamDifficultyLevelTypeId =
+    json['master_exam_difficulty_level_type_id'];
+    masterExamDifficultyLevelType =
+    json['master_exam_difficulty_level_type'] != null
+        ? MasterExamDifficultyLevelType.fromJson(
+        json['master_exam_difficulty_level_type'])
+        : null;
+    course = json['course'] != null
+        ? MasterExamDifficultyLevelType.fromJson(json['course'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['deleted_at'] = deletedAt;
     data['title'] = title;
     data['description'] = description;
-    data['course_points'] = coursePoints;
-    data['guideline_for_instructor'] = guidelineForInstructor;
+    data['exam_audiences'] = examAudiences;
+    data['exam_code'] = examCode;
+    data['pre_requisites'] = preRequisites;
+    data['total_questions_to_appear'] = totalQuestionsToAppear;
+    data['total_score'] = totalScore;
+    data['passing_score'] = passingScore;
+    data['grading_policy'] = gradingPolicy;
+    data['score_for_each_question'] = scoreForEachQuestion;
+    data['exam_duration_minutes'] = examDurationMinutes;
+    data['exam_tags'] = examTags;
+    data['start_date_time'] = startDateTime;
+    data['end_date_time'] = endDateTime;
+    data['is_Practice_Exam'] = isPracticeExam;
     data['course_id'] = courseId;
-    data['exam_id'] = examId;
+    data['master_exam_difficulty_level_type_id'] =
+        masterExamDifficultyLevelTypeId;
+    if (masterExamDifficultyLevelType != null) {
+      data['master_exam_difficulty_level_type'] =
+          masterExamDifficultyLevelType!.toJson();
+    }
+    if (course != null) {
+      data['course'] = course!.toJson();
+    }
+    return data;
+  }
+}
+
+class MasterExamDifficultyLevelType {
+  String? id;
+  String? name;
+
+  MasterExamDifficultyLevelType({this.id, this.name});
+
+  MasterExamDifficultyLevelType.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }
@@ -116,23 +187,20 @@ class Pagination {
   int? total;
   int? page;
   int? limit;
-  int? totalPages;
 
-  Pagination({this.total, this.page, this.limit, this.totalPages});
+  Pagination({this.total, this.page, this.limit});
 
   Pagination.fromJson(Map<String, dynamic> json) {
     total = json['total'];
     page = json['page'];
     limit = json['limit'];
-    totalPages = json['totalPages'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['total'] = total;
     data['page'] = page;
     data['limit'] = limit;
-    data['totalPages'] = totalPages;
     return data;
   }
 }
@@ -149,7 +217,7 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['timestamp'] = this.timestamp;
     data['response_time'] = this.responseTime;
     return data;
