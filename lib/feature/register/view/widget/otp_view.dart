@@ -36,7 +36,7 @@ class _OtpViewState extends State<OtpView> {
   @override
   void dispose() {
     countdownController.dispose();
-    registrationController.otpController.dispose();
+    Get.delete<RegistrationController>(force: true);
     super.dispose();
   }
 
@@ -48,7 +48,7 @@ class _OtpViewState extends State<OtpView> {
           appBar: AppBar(
             title: const Text(""),
             leading: InkWell(
-              onTap: () =>  Navigator.pushReplacementNamed(context, RouteNames.loginView),
+              onTap: () =>  Navigator.pushReplacementNamed(context, RouteNames.registerView),
               child: const Icon(Icons.arrow_back_ios_new),
             ),
           ),

@@ -134,7 +134,7 @@ class RegistrationController extends GetxController{
       password: passwordController.text.trim(),
       firstName: firstNameController.text.trim(),
       lastName: lastNameController.text.trim(),
-      profilePicture: selectedImage,
+      // profilePicture: selectedImage?.absolute,
       phone: phoneController.text.trim(),
       roles: [appRoleId ?? ''],
     );
