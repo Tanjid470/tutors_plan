@@ -15,6 +15,7 @@ import 'package:tutors_plan/feature/dashboard/view/widget/program_card.dart';
 import 'package:tutors_plan/feature/dashboard/view/widget/scholar_pass_view.dart';
 import 'package:tutors_plan/feature/learning/view/widget/more_info_tutorsplan_view.dart';
 import 'package:tutors_plan/global_widget/no_item_found.dart';
+import 'package:tutors_plan/route/app_pages.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -137,18 +138,23 @@ class _DashboardViewState extends State<DashboardView> {
                           child: Row(
                             spacing: 10,
                             children: [
-                              Container(
-                                clipBehavior: Clip.hardEdge, // Border thickness
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white // Change color & width
-                                    ),
-                                child: CircleAvatar(
-                                  radius: ResponsiveScale.of(context).hp(3),
-                                  backgroundColor: Colors.white,
-                                  child: Image.asset(
-                                      'assets/images/no_profile.jpg',
-                                      fit: BoxFit.cover),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, RouteNames.profileView);
+                                },
+                                child: Container(
+                                  clipBehavior: Clip.hardEdge, // Border thickness
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white // Change color & width
+                                      ),
+                                  child: CircleAvatar(
+                                    radius: ResponsiveScale.of(context).hp(3),
+                                    backgroundColor: Colors.white,
+                                    child: Image.asset(
+                                        'assets/images/no_profile.jpg',
+                                        fit: BoxFit.cover),
+                                  ),
                                 ),
                               ),
                               Expanded(
